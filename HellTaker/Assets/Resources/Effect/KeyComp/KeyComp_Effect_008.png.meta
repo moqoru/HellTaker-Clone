@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: 117047a2238cc5e47b552c92a31082f7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4349250140697276983
+    second: KeyComp_Effect_008_0
+  - first:
+      213: -5972267796567651158
+    second: KeyComp_Effect_008_1
+  - first:
+      213: -531655181400698128
+    second: KeyComp_Effect_008_2
+  - first:
+      213: -6830337754700764778
+    second: KeyComp_Effect_008_3
+  - first:
+      213: 8304800192199623136
+    second: KeyComp_Effect_008_4
+  - first:
+      213: 6177098115660277989
+    second: KeyComp_Effect_008_5
+  - first:
+      213: 647350097001356953
+    second: KeyComp_Effect_008_6
+  - first:
+      213: 1418590596055555790
+    second: KeyComp_Effect_008_7
+  - first:
+      213: -6313738047702838159
+    second: KeyComp_Effect_008_8
+  - first:
+      213: 3371831033703724096
+    second: KeyComp_Effect_008_9
+  - first:
+      213: 4795992397713179496
+    second: KeyComp_Effect_008_10
+  - first:
+      213: 1581031825138355099
+    second: KeyComp_Effect_008_11
+  - first:
+      213: -8985070703933440856
+    second: KeyComp_Effect_008_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_0
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 277
+        width: 80
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 732349ba5f3ab5c30800000000000000
+      internalID: 4349250140697276983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_1
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 283
+        width: 51
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aac841ad41e3e1da0800000000000000
+      internalID: -5972267796567651158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_2
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 264
+        width: 27
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f29d99ed6e2f98f0800000000000000
+      internalID: -531655181400698128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_3
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 264
+        width: 32
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6992f133004c531a0800000000000000
+      internalID: -6830337754700764778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_4
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 251
+        width: 33
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e187aa26c3904370800000000000000
+      internalID: 8304800192199623136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 89
+        width: 24
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e86aae220679b550800000000000000
+      internalID: 6177098115660277989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_6
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 32
+        width: 73
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99e9411cb79dbf800800000000000000
+      internalID: 647350097001356953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_7
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 96
+        width: 42
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eced99f81a8dfa310800000000000000
+      internalID: 1418590596055555790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_8
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 51
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 174ddcd72b81168a0800000000000000
+      internalID: -6313738047702838159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_9
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 70
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0447c8ed5762bce20800000000000000
+      internalID: 3371831033703724096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_10
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 14
+        width: 24
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8630b2beca9ce8240800000000000000
+      internalID: 4795992397713179496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_11
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 8
+        width: 109
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9b85fb7114f0f510800000000000000
+      internalID: 1581031825138355099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KeyComp_Effect_008_12
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1
+        width: 59
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ac374abccd9e4380800000000000000
+      internalID: -8985070703933440856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      KeyComp_Effect_008_0: 4349250140697276983
+      KeyComp_Effect_008_1: -5972267796567651158
+      KeyComp_Effect_008_10: 4795992397713179496
+      KeyComp_Effect_008_11: 1581031825138355099
+      KeyComp_Effect_008_12: -8985070703933440856
+      KeyComp_Effect_008_2: -531655181400698128
+      KeyComp_Effect_008_3: -6830337754700764778
+      KeyComp_Effect_008_4: 8304800192199623136
+      KeyComp_Effect_008_5: 6177098115660277989
+      KeyComp_Effect_008_6: 647350097001356953
+      KeyComp_Effect_008_7: 1418590596055555790
+      KeyComp_Effect_008_8: -6313738047702838159
+      KeyComp_Effect_008_9: 3371831033703724096
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: 2faf1f6a4ba109340ad8671456915d1a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3584567774141184728
+    second: LovePlosion_014_0
+  - first:
+      213: -7386672359668771975
+    second: LovePlosion_014_1
+  - first:
+      213: 7076797091388175301
+    second: LovePlosion_014_2
+  - first:
+      213: -6930164966286954832
+    second: LovePlosion_014_3
+  - first:
+      213: -2768206011507983457
+    second: LovePlosion_014_4
+  - first:
+      213: -7688412068714379337
+    second: LovePlosion_014_5
+  - first:
+      213: 3302848922349988147
+    second: LovePlosion_014_6
+  - first:
+      213: -7824591792854156279
+    second: LovePlosion_014_7
+  - first:
+      213: -3485000670888586889
+    second: LovePlosion_014_8
+  - first:
+      213: -649105701377555933
+    second: LovePlosion_014_9
+  - first:
+      213: -2290411746181168285
+    second: LovePlosion_014_10
+  - first:
+      213: 6572123840989810626
+    second: LovePlosion_014_11
+  - first:
+      213: -238377455144362237
+    second: LovePlosion_014_12
+  - first:
+      213: -5144101633169460018
+    second: LovePlosion_014_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LovePlosion_014_0
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 205
+        width: 67
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 825800de99e014ec0800000000000000
+      internalID: -3584567774141184728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_1
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 239
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9731fb900a44d7990800000000000000
+      internalID: -7386672359668771975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_2
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 231
+        width: 28
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c3b5bbc575d53260800000000000000
+      internalID: 7076797091388175301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_3
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 196
+        width: 35
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0beeb954eab13df90800000000000000
+      internalID: -6930164966286954832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_4
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 181
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9b37f29c4b5599d0800000000000000
+      internalID: -2768206011507983457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_5
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 208
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b7047d55f54d4590800000000000000
+      internalID: -7688412068714379337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_6
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 170
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339e37b789316dd20800000000000000
+      internalID: 3302848922349988147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_7
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 147
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90cbd7a8837796390800000000000000
+      internalID: -7824591792854156279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_8
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 45
+        width: 78
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77110b9aa5ac2afc0800000000000000
+      internalID: -3485000670888586889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_9
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 101
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 322c5bfbdc9edf6f0800000000000000
+      internalID: -649105701377555933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_10
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 72
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3634d77e6a2d630e0800000000000000
+      internalID: -2290411746181168285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_11
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 35
+        width: 24
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cfc21210dfd43b50800000000000000
+      internalID: 6572123840989810626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_12
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 8
+        width: 64
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30f98afa7fc11bcf0800000000000000
+      internalID: -238377455144362237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LovePlosion_014_13
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 36
+        width: 27
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec47d6ab1da7c98b0800000000000000
+      internalID: -5144101633169460018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LovePlosion_014_0: -3584567774141184728
+      LovePlosion_014_1: -7386672359668771975
+      LovePlosion_014_10: -2290411746181168285
+      LovePlosion_014_11: 6572123840989810626
+      LovePlosion_014_12: -238377455144362237
+      LovePlosion_014_13: -5144101633169460018
+      LovePlosion_014_2: 7076797091388175301
+      LovePlosion_014_3: -6930164966286954832
+      LovePlosion_014_4: -2768206011507983457
+      LovePlosion_014_5: -7688412068714379337
+      LovePlosion_014_6: 3302848922349988147
+      LovePlosion_014_7: -7824591792854156279
+      LovePlosion_014_8: -3485000670888586889
+      LovePlosion_014_9: -649105701377555933
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
