@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private GameObject[] Obstacles;
-    private GameObject[] ObjToPush;
+    private GameObject[] Obstacles, ObjToPush, ObjMonster;
 
+    private int MoveCount;
     private bool ReadyToMove;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Obstacles = GameObject.FindGameObjectsWithTag("Obstacles");
         ObjToPush = GameObject.FindGameObjectsWithTag("ObjToPush");
+        ObjMonster = GameObject.FindGameObjectsWithTag("ObjMonster");
+        MoveCount = 0;
     }
 
     // Update is called once per frame
@@ -27,7 +29,11 @@ public class PlayerMovement : MonoBehaviour
             if(ReadyToMove)
             {
                 ReadyToMove = false;
-                Move(moveInput);
+                if (Move(moveInput))
+                {
+                    MoveCount += 1;
+                    Debug.Log($"움직인 횟수: {MoveCount}"); // TODO : 몬스터 파괴시, 움직이진 않지만 움직인 횟수 포함
+                }
             }
         }
         else
@@ -65,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (var obj in Obstacles)
         {
-            if(obj.transform.position.x == newPos.x && obj.transform.position.y == newPos.y)
+            if (obj.transform.position.x == newPos.x && obj.transform.position.y == newPos.y)
             {
                 return true;
             }
@@ -75,8 +81,24 @@ public class PlayerMovement : MonoBehaviour
         {
             if (objToPush.transform.position.x == newPos.x && objToPush.transform.position.y == newPos.y)
             {
-                Push objPush = objToPush.GetComponent<Push>();
-                if(objPush && objPush.Move(direction))
+                Push oPush = objToPush.GetComponent<Push>();
+                if (oPush && oPush.Move(direction))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        foreach (var objMonster in ObjMonster)
+        {
+            if (objMonster != null && objMonster.transform.position.x == newPos.x && objMonster.transform.position.y == newPos.y)
+            {
+                Monster oMonster = objMonster.GetComponent<Monster>();
+                if (oMonster && oMonster.Move(direction))
                 {
                     return false;
                 }

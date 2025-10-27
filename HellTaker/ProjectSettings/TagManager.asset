@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacles
   - ObjToPush
+  - ObjMonster
   layers:
   - Default
   - TransparentFX

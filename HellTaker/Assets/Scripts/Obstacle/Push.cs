@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Push : MonoBehaviour
 {
-    private GameObject[] Obstacles;
-    private GameObject[] ObjToPush;
+    private GameObject[] Obstacles, ObjToPush, ObjMonster;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Obstacles = GameObject.FindGameObjectsWithTag("Obstacles");
         ObjToPush = GameObject.FindGameObjectsWithTag("ObjToPush");
+        ObjMonster = GameObject.FindGameObjectsWithTag("ObjMonster");
     }
 
     // Update is called once per frame
@@ -19,7 +20,7 @@ public class Push : MonoBehaviour
         
     }
 
-    public bool Move(Vector2 direction)
+    public virtual bool Move(Vector2 direction)
     {
         if(ObjToBlocked(transform.position, direction))
         {
@@ -47,6 +48,14 @@ public class Push : MonoBehaviour
         foreach (var objToPush in ObjToPush)
         {
             if (objToPush.transform.position.x == newPos.x && objToPush.transform.position.y == newPos.y)
+            {
+                return true;
+            }
+        }
+
+        foreach (var objMonster in ObjMonster)
+        {
+            if (objMonster != null && objMonster.transform.position.x == newPos.x && objMonster.transform.position.y == newPos.y)
             {
                 return true;
             }
