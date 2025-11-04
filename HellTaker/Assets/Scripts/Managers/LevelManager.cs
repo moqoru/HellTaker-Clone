@@ -6,6 +6,8 @@ using System.Linq;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; }
+
     [Header("맵 파일 설정")]
     [Tooltip("맵 파일 경로")]
     public string MapFileName = "Stages/Stage1";
@@ -41,6 +43,19 @@ public class LevelManager : MonoBehaviour
     public const char TILE_HIDDEN_THORN = 'H';
     public const char TILE_KEY = 'K';
     public const char TILE_LOCKBOX = 'L';
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        // 싱글톤 중복 방지
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -113,19 +128,59 @@ public class LevelManager : MonoBehaviour
                 );
 
                 string tileData = mapData[y, x];
+                GameObject spawnedObject;
+
                 if (tileData.Contains(TILE_PLAYER))
-                    Instantiate(PlayerPrefab, spawnPosition, Quaternion.identity, null);
+                {
+                    spawnedObject = Instantiate(PlayerPrefab, spawnPosition, Quaternion.identity, null);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
                 if (tileData.Contains(TILE_GOAL))
-                    Instantiate(GoalPrefab, spawnPosition, Quaternion.identity, goalParent);
+                {
+                    spawnedObject = Instantiate(GoalPrefab, spawnPosition, Quaternion.identity, goalParent);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
                 if (tileData.Contains(TILE_WALL))
-                    Instantiate(WallPrefab, spawnPosition, Quaternion.identity, wallParent);
+                {
+                    spawnedObject = Instantiate(WallPrefab, spawnPosition, Quaternion.identity, wallParent);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
                 if (tileData.Contains(TILE_BLOCK))
-                    Instantiate(BlockPrefab, spawnPosition, Quaternion.identity, blockParent);
+                {
+                    spawnedObject = Instantiate(BlockPrefab, spawnPosition, Quaternion.identity, blockParent);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
                 if (tileData.Contains(TILE_MONSTER))
-                    Instantiate(MonsterPrefab, spawnPosition, Quaternion.identity, monsterParent);
+                {
+                    spawnedObject = Instantiate(MonsterPrefab, spawnPosition, Quaternion.identity, monsterParent);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
             }
         }
 
         Debug.Log("맵 생성 완료");
+    }
+
+    /** basePosition 전달 */
+    public Vector2 GetBasePosition()
+    {
+        // TODO: 나중에 자동 구현 프로퍼티로 리팩토링 시도
+        return basePosition;
+    }
+
+    /** (디버깅) 특정 좌표의 타일 문자 확인 */
+    public string GetTileAt(int x, int y)
+    {
+        if (x < 0 || y < 0 || x>= mapWidth || y >= mapHeight)
+        {
+            return ".";
+        }
+        return mapData[y, x];
+    }
+
+    /** (디버깅) 맵 크기 확인 */
+    public Vector2Int GetMapSize()
+    {
+        return new Vector2Int(mapWidth, mapHeight);
     }
 }

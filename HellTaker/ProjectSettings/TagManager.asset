@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Obstacles
-  - ObjToPush
-  - ObjMonster
+  - Wall
+  - Block
+  - Monster
+  - Goal
+  - Key
+  - LockBox
+  - Thorn
   layers:
   - Default
   - TransparentFX

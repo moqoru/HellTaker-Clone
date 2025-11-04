@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 355787039272387283}
   - component: {fileID: 1031763339796067312}
-  - component: {fileID: 303758701458158306}
   m_Layer: 0
   m_Name: Goal
-  m_TagString: Obstacles
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,15 +90,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &303758701458158306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6373084058508665410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c371da8b1daa3f4d8dcc5ab39a34f5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Goal

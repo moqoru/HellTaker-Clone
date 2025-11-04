@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8575526225260765018}
   - component: {fileID: 6451451217603073225}
-  - component: {fileID: 1874965909845403546}
   m_Layer: 0
   m_Name: Monster
-  m_TagString: ObjMonster
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,15 +90,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1874965909845403546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967469443431534125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d6ed4ca1a2c9a94ba8cec3bd4007ab7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Skull

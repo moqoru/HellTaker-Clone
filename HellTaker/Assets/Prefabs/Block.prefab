@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3410887213416039139}
   - component: {fileID: 5444918188800603354}
-  - component: {fileID: 751715745793505288}
   m_Layer: 0
   m_Name: Block
-  m_TagString: ObjToPush
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,15 +90,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &751715745793505288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4948160910230035731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c9d28ad48734e42939b528c8691941, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Push
