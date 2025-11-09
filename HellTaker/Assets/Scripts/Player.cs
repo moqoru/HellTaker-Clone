@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     private void TryMove(Vector2Int direction)
     {
         if (GameManager.Instance.IsGameOver()
-            || GameManager.Instance.IsLevelCleared()
+            || GameManager.Instance.IsStageCleared()
             )
         {
             return;
