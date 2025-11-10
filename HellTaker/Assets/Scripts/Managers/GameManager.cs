@@ -150,13 +150,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /** 까시 페널티 (이동 횟수 +2) */
-    public void ApplyThornPenalty()
-    {
-        IncreaseMoveCount(2);
-        Debug.Log("가시를 밟음! 이동 횟수 +2");
-    }
-
     /** 레벨 클리어 */
     void OnLevelClear()
     {

@@ -98,14 +98,35 @@ public class GridManager : MonoBehaviour
 
             if (obj.CompareTag("Wall")
                 || obj.CompareTag("Goal")
-                || obj.CompareTag("LockBox")
-                )
+                || obj.CompareTag("LockBox"))
             {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public bool IsPositionPunished(Vector2Int pos)
+    {
+        if (!grid.ContainsKey(pos))
+        {
+            return false;
+        }
+
+        foreach (GameObject obj in grid[pos])
+        {
+            if (obj == null) continue;
+
+            if (obj.CompareTag("ThornNormal")
+                || obj.CompareTag("ThornHidden"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     /** 특정 위치의 모든 오브젝트 확인 */
@@ -150,8 +171,7 @@ public class GridManager : MonoBehaviour
         foreach (GameObject obj in objects)
         {
             if (obj.CompareTag("Block")
-                || obj.CompareTag("Monster")
-                )
+                || obj.CompareTag("Monster"))
             {
                 return obj;
             }

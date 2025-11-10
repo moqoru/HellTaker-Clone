@@ -76,10 +76,17 @@ public class Player : MonoBehaviour
             }
         }
 
+        // 이동 횟수 1회, 가시에 찔릴 경우 이동 횟수 2회
+        int moveCount = 1;
+        if (GridManager.Instance.IsPositionPunished(targetPos))
+        {
+            moveCount++;
+        }
+
         // 이동 수행
         GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
         currentGridPos = targetPos;
-        GameManager.Instance.IncreaseMoveCount(1);
+        GameManager.Instance.IncreaseMoveCount(moveCount);
 
     }
 

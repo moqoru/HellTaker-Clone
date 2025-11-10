@@ -10,6 +10,8 @@ TagManager:
   - Goal
   - Key
   - LockBox
+  - ThornNormal
+  - ThornToggle
   - Thorn
   layers:
   - Default

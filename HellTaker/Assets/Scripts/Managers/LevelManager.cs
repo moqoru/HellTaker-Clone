@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     public GameObject WallPrefab;
     public GameObject BlockPrefab;
     public GameObject MonsterPrefab;
+    public GameObject ThornNormalPrefab;
 
     [Header("¸Ê ¼³Á¤")]
     public Vector2 basePosition = Vector2.zero;
@@ -27,6 +28,7 @@ public class LevelManager : MonoBehaviour
     private Transform wallParent;
     private Transform blockParent;
     private Transform monsterParent;
+    private Transform thornNormalParent;
 
     private string[,] mapData;
     private int mapWidth;
@@ -39,8 +41,9 @@ public class LevelManager : MonoBehaviour
     public const char TILE_PLAYER = 'P';
     public const char TILE_GOAL = 'G';
     public const char TILE_MONSTER = 'M';
-    public const char TILE_THORN = 'T';
-    public const char TILE_HIDDEN_THORN = 'H';
+    public const char TILE_THORN_NORMAL = 'T';
+    public const char TILE_THORN_TOGGLE_SHOWN = 'S';
+    public const char TILE_THORN_TOGGLE_HIDDEN = 'H';
     public const char TILE_KEY = 'K';
     public const char TILE_LOCKBOX = 'L';
 
@@ -63,6 +66,7 @@ public class LevelManager : MonoBehaviour
         wallParent = new GameObject("Walls").transform;
         blockParent = new GameObject("Blocks").transform;
         monsterParent = new GameObject("Monsters").transform;
+        thornNormalParent = new GameObject("ThornsNormal").transform; 
 
         LoadMapFromCSV();
         GenerateMap();
@@ -153,6 +157,11 @@ public class LevelManager : MonoBehaviour
                 if (tileData.Contains(TILE_MONSTER))
                 {
                     spawnedObject = Instantiate(MonsterPrefab, spawnPosition, Quaternion.identity, monsterParent);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
+                if (tileData.Contains(TILE_THORN_NORMAL))
+                {
+                    spawnedObject = Instantiate(ThornNormalPrefab, spawnPosition, Quaternion.identity, thornNormalParent);
                     GridManager.Instance.RegisterObject(spawnedObject);
                 }
             }
