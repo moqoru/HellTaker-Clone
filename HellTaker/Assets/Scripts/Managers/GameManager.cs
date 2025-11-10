@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         InitializeStage();
     }
 
+    /** 맵 초기화 및 UI 반영 */
     void InitializeStage()
     {
         currentMoveCount = 0;
@@ -155,7 +156,8 @@ public class GameManager : MonoBehaviour
     {
         isStageCleared = true;
         Debug.Log("=== 레벨 클리어! ===");
-        // TODO: 캐릭터와의 대화 씬 전환
+        // TODO: 캐릭터와의 대화 씬 전환, 배경 이미지 전환
+        LoadNextStage();
     }
 
     /** 게임 오버 (이동 횟수 초과) */
@@ -164,25 +166,33 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Debug.Log("=== 게임 오버! 이동 횟수 초과 ===");
         // TODO: 게임 오버 씬 재생 후 재시작 처리
+        RestartStage();
     }
 
     /** 스테이지 재시작 */
     public void RestartStage()
     {
-        // TODO: 현재 씬 다시 로드
-        Debug.Log("현재 레벨 재시작 (구현 예정");
-        /*
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
-        );*/
+        Debug.Log("현재 스테이지 재시작");
+
+        // GameManager 상태 초기화
+        InitializeStage();
+
+        // LevelManager에서 맵 리로드
+        LevelManager.Instance.ReloadStage();
     }
 
     /** 다음 스테이지 로드 */
     public void LoadNextStage()
     {
+        // 스테이지 번호 증가
         currentStage++;
-        // TODO: 다음 스테이지 번호 계산해서 로드
-        Debug.Log($"다음 스테이지 로드: {currentStage} (구현 예정)");
+        Debug.Log($"다음 스테이지 로드: {currentStage}");
+
+        // GameManager 상태 초기화
+        InitializeStage();
+
+        // LevelManager에서 다음 맵 로드
+        LevelManager.Instance.LoadNextStage(currentStage);
     }
 
     /** 남은 이동 횟수 반환 */

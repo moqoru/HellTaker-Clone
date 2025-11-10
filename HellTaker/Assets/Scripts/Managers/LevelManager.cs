@@ -4,13 +4,11 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
+using static DestroyHelper;
+
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
-
-    [Header("맵 파일 설정")]
-    [Tooltip("맵 파일 경로")]
-    public string MapFileName = "Stages/Stage1";
 
     [Header("타일 프리팹")]
     public GameObject PlayerPrefab;
@@ -30,6 +28,7 @@ public class LevelManager : MonoBehaviour
     private Transform monsterParent;
     private Transform thornNormalParent;
 
+    private string MapFileName;
     private string[,] mapData;
     private int mapWidth;
     private int mapHeight;
@@ -62,6 +61,8 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        MapFileName = $"Stages/Stage{GameManager.Instance.currentStage}";
+
         goalParent = new GameObject("Goals").transform;
         wallParent = new GameObject("Walls").transform;
         blockParent = new GameObject("Blocks").transform;
@@ -170,10 +171,49 @@ public class LevelManager : MonoBehaviour
         Debug.Log("맵 생성 완료");
     }
 
+    /** 현재 맵의 모든 오브젝트 제거 */
+    public void ClearCurrentMap()
+    {
+        // 모든 부모 오브젝트의 자식 삭제
+        DestroyAllChilren(goalParent,
+            wallParent,
+            blockParent,
+            monsterParent,
+            thornNormalParent);
+
+        // 플레이어도 함께 삭제
+        DestroyAllWithTag("Player");
+
+        // Grid 초기화
+        GridManager.Instance.ClearGrid();
+    }
+
+    /** 스테이지 리로드 */
+    public void ReloadStage()
+    {
+        ClearCurrentMap();
+        
+        // TODO: 턴 정보, 오프셋 정보도 CSV에 담아 설정하기
+        LoadMapFromCSV();
+        GenerateMap();
+    }
+
+    /** 다음 스테이지 로드 */
+    public void LoadNextStage(int stageNum)
+    {
+        ClearCurrentMap();
+
+        // 맵 파일명 재설정
+        MapFileName = $"Stages/Stage{stageNum}";
+
+        // TODO: 턴 정보, 오프셋 정보도 CSV에 담아 설정하기
+        LoadMapFromCSV();
+        GenerateMap();
+    }
+
     /** basePosition 전달 */
     public Vector2 GetBasePosition()
     {
-        // TODO: 나중에 자동 구현 프로퍼티로 리팩토링 시도
         return basePosition;
     }
 

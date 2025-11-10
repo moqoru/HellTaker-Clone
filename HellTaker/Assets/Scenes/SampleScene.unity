@@ -536,7 +536,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -100
-  m_Sprite: {fileID: 9127882551339418055, guid: f6029560b363d594fa616564e66d5744, type: 3}
+  m_Sprite: {fileID: -8979055459776467921, guid: 35bf23391c702dc4aa9697eca4fb7384, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -712,7 +712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b767e399e670d9644a7218558f427f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  MapFileName: Stages/Stage2
   PlayerPrefab: {fileID: 2068864478604194003, guid: ff3a7ade927cfef4297d2bae54095b42, type: 3}
   GoalPrefab: {fileID: 6373084058508665410, guid: cb6bccfd91f7a4b4d93a4e79dad3f494, type: 3}
   WallPrefab: {fileID: 4856647904000467685, guid: 733b0eff4c65fee43aaccf10553e91dc, type: 3}
@@ -814,8 +813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9de4127f67e5f40ab3194d87c05006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  maxMoveCount: 24
-  currentStage: 2
+  maxMoveCount: 23
+  currentStage: 1
   turnText: {fileID: 700460424}
   stageText: {fileID: 1142054712}
 --- !u!224 &1696804066 stripped
