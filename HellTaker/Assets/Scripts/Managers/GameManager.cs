@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
     /** 이동 횟수 증가 (일반 이동 처리) */
     public void IncreaseMoveCount(int amount = 1)
     {
+        // TODO: 가시에 닿아 2번 이동 페널티 처리 시 UI와 이펙트로 데미지 처리
         if (isStageCleared || isGameOver)
         {
             return;

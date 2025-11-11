@@ -18,6 +18,9 @@ public class LevelManager : MonoBehaviour
     public GameObject MonsterPrefab;
     public GameObject ThornNormalPrefab;
 
+    [Header("배경 이미지")]
+    public SpriteRenderer backGroundImage;
+
     [Header("맵 설정")]
     public Vector2 basePosition = Vector2.zero;
     public float tileSize = 1f;
@@ -62,6 +65,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         MapFileName = $"Stages/Stage{GameManager.Instance.currentStage}";
+        backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
+        // TODO: Epilogue는 번호 다르게 설정
 
         goalParent = new GameObject("Goals").transform;
         wallParent = new GameObject("Walls").transform;
@@ -94,14 +99,21 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        mapHeight = validLines.Count;
-        mapWidth = validLines[0].Count(c => c == ',') + 1;
+        mapHeight = validLines.Count - 1;
+        mapWidth = validLines[1].Count(c => c == ',') + 1;
+
+        string[] mapInfo = validLines[0].Split(',');
+        Debug.Log(mapInfo[0]);
+        if (!int.TryParse(mapInfo[0], out GameManager.Instance.maxMoveCount))
+        {
+            Debug.LogError($"이동 횟수를 불러오지 못했습니다.");
+        }
 
         mapData = new string[mapHeight, mapWidth];
 
         for (int y = 0; y < mapHeight; y++)
         {
-            string[] cells = validLines[y].Split(',');
+            string[] cells = validLines[y + 1].Split(',');
             for (int x = 0; x < cells.Length && x < mapWidth; x++)
             {
                 mapData[y, x] = cells[x].Trim();
@@ -171,6 +183,11 @@ public class LevelManager : MonoBehaviour
         Debug.Log("맵 생성 완료");
     }
 
+    void SetBackGroundImage()
+    {
+
+    }
+
     /** 현재 맵의 모든 오브젝트 제거 */
     public void ClearCurrentMap()
     {
@@ -203,8 +220,10 @@ public class LevelManager : MonoBehaviour
     {
         ClearCurrentMap();
 
-        // 맵 파일명 재설정
+        // 맵, 배경 이미지 파일명 재설정
         MapFileName = $"Stages/Stage{stageNum}";
+        backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
+        // TODO: Epilogue는 번호 다르게 설정
 
         // TODO: 턴 정보, 오프셋 정보도 CSV에 담아 설정하기
         LoadMapFromCSV();
