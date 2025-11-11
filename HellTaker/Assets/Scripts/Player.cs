@@ -11,10 +11,20 @@ public class Player : MonoBehaviour
     {
         currentGridPos = GridManager.Instance.WorldToGrid(transform.position);
         GameManager.Instance.SetPlayer(gameObject);
+
+        readyToMove = true;
     }
 
     void Update()
     {
+        /** 게임 오버되거나 클리어 상태, 맵 로드 중일 땐 입력 차단 */
+        if (GameManager.Instance.IsGameOver()
+            || GameManager.Instance.IsStageCleared())
+        {
+            Debug.Log("입력 차단됨!");
+            return;
+        }
+
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         // 입력 '감도' 설정
@@ -52,13 +62,6 @@ public class Player : MonoBehaviour
     /** 이동 시도 */
     private void TryMove(Vector2Int direction)
     {
-        if (GameManager.Instance.IsGameOver()
-            || GameManager.Instance.IsStageCleared()
-            )
-        {
-            return;
-        }
-
         Vector2Int targetPos = currentGridPos + direction;
 
         if (GridManager.Instance.IsPositionBlocked(targetPos))
@@ -97,8 +100,7 @@ public class Player : MonoBehaviour
 
         // 밀릴 위치가 장애물이나 다른 밀리는 오브젝트로 막혀있는지 체크
         if (GridManager.Instance.IsPositionBlocked(pushTargetPos)
-            || GridManager.Instance.GetPushableAt(pushTargetPos)
-            )
+            || GridManager.Instance.GetPushableAt(pushTargetPos))
         {
             // Monster는 벽에 밀리면 제거 처리
             if (pushable.CompareTag("Monster"))

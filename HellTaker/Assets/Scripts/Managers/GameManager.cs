@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
-    private bool isGameOver = false;
+    private bool isGameOver = true;
     private GameObject player;
 
     void Awake()
@@ -34,22 +34,13 @@ public class GameManager : MonoBehaviour
         else if (Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
     }
     
     void Start()
     {
         InitializeStage();
-    }
-
-    /** 맵 초기화 및 UI 반영 */
-    void InitializeStage()
-    {
-        currentMoveCount = 0;
-        isStageCleared = false;
-        isGameOver = false;
-
-        UpdateUI();
     }
 
     void Update()
@@ -59,6 +50,26 @@ public class GameManager : MonoBehaviour
             return;
         }
         CheckWinCondition();
+    }
+
+    /** 맵 초기화 및 UI 반영 */
+    void InitializeStage()
+    {
+        StartCoroutine(EnableStageAfterFrames(1));
+        
+        isStageCleared = false;
+        isGameOver = false;
+
+    }
+
+    IEnumerator EnableStageAfterFrames(int frames)
+    {
+        for (int i = 0; i < frames; i++)
+        {
+            yield return null;
+        }
+        currentMoveCount = 0;
+        UpdateUI();
     }
 
     void UpdateUI()
@@ -143,6 +154,7 @@ public class GameManager : MonoBehaviour
         }
 
         currentMoveCount += amount;
+
         UpdateUI();
 
         // 이동 횟수 초과 체크
@@ -187,13 +199,13 @@ public class GameManager : MonoBehaviour
     {
         // 스테이지 번호 증가
         currentStage++;
-        Debug.Log($"다음 스테이지 로드: {currentStage}");
 
         // GameManager 상태 초기화
         InitializeStage();
 
         // LevelManager에서 다음 맵 로드
         LevelManager.Instance.LoadNextStage(currentStage);
+        Debug.Log($"[LoadNextStage] {currentStage} 스테이지 맵 로드 완료");
     }
 
     /** 남은 이동 횟수 반환 */

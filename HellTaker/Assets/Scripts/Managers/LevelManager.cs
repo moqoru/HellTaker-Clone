@@ -103,10 +103,25 @@ public class LevelManager : MonoBehaviour
         mapWidth = validLines[1].Count(c => c == ',') + 1;
 
         string[] mapInfo = validLines[0].Split(',');
-        Debug.Log(mapInfo[0]);
-        if (!int.TryParse(mapInfo[0], out GameManager.Instance.maxMoveCount))
+
+        if (int.TryParse(mapInfo[0].Trim(), out int moveCount))
         {
-            Debug.LogError($"이동 횟수를 불러오지 못했습니다.");
+            GameManager.Instance.maxMoveCount = moveCount;
+        }
+        else
+        {
+            Debug.LogError($"이동 횟수를 불러오지 못했습니다: {mapInfo[0]}");
+        }
+
+        if (float.TryParse(mapInfo[1].Trim(), out float offsetX)
+            && float.TryParse(mapInfo[2].Trim(), out float offsetY))
+        {
+            basePosition.x = offsetX;
+            basePosition.y = offsetY;
+        }
+        else
+        {
+            Debug.LogError($"오프셋 좌표를 불러오지 못했습니다: x => {mapInfo[1]} y => {mapInfo[2]}");
         }
 
         mapData = new string[mapHeight, mapWidth];
@@ -183,11 +198,6 @@ public class LevelManager : MonoBehaviour
         Debug.Log("맵 생성 완료");
     }
 
-    void SetBackGroundImage()
-    {
-
-    }
-
     /** 현재 맵의 모든 오브젝트 제거 */
     public void ClearCurrentMap()
     {
@@ -225,7 +235,7 @@ public class LevelManager : MonoBehaviour
         backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
         // TODO: Epilogue는 번호 다르게 설정
 
-        // TODO: 턴 정보, 오프셋 정보도 CSV에 담아 설정하기
+        // TODO: 오프셋 정보도 CSV에 담아 설정하기
         LoadMapFromCSV();
         GenerateMap();
     }
