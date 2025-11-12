@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("스테이지 텍스트")]
     public TextMeshProUGUI stageText;
 
+    private TransitionManager transitionManager;
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        transitionManager = FindFirstObjectByType<TransitionManager>();
         InitializeStage();
     }
 
@@ -169,7 +172,7 @@ public class GameManager : MonoBehaviour
     {
         isStageCleared = true;
         Debug.Log("=== 레벨 클리어! ===");
-        // TODO: 캐릭터와의 대화 씬 전환, 배경 이미지 전환
+        // TODO: 캐릭터와의 대화 씬 전환
         LoadNextStage();
     }
 
@@ -197,6 +200,10 @@ public class GameManager : MonoBehaviour
     /** 다음 스테이지 로드 */
     public void LoadNextStage()
     {
+        // 트랜지션 애니메이션 실행
+        transitionManager.PlayTransition();
+        // TODO: '완전히 화면이 덮였을 때' 다음 맵 로드하기
+
         // 스테이지 번호 증가
         currentStage++;
 
