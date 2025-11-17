@@ -20,7 +20,7 @@ public static class DestroyHelper
     }
 
     /** 여러 부모의 자식 안전하게 삭제 (오버로드) */
-    public static void DestroyAllChilren(params Transform[] parents)
+    public static void DestroyAllChildren(params Transform[] parents)
     {
         foreach (Transform parent in parents)
         {
@@ -38,6 +38,15 @@ public static class DestroyHelper
             {
                 Object.Destroy(obj);
             }
+        }
+    }
+
+    /** 여러 태그의 모든 오브젝트 삭제*/
+    public static void DestroyAllWithTag(params string[] tags)
+    {
+        foreach (string tag in tags)
+        {
+            DestroyAllWithTag(tag);
         }
     }
 }

@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
     private bool isGameOver = true;
+    private bool hasKey = false;
     private GameObject player;
 
     void Awake()
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
         
         isStageCleared = false;
         isGameOver = false;
+        hasKey = false;
 
     }
 
@@ -231,5 +233,17 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver()
     {
         return isGameOver;
+    }
+
+    /** ≈∞ »πµÊ ø©∫Œ »Æ¿Œ */
+    public bool HasKey()
+    {
+        return hasKey;
+    }
+
+    /** ≈∞ »πµÊ ø©∫Œ ∫Ø∞Ê */
+    public void SetKey(bool value)
+    {
+        hasKey = value;
     }
 }

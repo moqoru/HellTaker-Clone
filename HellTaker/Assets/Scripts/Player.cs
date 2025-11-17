@@ -64,32 +64,60 @@ public class Player : MonoBehaviour
     {
         Vector2Int targetPos = currentGridPos + direction;
 
+        // 자물쇠 체크 (열쇠를 갖고 있다면 이동 전 '미리' 자물쇠 제거)
+        GameObject lockBox = GridManager.Instance.GetObjectWithTagAt(targetPos, "LockBox");
+        if (lockBox != null)
+        {
+            if (GameManager.Instance.HasKey())
+            {
+                UnlockBox(lockBox, targetPos);
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        // 이동 불가능하면 이동 막기
         if (GridManager.Instance.IsPositionBlocked(targetPos))
         {
             return;
+        }
+
+        // 열쇠 획득 처리
+        GameObject key = GridManager.Instance.GetObjectWithTagAt(targetPos, "Key");
+        if (key != null)
+        {
+            CollectKey(key);
         }
 
         // 밀 수 있는 오브젝트가 밀리는지 체크
         GameObject pushable = GridManager.Instance.GetPushableAt(targetPos);
         if (pushable != null)
         {
+            // 밀 수 있는 게 있으면 '걷어 차고' 위치는 그대로, 아니면 그 위치로 이동
             if (!TryPushObject(pushable, targetPos, direction))
             {
                 return;
             }
+            // TODO: 블럭을 걷어 찰 경우 걷어차는 모션 재생 필요
+            GameManager.Instance.IncreaseMoveCount(1);
         }
-
-        // 이동 횟수 1회, 가시에 찔릴 경우 이동 횟수 2회
-        int moveCount = 1;
-        if (GridManager.Instance.IsPositionPunished(targetPos))
+        else
         {
-            moveCount++;
-        }
+            // 이동 횟수 기본 1회, 도착 지점에서 가시에 찔릴 경우 이동 횟수 2회
+            int moveCount = 1;
+            if (GridManager.Instance.IsPositionPunished(targetPos))
+            {
+                moveCount++;
+            }
 
-        // 이동 수행
-        GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
-        currentGridPos = targetPos;
-        GameManager.Instance.IncreaseMoveCount(moveCount);
+            // 일반 이동 수행
+            GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
+            currentGridPos = targetPos;
+
+            GameManager.Instance.IncreaseMoveCount(moveCount);
+        }
 
     }
 
@@ -122,6 +150,7 @@ public class Player : MonoBehaviour
 
         // 밀기 처리
         GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos);
+
         return true;
     }
 
@@ -130,5 +159,22 @@ public class Player : MonoBehaviour
     {
         GridManager.Instance.UnregisterObject(monster);
         Destroy(monster);
+    }
+
+    /** 열쇠 획득 처리 */
+    private void CollectKey(GameObject key)
+    {
+        GameManager.Instance.SetKey(true);
+        GridManager.Instance.UnregisterObject(key);
+        Destroy(key);
+        Debug.Log("열쇠 획득");
+    }
+
+    /** 자물쇠 열기 처리 */
+    private void UnlockBox(GameObject lockBox, Vector2Int lockBoxPos)
+    {
+        GridManager.Instance.UnregisterObject(lockBox);
+        Destroy(lockBox);
+        Debug.Log("자물쇠 해제");
     }
 }

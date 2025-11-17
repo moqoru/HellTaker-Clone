@@ -17,6 +17,8 @@ public class LevelManager : MonoBehaviour
     public GameObject BlockPrefab;
     public GameObject MonsterPrefab;
     public GameObject ThornNormalPrefab;
+    public GameObject KeyPrefab;
+    public GameObject LockBoxPrefab;
 
     [Header("배경 이미지")]
     public SpriteRenderer backGroundImage;
@@ -72,7 +74,7 @@ public class LevelManager : MonoBehaviour
         wallParent = new GameObject("Walls").transform;
         blockParent = new GameObject("Blocks").transform;
         monsterParent = new GameObject("Monsters").transform;
-        thornNormalParent = new GameObject("ThornsNormal").transform; 
+        thornNormalParent = new GameObject("ThornsNormal").transform;
 
         LoadMapFromCSV();
         GenerateMap();
@@ -167,6 +169,16 @@ public class LevelManager : MonoBehaviour
                     spawnedObject = Instantiate(PlayerPrefab, spawnPosition, Quaternion.identity, null);
                     GridManager.Instance.RegisterObject(spawnedObject);
                 }
+                if (tileData.Contains(TILE_KEY))
+                {
+                    spawnedObject = Instantiate(KeyPrefab, spawnPosition, Quaternion.identity, null);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
+                if (tileData.Contains(TILE_LOCKBOX))
+                {
+                    spawnedObject = Instantiate(LockBoxPrefab, spawnPosition, Quaternion.identity, null);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
                 if (tileData.Contains(TILE_GOAL))
                 {
                     spawnedObject = Instantiate(GoalPrefab, spawnPosition, Quaternion.identity, goalParent);
@@ -202,14 +214,14 @@ public class LevelManager : MonoBehaviour
     public void ClearCurrentMap()
     {
         // 모든 부모 오브젝트의 자식 삭제
-        DestroyAllChilren(goalParent,
+        DestroyAllChildren(goalParent,
             wallParent,
             blockParent,
             monsterParent,
             thornNormalParent);
 
-        // 플레이어도 함께 삭제
-        DestroyAllWithTag("Player");
+        // 단일 오브젝트들도 함께 삭제
+        DestroyAllWithTag("Player", "Key", "LockBox");
 
         // Grid 초기화
         GridManager.Instance.ClearGrid();
@@ -249,7 +261,7 @@ public class LevelManager : MonoBehaviour
     /** (디버깅) 특정 좌표의 타일 문자 확인 */
     public string GetTileAt(int x, int y)
     {
-        if (x < 0 || y < 0 || x>= mapWidth || y >= mapHeight)
+        if (x < 0 || y < 0 || x >= mapWidth || y >= mapHeight)
         {
             return ".";
         }
