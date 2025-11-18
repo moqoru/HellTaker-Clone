@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TransitionManager : MonoBehaviour
+public class TransitionAnimator : MonoBehaviour
 {
     private Animator animator;
     // 모든 오브젝트의 알파값 조절 대신, 렌더링 레이어로 조절하는 CanvasGroup으로 알파값 조절

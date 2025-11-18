@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.IsGameOver()
             || GameManager.Instance.IsStageCleared())
         {
-            Debug.Log("입력 차단됨!");
             return;
         }
 

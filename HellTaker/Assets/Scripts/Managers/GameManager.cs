@@ -20,7 +20,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("스테이지 텍스트")]
     public TextMeshProUGUI stageText;
 
-    private TransitionManager transitionManager;
+    [Header("애니메이션 참조")]
+    [SerializeField] private TransitionAnimator transitionAnimator;
+    [SerializeField] private DialogueDeathAnimator dialogueDeathAnimator;
+
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
@@ -43,7 +46,6 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        transitionManager = FindFirstObjectByType<TransitionManager>();
         InitializeStage();
     }
 
@@ -53,7 +55,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        CheckWinCondition();
+        // CheckWinCondition();
     }
 
     /** 맵 초기화 및 UI 반영 */
@@ -67,7 +69,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator EnableStageAfterFrames(int frames)
+    /** 이동 횟수 미리 차감 방지를 위해 딜레이 */
+    IEnumerator EnableStageAfterFrames(int frames = 1)
     {
         for (int i = 0; i < frames; i++)
         {
@@ -162,7 +165,11 @@ public class GameManager : MonoBehaviour
 
         UpdateUI();
 
-        // 이동 횟수 초과 체크
+        CheckWinCondition();
+
+        // 게임 미 클리어시, 이동 횟수 초과 체크
+        if (isStageCleared) return;
+
         if (currentMoveCount >= maxMoveCount)
         {
             OnGameOver();
@@ -175,7 +182,7 @@ public class GameManager : MonoBehaviour
         isStageCleared = true;
         Debug.Log("=== 레벨 클리어! ===");
         // TODO: 캐릭터와의 대화 씬 전환
-        LoadNextStage();
+        StartCoroutine(LoadNextStageAfterFrames(1));
     }
 
     /** 게임 오버 (이동 횟수 초과) */
@@ -183,14 +190,22 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("=== 게임 오버! 이동 횟수 초과 ===");
-        // TODO: 게임 오버 씬 재생 후 재시작 처리
-        RestartStage();
+        // TODO: 게임 오버 씬 테스트용. 추후 대화 선택지에서만 나오게 변경 후 여기는 트랜지션만 재생
+        if (dialogueDeathAnimator != null)
+        {
+            dialogueDeathAnimator.PlayGameOver();
+        }
+        else
+        {
+            RestartStage();
+        }
     }
 
     /** 스테이지 재시작 */
     public void RestartStage()
     {
-        Debug.Log("현재 스테이지 재시작");
+        // 트랜지션 애니메이션 실행
+        transitionAnimator.PlayTransition();
 
         // GameManager 상태 초기화
         InitializeStage();
@@ -199,11 +214,16 @@ public class GameManager : MonoBehaviour
         LevelManager.Instance.ReloadStage();
     }
 
-    /** 다음 스테이지 로드 */
-    public void LoadNextStage()
+    /** 게임 오버와 꼬이지 않게 다음 스테이지 로드 */
+    IEnumerator LoadNextStageAfterFrames(int frames = 1)
     {
+        for (int i = 0; i < frames; i++)
+        {
+            yield return null;
+        }
+
         // 트랜지션 애니메이션 실행
-        transitionManager.PlayTransition();
+        transitionAnimator.PlayTransition();
         // TODO: '완전히 화면이 덮였을 때' 다음 맵 로드하기
 
         // 스테이지 번호 증가
