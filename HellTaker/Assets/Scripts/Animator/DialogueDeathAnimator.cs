@@ -11,7 +11,7 @@ public class DialogueDeathAnimator : MonoBehaviour
     [Tooltip("프레임당 지속 시간 (초)")]
     public float frameInterval = 0.067f;
 
-    [Header("UI 참조")]
+    [Header("자기 자신과 자식 오브젝트 할당")]
     public CanvasGroup canvasGroup;
     public Image heartAttackAnimation;
     public TextMeshProUGUI deathMessage;
