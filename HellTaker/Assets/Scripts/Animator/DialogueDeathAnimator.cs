@@ -61,7 +61,7 @@ public class DialogueDeathAnimator : MonoBehaviour
     }
 
     /** 게임 오버 애니메이션 재생 */
-    public void PlayGameOver(string message = "Game Over : Enter나 Space를 눌러 재시작")
+    public void PlayGameOver(string message = "Game Over : Enter를 눌러 재시작")
     {
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
@@ -82,10 +82,11 @@ public class DialogueDeathAnimator : MonoBehaviour
     /** 애니메이션 완료 처리 */
     public void OnAnimationComplete()
     {
+        isPlaying = false;
         StartCoroutine(WaitForKeyInput());
     }
 
-    // TODO : 키 입력하는 스크립트만 따로 모으는 클래스 제작 필요
+    // TODO : InputManager와 연동 필요
     IEnumerator WaitForKeyInput()
     {
         // Debug.Log("스페이스바나 엔터 누를 때까지 대기 중...");
@@ -94,8 +95,6 @@ public class DialogueDeathAnimator : MonoBehaviour
             || Input.GetKeyDown(KeyCode.Space));
 
         Debug.Log("키 입력 확인!");
-
-        isPlaying = false;
 
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;

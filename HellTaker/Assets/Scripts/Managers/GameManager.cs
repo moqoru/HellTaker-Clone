@@ -181,7 +181,12 @@ public class GameManager : MonoBehaviour
     {
         isStageCleared = true;
         Debug.Log("=== 레벨 클리어! ===");
-        // TODO: 캐릭터와의 대화 씬 전환
+        
+        // TODO: 캐릭터와의 대화 시스템 구현 후 활성화
+        // InputManager.Instance.SetState(GameState.UI, UIType.Dialogue);
+        // DialogueManager.Instacne.StartDialogue(currentStage);
+
+        // 임시 : 바로 다음 스테이지 로드
         StartCoroutine(LoadNextStageAfterFrames(1));
     }
 
@@ -190,6 +195,9 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         Debug.Log("=== 게임 오버! 이동 횟수 초과 ===");
+
+        InputManager.Instance.SetState(GameState.UI, UIType.GameOver);
+
         // TODO: 게임 오버 씬 테스트용. 추후 대화 선택지에서만 나오게 변경 후 여기는 트랜지션만 재생
         if (dialogueDeathAnimator != null)
         {

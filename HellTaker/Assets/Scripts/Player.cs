@@ -4,63 +4,44 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private bool readyToMove = true;
+    public static Player Instance {  get; private set; }
+
     private Vector2Int currentGridPos;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     void Start()
     {
         currentGridPos = GridManager.Instance.WorldToGrid(transform.position);
         GameManager.Instance.SetPlayer(gameObject);
-
-        readyToMove = true;
     }
 
     void Update()
     {
-        /** 게임 오버되거나 클리어 상태, 맵 로드 중일 땐 입력 차단 */
-        if (GameManager.Instance.IsGameOver()
-            || GameManager.Instance.IsStageCleared())
-        {
-            return;
-        }
-
-        Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        // 입력 '감도' 설정
-        if (moveInput.sqrMagnitude > 0.5f)
-        {
-            if (readyToMove)
-            {
-                readyToMove = false;
-
-                // 방향 정규화 (대각 입력 방지)
-                Vector2Int direction = NormalizeDirection(moveInput);
-
-                TryMove(direction);
-            }
-        }
-        else
-        {
-            readyToMove = true;
-        }
-    }
-
-    /** 입력을 4방향 중 하나로 정규화 */
-    private Vector2Int NormalizeDirection(Vector2 input)
-    {
-        if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
-        {
-            return new Vector2Int(input.x > 0 ? 1 : -1, 0);
-        }
-        else
-        {
-            return new Vector2Int(0, input.y > 0 ? 1 : -1);
-        }
+        // 입력 처리 부분을 InputManager로 이동
     }
 
     /** 이동 시도 */
-    private void TryMove(Vector2Int direction)
+    public void TryMove(Vector2Int direction)
     {
+        // Playing 상태일 때만 이동 가능
+        if (InputManager.Instance.GetState() != GameState.Playing)
+        {
+            Debug.LogError("[Player] Playing 상태가 아닐 때 이동을 시도했습니다.");
+            return;
+        }
+
         Vector2Int targetPos = currentGridPos + direction;
 
         // 자물쇠 체크 (열쇠를 갖고 있다면 이동 전 '미리' 자물쇠 제거)
