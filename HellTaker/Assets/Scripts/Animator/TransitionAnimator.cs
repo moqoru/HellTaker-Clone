@@ -22,6 +22,8 @@ public class TransitionAnimator : MonoBehaviour
     private float timer = 0f;
     private bool isPlaying = false;
 
+    public float TotalDuration => (mainFrames.Length + 2) * frameInterval;
+
     void Start()
     {
         // 인스펙터에 CanvasGroup이 없을 경우 직접 생성

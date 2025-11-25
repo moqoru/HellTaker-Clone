@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
-    private bool isGameOver = true;
+    private bool isGameOver = false;
     private bool hasKey = false;
     private GameObject player;
 
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         hasKey = false;
 
+        InputManager.Instance.SetState(GameState.Playing);
     }
 
     /** 이동 횟수 미리 차감 방지를 위해 딜레이 */
@@ -212,6 +214,8 @@ public class GameManager : MonoBehaviour
     /** 스테이지 재시작 */
     public void RestartStage()
     {
+        InputManager.Instance.SetState(GameState.Transition);
+
         // 트랜지션 애니메이션 실행
         transitionAnimator.PlayTransition();
 
