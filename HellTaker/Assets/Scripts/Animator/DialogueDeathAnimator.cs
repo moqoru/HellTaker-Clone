@@ -61,7 +61,7 @@ public class DialogueDeathAnimator : MonoBehaviour
     }
 
     /** 게임 오버 애니메이션 재생 */
-    public void PlayGameOver(string message = "Game Over : Enter를 눌러 재시작")
+    public void PlayGameOver(string message = "Game Over : Press Enter to Restart")
     {
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
@@ -83,24 +83,14 @@ public class DialogueDeathAnimator : MonoBehaviour
     public void OnAnimationComplete()
     {
         isPlaying = false;
-        StartCoroutine(WaitForKeyInput());
     }
 
-    // TODO : InputManager와 연동 필요
-    IEnumerator WaitForKeyInput()
+    /** 게임오버 화면 숨기기 */
+    public void HideGameOver()
     {
-        // Debug.Log("스페이스바나 엔터 누를 때까지 대기 중...");
-        yield return new WaitUntil(
-            () => Input.GetKeyDown(KeyCode.Return)
-            || Input.GetKeyDown(KeyCode.Space));
-
-        Debug.Log("키 입력 확인!");
-
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
-
-        GameManager.Instance.RestartStage();
     }
 
 }

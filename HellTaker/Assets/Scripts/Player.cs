@@ -32,6 +32,15 @@ public class Player : MonoBehaviour
         // 입력 처리 부분을 InputManager로 이동
     }
 
+    void OnDestroy()
+    {
+        // Player가 파괴될 때 Instance를 null로 초기화, 새로 만들도록 하기
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     /** 이동 시도 */
     public void TryMove(Vector2Int direction)
     {

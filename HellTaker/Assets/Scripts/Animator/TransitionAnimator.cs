@@ -23,6 +23,9 @@ public class TransitionAnimator : MonoBehaviour
     private bool isPlaying = false;
 
     public float TotalDuration => (mainFrames.Length + 2) * frameInterval;
+    public float HalfDuration => TotalDuration * 0.5f;
+
+    public bool IsPlaying => isPlaying;
 
     void Start()
     {

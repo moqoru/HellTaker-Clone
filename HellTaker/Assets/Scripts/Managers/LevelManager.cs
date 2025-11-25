@@ -221,7 +221,7 @@ public class LevelManager : MonoBehaviour
             thornNormalParent);
 
         // 단일 오브젝트들도 함께 삭제
-        DestroyAllWithTag("Player", "Key", "LockBox");
+        DestroyAllWithTagImmediate("Player", "Key", "LockBox");
 
         // Grid 초기화
         GridManager.Instance.ClearGrid();

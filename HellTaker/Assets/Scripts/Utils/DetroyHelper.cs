@@ -29,24 +29,24 @@ public static class DestroyHelper
     }
 
     /** 특정 태그의 모든 오브젝트 삭제 */
-    public static void DestroyAllWithTag(string tag)
+    public static void DestroyAllWithTagImmediate(string tag)
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject obj in objects)
         {
             if (obj != null)
             {
-                Object.Destroy(obj);
+                Object.DestroyImmediate(obj);
             }
         }
     }
 
     /** 여러 태그의 모든 오브젝트 삭제*/
-    public static void DestroyAllWithTag(params string[] tags)
+    public static void DestroyAllWithTagImmediate(params string[] tags)
     {
         foreach (string tag in tags)
         {
-            DestroyAllWithTag(tag);
+            DestroyAllWithTagImmediate(tag);
         }
     }
 }

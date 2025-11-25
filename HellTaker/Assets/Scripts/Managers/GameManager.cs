@@ -62,24 +62,29 @@ public class GameManager : MonoBehaviour
     /** 맵 초기화 및 UI 반영 */
     void InitializeStage()
     {
-        StartCoroutine(EnableStageAfterFrames(1));
-        
+        StartCoroutine(EnableStageCoroutine());
+    }
+
+    void ResetGameState()
+    {
         isStageCleared = false;
         isGameOver = false;
         hasKey = false;
+        currentMoveCount = 0;
 
-        InputManager.Instance.SetState(GameState.Playing);
+        UpdateUI();
     }
-
     /** 이동 횟수 미리 차감 방지를 위해 딜레이 */
-    IEnumerator EnableStageAfterFrames(int frames = 1)
+    IEnumerator EnableStageCoroutine()
     {
-        for (int i = 0; i < frames; i++)
+        while (InputManager.Instance == null)
         {
             yield return null;
         }
-        currentMoveCount = 0;
-        UpdateUI();
+
+        ResetGameState();
+        InputManager.Instance.SetState(GameState.Playing);
+        Debug.Log("[GameManager] Initialize 완료");
     }
 
     void UpdateUI()
@@ -189,7 +194,7 @@ public class GameManager : MonoBehaviour
         // DialogueManager.Instacne.StartDialogue(currentStage);
 
         // 임시 : 바로 다음 스테이지 로드
-        StartCoroutine(LoadNextStageAfterFrames(1));
+        StartCoroutine(LoadNextStageDuringTransition());
     }
 
     /** 게임 오버 (이동 횟수 초과) */
@@ -207,46 +212,59 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            RestartStage();
+            StartCoroutine(RestartStageDuringTransition());
         }
     }
 
     /** 스테이지 재시작 */
     public void RestartStage()
     {
+        StartCoroutine(RestartStageDuringTransition());
+    }
+
+    IEnumerator RestartStageDuringTransition()
+    {
+        InputManager.Instance.SetState(GameState.Transition);
+
+        // TODO: 잘못된 선택지 선택했을 때 GameOver가 뜨는 것으로 바꾸기
+        dialogueDeathAnimator.HideGameOver();
+        transitionAnimator.PlayTransition();
+
+        // 절반 상태 (화면이 덮인 상태)까지 대기
+        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+
+        // LevelManager에서 맵 리로드
+        LevelManager.Instance.ReloadStage();
+        ResetGameState();
+
+        // 나머지 절반 (화면이 완전히 보이는 상태)까지 대기
+        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+
+        InputManager.Instance.SetState(GameState.Playing);
+        Debug.Log("[GameManager] 재시작 완료");
+    }
+
+    /** 다음 스테이지 로드 */
+    IEnumerator LoadNextStageDuringTransition()
+    {
         InputManager.Instance.SetState(GameState.Transition);
 
         // 트랜지션 애니메이션 실행
         transitionAnimator.PlayTransition();
 
-        // GameManager 상태 초기화
-        InitializeStage();
+        // 절반 상태 (화면이 덮인 상태)까지 대기
+        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
 
-        // LevelManager에서 맵 리로드
-        LevelManager.Instance.ReloadStage();
-    }
-
-    /** 게임 오버와 꼬이지 않게 다음 스테이지 로드 */
-    IEnumerator LoadNextStageAfterFrames(int frames = 1)
-    {
-        for (int i = 0; i < frames; i++)
-        {
-            yield return null;
-        }
-
-        // 트랜지션 애니메이션 실행
-        transitionAnimator.PlayTransition();
-        // TODO: '완전히 화면이 덮였을 때' 다음 맵 로드하기
-
-        // 스테이지 번호 증가
+        // 스테이지 번호 증가, 맵 로드
         currentStage++;
-
-        // GameManager 상태 초기화
-        InitializeStage();
-
-        // LevelManager에서 다음 맵 로드
         LevelManager.Instance.LoadNextStage(currentStage);
-        Debug.Log($"[LoadNextStage] {currentStage} 스테이지 맵 로드 완료");
+        ResetGameState();
+
+        // 나머지 절반 (화면이 완전히 보이는 상태)까지 대기
+        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+
+        InputManager.Instance.SetState(GameState.Playing);
+        Debug.Log($"[GameManager] {currentStage} 스테이지 맵 로드 완료");
     }
 
     /** 남은 이동 횟수 반환 */

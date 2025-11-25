@@ -131,7 +131,15 @@ public class InputManager : MonoBehaviour
 
                 // 방향 정규화 (대각 입력 방지)
                 Vector2Int direction = NormalizeDirection(moveInput);
-                Player.Instance.TryMove(direction);
+
+                if (Player.Instance != null)
+                {
+                    Player.Instance.TryMove(direction);
+                }
+                else
+                {
+                    Debug.LogWarning("[InputManager] Player.Instance가 null입니다!");
+                }
             }
         }
         else
