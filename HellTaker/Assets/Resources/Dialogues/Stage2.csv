@@ -1,0 +1,12 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+1,Choice,Scene/Characters/Mod_Idle,음란한 악마 모데우스,"""너랑 나랑. 지금 바로.""","""좋아. 이의 없어.""",101,"""시간 없어. 여자애들 모으기 바빠.""",2,,
+2,Success,Scene/Characters/Mod_Close,음란한 악마 모데우스,"""악마 하렘? 불쌍한 멍청이...\n악마들이 너를 갈가리 찢어 버릴 텐데, 그걸 놓칠 수 없지.""",,,,,,
+101,Dialogue,Scene/Characters/Mod_Idle,음란한 악마 모데우스,"""다들 그렇게 말하곤... 나중에 도망가려 하더라.\n혹시 모르니 무릎을 부숴 놔야지.""",,,,,,
+102,GameOver,,,"""모데우스는 커다란 망치를 꺼냈다. 좋은 꼴은 못 볼 것 같다.""",,,,,,
+201,Advice,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""우리가 같이 다니기 시작했으니 저도 할 일을 해야겠네요.""",,,,,,
+202,Advice,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""지옥을 거닐면서 의지를 소모하는 것을 알아차리셨나요?\n지옥에서 의지가 바닥나면, 사망합니다.""",,,,,,
+203,Advice,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""가시밭을 지난다면 의지는 2배로 소모되죠.\n가시밭을 가능한 한 덜 거치는 것이 핵심입니다.""",,,,,,
+204,Advice,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""지옥 고객센터 서비스를 이용해 주셔서 감사합니다.""",,,,,,
+205,NumberChoice,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""받으신 서비스에 만족도를 1점부터 10점까지 점수를 매기신다면, 몇 점인가요?""",1,206,10,207,,
+206,Advice,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""설문 감사 드립니다. 언제든지 이용 바랍니다.""",,,,,,
+207,Advice,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""와... 10점은 처음 받네요...""",,,,,,

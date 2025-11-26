@@ -1,0 +1,8 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+1,Choice,Scene/Characters/Cer_Idle,세 쌍둥이 악마 케르베로스,"""인간이야? 진짜 인간이야? 같이 데려가 줘.""","""좋아. 이의 없어.""",2,"""너무 쉬워서 의심이 가는데...""",101,,
+2,Success,Scene/Characters/Cer_Happy,세 쌍둥이 악마 케르베로스,"""좋아, 드디어! 인간들을 타락시키러 가자!""",,,,,,
+101,Dialogue,Scene/Characters/Cer_Idle,세 쌍둥이 악마 케르베로스,"""지옥문을 지나기 위해선 인간이 필요해서 그래.\n굳이 한 조각일 필요는 없지만.""",,,,,,
+102,GameOver,,,"""쌍둥이들이 미친 개마냥 당신에게 달려들었다.\n귀여운 강아지 소리와 함께 당신의 심장은 멈췄다.""",,,,,,
+201,Advice,Scene/Characters/Mod_Idle,음란한 악마 모데우스,"""조언 말이야? 별 거 없어. 퍼즐들을 싹 다 건너뛰고,\n악마년들을 모아서 본격적으로 하렘 활동을 시작하는 거야.""",,,,,,
+202,Advice,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""이해해 주세요. 악마들은 대부분 저렇죠.\n죄악에 대한 욕망이 핏속을 흘러 잘 억제하지 못해요.""",,,,,,
+203,Advice,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""퍼즐에 관해서라면... 언데드 노예들을 걷어차고 다니는 데\n시간을 낭비하지만 않는다면 괜찮을 거에요.""",,,,,,
