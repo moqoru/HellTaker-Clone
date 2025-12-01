@@ -20,7 +20,7 @@ public class DialogueDeathAnimator : MonoBehaviour
     private float timer = 0f;
     private bool isPlaying = false;
 
-    void Start()
+    private void Start()
     {
         // 인스펙터에 CanvasGroup이 없을 경우 직접 생성
         if (canvasGroup == null)
@@ -38,7 +38,7 @@ public class DialogueDeathAnimator : MonoBehaviour
     }
 
     /** 전환 시간 계산 및 프레임 전환, 종료 처리 */
-    void Update()
+    private void Update()
     {
         if (!isPlaying) return;
 

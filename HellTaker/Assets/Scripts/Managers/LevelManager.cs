@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
     public const char TILE_KEY = 'K';
     public const char TILE_LOCKBOX = 'L';
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         MapFileName = $"Stages/Stage{GameManager.Instance.currentStage}";
         backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
@@ -81,7 +81,7 @@ public class LevelManager : MonoBehaviour
     }
 
     /** CSV 파일을 읽고 2D 문자 배열로 변환 */
-    void LoadMapFromCSV()
+    private void LoadMapFromCSV()
     {
         TextAsset csvFile = Resources.Load<TextAsset>(MapFileName);
         if (csvFile == null)
@@ -142,7 +142,7 @@ public class LevelManager : MonoBehaviour
     }
 
     /** 로드된 맵 데이터를 기반으로 오브젝트 생성 */
-    void GenerateMap()
+    private void GenerateMap()
     {
         if(mapData == null)
         {

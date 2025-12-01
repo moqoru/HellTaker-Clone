@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
     // 위치별 오브젝트 딕셔너리 (key : 그리드 좌표, value : 해당 위치의 오브젝트 리스트)
     private Dictionary<Vector2Int, List<GameObject>> grid = new Dictionary<Vector2Int, List<GameObject>>();
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {

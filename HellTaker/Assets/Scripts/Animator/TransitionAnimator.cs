@@ -27,7 +27,7 @@ public class TransitionAnimator : MonoBehaviour
 
     public bool IsPlaying => isPlaying;
 
-    void Start()
+    private void Start()
     {
         // 인스펙터에 CanvasGroup이 없을 경우 직접 생성
         if (parentCanvasGroup == null)
@@ -72,7 +72,7 @@ public class TransitionAnimator : MonoBehaviour
         HideAllImages();
     }
 
-    void Update()
+    private void Update()
     {
         if (!isPlaying) return;
 
@@ -115,7 +115,7 @@ public class TransitionAnimator : MonoBehaviour
         }
     }
 
-    void ShowMainFrame(int frameIndex)
+    private void ShowMainFrame(int frameIndex)
     {
         mainImage.sprite = mainFrames[frameIndex];
         ActiveCanvasGroup(mainCanvasGroup);
@@ -126,7 +126,7 @@ public class TransitionAnimator : MonoBehaviour
         }
     }
 
-    void ShowLastFrame()
+    private void ShowLastFrame()
     {
         DeactiveCanvasGroup(mainCanvasGroup);
         
@@ -137,14 +137,14 @@ public class TransitionAnimator : MonoBehaviour
         }
     }
 
-    void ActiveCanvasGroup(CanvasGroup cg)
+    private void ActiveCanvasGroup(CanvasGroup cg)
     {
         cg.alpha = 1f;
         cg.interactable = true;
         cg.blocksRaycasts = true;
     }
 
-    void DeactiveCanvasGroup(CanvasGroup cg)
+    private void DeactiveCanvasGroup(CanvasGroup cg)
     {
         cg.alpha = 0f;
         cg.interactable = false;
@@ -152,7 +152,7 @@ public class TransitionAnimator : MonoBehaviour
     }
 
     /** Parent를 제외한 이미지 비활성화 */
-    void HideAllImages()
+    private void HideAllImages()
     {
         DeactiveCanvasGroup(mainCanvasGroup);
         foreach (CanvasGroup cg in lastFrameCanvasGroups)
@@ -161,7 +161,7 @@ public class TransitionAnimator : MonoBehaviour
         }
     }
 
-    void OnTransitionEnd()
+    private void OnTransitionEnd()
     {
         isPlaying = false;
         DeactiveCanvasGroup(parentCanvasGroup);

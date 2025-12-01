@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
     private bool readyToMove = true;
     private bool waitingForInputRelease = false;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -27,13 +27,13 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         switch (currentState)
         {

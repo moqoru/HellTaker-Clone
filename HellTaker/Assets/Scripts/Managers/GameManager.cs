@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private bool hasKey = false;
     private GameObject player;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -45,12 +45,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    void Start()
+    private void Start()
     {
         InitializeStage();
     }
 
-    void Update()
+    private void Update()
     {
         if (isStageCleared || isGameOver)
         {
@@ -60,12 +60,12 @@ public class GameManager : MonoBehaviour
     }
 
     /** 맵 초기화 및 UI 반영 */
-    void InitializeStage()
+    private void InitializeStage()
     {
         StartCoroutine(EnableStageCoroutine());
     }
 
-    void ResetGameState()
+    private void ResetGameState()
     {
         isStageCleared = false;
         isGameOver = false;
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] Initialize 완료");
     }
 
-    void UpdateUI()
+    private void UpdateUI()
     {
         if (turnText != null)
         {
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
     }
 
     /** 클리어 조건 체크 (플레이어 상하좌우에 Goal 있는 지)*/
-    void CheckWinCondition()
+    private void CheckWinCondition()
     {
         if (player == null)
         {
@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
     }
 
     /** 레벨 클리어 */
-    void OnLevelClear()
+    private void OnLevelClear()
     {
         isStageCleared = true;
         Debug.Log("=== 레벨 클리어! ===");
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
     }
 
     /** 게임 오버 (이동 횟수 초과) */
-    void OnGameOver()
+    private void OnGameOver()
     {
         isGameOver = true;
         Debug.Log("=== 게임 오버! 이동 횟수 초과 ===");

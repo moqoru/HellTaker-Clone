@@ -15,25 +15,31 @@ public class DialogueManager : MonoBehaviour
     public CanvasGroup choicePanel; // 선택지 Alpha 제어용
     public List<Image> choiceBackgrounds; // 선택지 배경 (하이라이트용)
     public List<Text> choiceTexts;
+    public int normalFontSize = 24;
+    public int highlightedFontSize = 48;
 
     [Header("UI Colors")]
     public Color normalChoiceColor = Color.white;
-    public Color hightlightedChoiceColor = Color.yellow;
+    public Color highlightedChoiceColor = Color.yellow;
 
     [Header("Character Sprites")]
     private Dictionary<string, Sprite> characterSprites;
 
+    // ID 구분 번호
+    private const int DIALOGUE_START_ID = 1;
+    private const int DIALOGUE_THRESHOLD_ID = 100;
+    private const int ADVICE_START_ID = 201;
+    
     private Dictionary<int, DialogueNode> currentDialogueData;
     private int currentDialogueID;
     private int currentChoiceIndex = 0;
     private int activeChoiceCount = 0;
 
     // NumberChoice 전용
-    private bool isNumberChoice = false;
-    private int currentNumberValue;
-    private int numberChoiceMin;
-    private int numberChoiceMax;
-    private DialogueNode numberChoiceNode;
+    private int currentNumberValue = 0;
+    private int numberChoiceMin = 0;
+    private int numberChoiceMax = 0;
+    private DialogueNode numberChoiceNode = null;
 
     // 콜백
     public System.Action OnDialogueEnd;
@@ -41,10 +47,10 @@ public class DialogueManager : MonoBehaviour
 
     // 프로퍼티
     public bool IsShowingChoice { get; private set; }
-    public bool IsNumberChoice => isNumberChoice;
+    public bool IsNumberChoice { get; private set; } = false;
     public bool IsActive { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -66,7 +72,7 @@ public class DialogueManager : MonoBehaviour
         LoadCharacterSprites();
     }
 
-    void LoadCharacterSprites()
+    private void LoadCharacterSprites()
     {
         characterSprites = new Dictionary<string, Sprite>();
         Sprite[] sprites = Resources.LoadAll<Sprite>("Scene/Characters");
@@ -90,8 +96,8 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // 첫 번째 대사 표시 (항상 시작 ID는 1번)
-        currentDialogueID = 1;
+        // 첫 번째 대사 표시
+        currentDialogueID = DIALOGUE_START_ID;
         IsActive = true;
 
         // UI 활성화
@@ -116,7 +122,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         // 인생 조언의 대사 ID는 201부터 시작
-        currentDialogueID = 201;
+        currentDialogueID = ADVICE_START_ID;
         IsActive = true;
 
         // UI 활성화
@@ -129,7 +135,8 @@ public class DialogueManager : MonoBehaviour
         InputManager.Instance.SetState(GameState.UI, UIType.Advice);
     }
 
-    void LoadDialogueData(string csvFileName)
+    /** 대화 텍스트 내용을 불러오고 다음 대사 ID와 설정 */
+    private void LoadDialogueData(string csvFileName)
     {
         currentDialogueData = new Dictionary<int, DialogueNode>();
 
@@ -148,12 +155,25 @@ public class DialogueManager : MonoBehaviour
             if (string.IsNullOrWhiteSpace(lines[i])) continue;
 
             string[] values = ParseCSVLine(lines[i]);
+
             if (values.Length < 5) continue; // 필드의 최솟값 이상 채워져 있는지 체크
+
+            if (!int.TryParse(values[0], out int id))
+            {
+                Debug.LogWarning($"[DialogueManager] csv {i}번째 줄: ID 파싱 실패");
+                continue;
+            }
+
+            if (!System.Enum.TryParse(values[1], out DialogueType type))
+            {
+                Debug.LogWarning($"[DialogueManager] csv {i}번째 줄: 타입 파싱 실패");
+                continue;
+            }
 
             DialogueNode node = new DialogueNode
             {
-                dialogueID = int.Parse(values[0]),
-                type = (DialogueType)System.Enum.Parse(typeof(DialogueType), values[1]),
+                dialogueID = id,
+                type = type,
                 characterImagePath = CleanString(values[2]),
                 characterName = CleanString(values[3]),
                 text = CleanString(values[4]),
@@ -180,7 +200,7 @@ public class DialogueManager : MonoBehaviour
                         validChoices++;
 
                         // 다음 ID 번호가 한 자릿수이면 일반 대화 => 정답 선택지 인덱스로 설정
-                        if (node.choiceNextIDs[j] < 100)
+                        if (node.choiceNextIDs[j] < DIALOGUE_THRESHOLD_ID)
                         {
                             node.correctChoiceIndex = j;
                         }
@@ -207,6 +227,379 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"[DialogueManager] {csvFileName} 파일의 {currentDialogueData.Count} 노드의 정보를 로드했습니다.");
     }
 
+    /** CleanString 작업 후, csv 파일의 데이터를 칸별로 구분 */
+    private string[] ParseCSVLine(string line)
+    {
+        List<string> result = new List<string>();
+        bool inQuotes = false;
+        string current = "";
 
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
 
+            // ',' 기호가 칼럼 구분자인지, 아니면 따옴표 안에 있는 문장 부호인지 구분하여 저장
+            if (c == '"')
+            {
+                inQuotes = !inQuotes;
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                result.Add(current);
+                current = "";
+            }
+            else
+            {
+                current += c;
+            }
+        }
+
+        result.Add(current);
+        return result.ToArray();
+    }
+
+    /** 문자열에서 따옴표가 3쌍씩 생기는 문제와 \n 기호가 실제와 다른 것을 정상화 */
+    private string CleanString(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return "";
+
+        // 앞뒤 따옴표 제거 (따옴표 3쌍씩 있는 경우도 포함)
+        str = str.Trim();
+        if (str.StartsWith("\"\"\"")) str = str.Substring(3);
+        if (str.EndsWith("\"\"\"")) str = str.Substring(0, str.Length - 3);
+        if (str.StartsWith("\"")) str = str.Substring(1);
+        if (str.EndsWith("\"")) str = str.Substring(0, str.Length - 1);
+
+        // \n을 실제 줄바꿈으로 변경
+        str = str.Replace("\\n", "\n");
+
+        // 앞 뒤 공백 제거하여 깔끔하게 만들기
+        return str.Trim();
+    }
+
+    private void ShowDialogue(int dialogueID)
+    {
+        if (!currentDialogueData.ContainsKey(dialogueID))
+        {
+            Debug.LogError($"[DialogueManager] 현재 스테이지의 {dialogueID}번 대사를 불러오지 못했습니다.");
+            EndDialogue(true);
+            return;
+        }
+
+        DialogueNode node = currentDialogueData[dialogueID];
+
+        // 캐릭터 이미지 설정
+        if (!string.IsNullOrEmpty(node.characterImagePath))
+        {
+            string spriteName = System.IO.Path.GetFileNameWithoutExtension(node.characterImagePath);
+
+            if (characterSprites.ContainsKey(spriteName))
+            {
+                characterImage.sprite = characterSprites[spriteName];
+                characterImage.enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning($"[DialogueManager] 캐릭터 이미지를 불러오지 못했습니다: {spriteName}");
+                characterImage.enabled = false;
+            }
+        }
+        else
+        {
+            characterImage.enabled = false;
+        }
+
+        // 캐릭터 이름 설정
+        if (!string.IsNullOrEmpty(node.characterName))
+        {
+            characterNameText.text = node.characterName;
+            characterNameText.transform.parent.gameObject.SetActive(true);
+        }
+        else
+        {
+            characterNameText.transform.parent.gameObject.SetActive(false);
+        }
+
+        // 대사 텍스트 설정
+        dialogueText.text = node.text;
+
+        // 타입에 따른 처리
+        if (node.type == DialogueType.Choice)
+        {
+            ShowChoices(node);
+        }
+        else if (node.type == DialogueType.NumberChoice)
+        {
+            ShowNumberChoice(node);
+        }
+        else if (node.type == DialogueType.Success)
+        {
+            StartCoroutine(HandleEndDialogue(node, true));
+        }
+        else if (node.type == DialogueType.GameOver)
+        {
+            StartCoroutine(HandleEndDialogue(node, false));
+        }
+        else // Dialogue, Advice
+        {
+            IsShowingChoice = false;
+            IsNumberChoice = false;
+            choicePanel.alpha = 0;
+        }
+
+    }
+
+    private void ShowChoices(DialogueNode node)
+    {
+        IsShowingChoice = true;
+        IsNumberChoice = false;
+        currentChoiceIndex = 0;
+
+        // 선택지 개수 확인
+        activeChoiceCount = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            if (!string.IsNullOrEmpty(node.choiceTexts[i]))
+            {
+                choiceTexts[i].text = node.choiceTexts[i];
+                choiceTexts[i].fontSize = normalFontSize;
+                choiceBackgrounds[i].gameObject.SetActive(true);
+                activeChoiceCount++;
+            }
+            else
+            {
+                choiceBackgrounds[i].gameObject.SetActive(false);
+            }
+        }
+
+        // 선택지 UI 활성화
+        StartCoroutine(FadeIn(choicePanel));
+
+        // 첫 번째 선택지 하이라이트
+        UpdateChoiceHighlight();
+    }
+
+    private void ShowNumberChoice(DialogueNode node)
+    {
+        IsShowingChoice = true;
+        IsNumberChoice = true;
+
+        // 숫자 선택 초기화
+        numberChoiceMin = node.minValue;
+        numberChoiceMax = node.maxValue;
+        // TODO: 이전에 한 숫자 선택 기억하기
+        currentNumberValue = numberChoiceMin;
+        numberChoiceNode = node;
+
+        // 첫 번째 선택지만 사용 (숫자 표시)
+        choiceBackgrounds[0].gameObject.SetActive(true);
+        choiceBackgrounds[1].gameObject.SetActive(false);
+        choiceBackgrounds[2].gameObject.SetActive(false);
+
+        // UI 업데이트
+        UpdateNumberChoiceDisplay();
+
+        StartCoroutine(FadeIn(choicePanel));
+    }
+
+    private void UpdateNumberChoiceDisplay()
+    {
+        choiceTexts[0].text = currentNumberValue.ToString();
+        choiceTexts[0].fontSize = highlightedFontSize;
+        choiceBackgrounds[0].color = highlightedChoiceColor;
+    }
+
+    // 다음 대사로 넘기기
+    public void AdvanceDialogue()
+    {
+        if (IsShowingChoice) return; // 선택지가 보일 때는 넘기기 불가
+
+        DialogueNode currentNode = currentDialogueData[currentDialogueID];
+
+        if (currentNode.type == DialogueType.Dialogue || currentNode.type == DialogueType.Advice)
+        {
+            // 다음 대사가 있는지 확인
+            if (currentDialogueData.ContainsKey(currentNode.nextDialogueID))
+            {
+                // 다음 대사의 타입 확인
+                DialogueNode nextNode = currentDialogueData[currentNode.nextDialogueID];
+
+                // Advice에서 Advice가 아닌 대사로 넘어가면 인생 조언 종료
+                if (currentNode.type == DialogueType.Advice && nextNode.type != DialogueType.Advice)
+                {
+                    EndDialogue(false); // 인생 조언 종료 후 게임으로 복귀
+                    return;
+                }
+
+                currentDialogueID = currentNode.nextDialogueID;
+                ShowDialogue(currentDialogueID);
+            }
+
+            else
+            {
+                if (currentNode.type == DialogueType.Advice)
+                {
+                    EndDialogue(false); // 인생 조언 종료 - 아직 게임 클리어 아님
+                }
+                else
+                {
+                    EndDialogue(true); // 일반 대화 종료 (게임 클리어 처리?)
+                }
+            }
+        }
+    }
+
+    public void MoveChoiceSelection(int direction)
+    {
+        if (!IsShowingChoice || IsNumberChoice) return;
+
+        currentChoiceIndex += direction;
+
+        // 순환 가능한 커서 이동 처리
+        if (currentChoiceIndex < 0)
+            currentChoiceIndex = activeChoiceCount - 1;
+        else if (currentChoiceIndex >= activeChoiceCount)
+            currentChoiceIndex = 0;
+
+        UpdateChoiceHighlight();
+    }
+
+    void UpdateChoiceHighlight()
+    {
+        for (int i = 0; i < activeChoiceCount; i++)
+        {
+            if (i == currentChoiceIndex)
+            {
+                choiceBackgrounds[i].color = highlightedChoiceColor;
+            }
+            else
+            {
+                choiceBackgrounds[i].color = normalChoiceColor;
+            }
+        }
+    }
+
+    public void SelectChoice()
+    {
+        if (!IsShowingChoice || IsNumberChoice) return;
+
+        DialogueNode currentNode = currentDialogueData[currentDialogueID];
+
+        if (currentChoiceIndex == currentNode.correctChoiceIndex)
+        {
+            // 정답 선택 - 다음 대사로
+            int nextID = currentNode.choiceNextIDs[currentChoiceIndex];
+            currentDialogueID = nextID;
+        }
+        else
+        {
+            // 오답 선택 - 게임오버 대사로
+            int gameOverID = currentNode.choiceNextIDs[currentChoiceIndex];
+            currentDialogueID = gameOverID; 
+        }
+
+        // 선택지 다시 숨기기
+        IsShowingChoice = false;
+        StartCoroutine(FadeOut(choicePanel));
+
+        ShowDialogue(currentDialogueID);
+    }
+
+    public void ChangeNumberValue(int delta)
+    {
+        if (!IsNumberChoice) return;
+
+        currentNumberValue += delta;
+
+        // min과 max 사이로 범위 제한
+        if (currentNumberValue < numberChoiceMin)
+            currentNumberValue = numberChoiceMin;
+        else if (currentNumberValue > numberChoiceMax)
+            currentNumberValue = numberChoiceMax;
+
+        UpdateNumberChoiceDisplay();
+    }
+
+    public void SelectNumberChoice()
+    {
+        if (!IsNumberChoice) return;
+
+        IsNumberChoice = false;
+        IsShowingChoice = false;
+
+        // 선택한 숫자에 따라 분기
+        int nextID;
+        if (currentNumberValue == numberChoiceMax) // 10일 때만 뒤쪽 분기로
+        {
+            nextID = numberChoiceNode.choiceNextIDs[1];
+        }
+        else
+        {
+            nextID = numberChoiceNode.choiceNextIDs[0];
+        }
+
+        currentDialogueID = nextID;
+        StartCoroutine(FadeOut(choicePanel));
+        ShowDialogue(currentDialogueID);
+    }
+
+    /// <summary>
+    /// 대화 종료 코루틴 (0번째: node 정보, 1번째: 스테이지 클리어 성공 여부를 bool로 처리)
+    /// </summary>
+    IEnumerator HandleEndDialogue(DialogueNode node, bool isSuccess)
+    {
+        // TODO : 확인 키 입력 대기로 변경
+        yield return new WaitForSeconds(2f);
+
+        // 대화 종료 후 클리어 or 게임오버 처리
+        EndDialogue(isSuccess);
+        if (isSuccess)
+            OnDialogueEnd?.Invoke();
+        else
+            OnWrongChoice?.Invoke(node.text);
+    }
+
+    /// <summary>
+    /// 대화 종료 처리(인자는 스테이지 클리어 성공/실패를 bool로 처리)
+    /// </summary>
+    private void EndDialogue(bool isSuccess)
+    {
+        IsActive = false;
+        IsShowingChoice = false;
+        IsNumberChoice = false;
+
+        // UI 비활성화
+        StartCoroutine(FadeOut(dialoguePanel));
+        StartCoroutine(FadeOut(choicePanel));
+    }
+
+    IEnumerator FadeIn(CanvasGroup group)
+    {
+        float duration = 0.3f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            group.alpha = Mathf.Lerp(0, 1, elapsed / duration);
+            yield return null;
+        }
+
+        group.alpha = 1;
+    }
+
+    IEnumerator FadeOut(CanvasGroup group)
+    {
+        float duration = 0.3f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            group.alpha = Mathf.Lerp(1, 0, elapsed / duration);
+            yield return null;
+        }
+
+        group.alpha = 0;
+    }
 }

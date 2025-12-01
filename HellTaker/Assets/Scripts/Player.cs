@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     private Vector2Int currentGridPos;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -21,18 +21,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         currentGridPos = GridManager.Instance.WorldToGrid(transform.position);
         GameManager.Instance.SetPlayer(gameObject);
     }
 
-    void Update()
+    private void Update()
     {
         // 입력 처리 부분을 InputManager로 이동
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         // Player가 파괴될 때 Instance를 null로 초기화, 새로 만들도록 하기
         if (Instance == this)
