@@ -27,11 +27,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-    }
-
     // Update is called once per frame
     private void Update()
     {
@@ -46,7 +41,7 @@ public class InputManager : MonoBehaviour
             case GameState.Transition:
                 // 입력 차단
                 break;
-                // case GameState.Paused:
+            // case GameState.Paused:
         }
     }
 
@@ -59,7 +54,6 @@ public class InputManager : MonoBehaviour
         {
             // state가 바뀌는 상황이라면 입력 초기화 대기
             waitingForInputRelease = true;
-
             currentState = newState;
 
             if (newState == GameState.UI)
@@ -80,7 +74,6 @@ public class InputManager : MonoBehaviour
             }
 
         }
-        // 같은 UI State라면 UIType을 한번 더 확인
         else if (newState == GameState.UI)
         {
             if (uiType == UIType.None)
@@ -93,7 +86,6 @@ public class InputManager : MonoBehaviour
             {
                 // uiType가 바뀌는 상황이라면 입력 초기화 대기
                 waitingForInputRelease = true;
-
                 currentUIType = uiType;
             }
         }
@@ -147,20 +139,19 @@ public class InputManager : MonoBehaviour
             readyToMove = true;
         }
 
-        // TODO: 게임패드 LB, RB 키를 키보드 L,R키로 설정
-        // R키: 재시작
-        if (Input.GetKeyDown(KeyCode.R))
+        // R키 or RB버튼: 재시작
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton5))
         {
             SetState(GameState.Transition);
             GameManager.Instance.RestartStage();
         }
 
-        // L키: 인생 조언(추후 구현)
-        // if (Input.GetKeyDown(KeyCode.L))
-        // {
-        //    SetState(GameState.UI, UIType.Advice);
-        //    DialogueManager.Instance.ShowAdvice();
-        // }
+        // L키 or LB버튼: 인생 조언
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.JoystickButton4))
+        {
+            SetState(GameState.UI, UIType.Advice);
+            DialogueManager.Instance.StartAdvice(GameManager.Instance.GetCurrentStage());
+        }
     }
 
     /** 입력을 4방향 중 하나로 정규화 */
@@ -193,56 +184,71 @@ public class InputManager : MonoBehaviour
                 waitingForInputRelease = false;
                 readyToMove = true;
                 Debug.Log("[InputManager] UI 입력 초기화 완료");
+                return; // 그 다음 프레임에서 다시 처리하기.
             }
         }
 
-        Vector2Int direction = NormalizeDirection(moveInput);
-
-        if (moveInput.sqrMagnitude > inputThreshold * inputThreshold)
+        // Dialogue/Advice UI 처리
+        if (currentUIType == UIType.Dialogue || currentUIType == UIType.Advice)
         {
-            if (readyToMove)
+            if (DialogueManager.Instance.IsNumberChoice)
+            {
+                // 숫자 선택지 - 좌우 키로 증감
+                if (Mathf.Abs(moveInput.x) > inputThreshold && readyToMove)
+                {
+                    DialogueManager.Instance.ChangeNumberValue(moveInput.x > 0 ? 1 : -1);
+                    readyToMove = false;
+                }
+
+                // 스틱을 중립으로 놓아야 다시 이동 가능
+                if (Mathf.Abs(moveInput.x) <= inputThreshold && !readyToMove)
+                {
+                    readyToMove = true;
+                }
+
+                // Enter 또는 A버튼으로 확정
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
+                {
+                    DialogueManager.Instance.SelectNumberChoice();
+                }
+            }
+            else if (DialogueManager.Instance.IsShowingChoice)
+            {
+                // 일반 선택지 - 상하 키로 이동
+                if (Mathf.Abs(moveInput.y) > inputThreshold && readyToMove)
+                {
+                    DialogueManager.Instance.MoveChoiceSelection(moveInput.y > 0 ? -1 : 1);
+                    readyToMove = false;
+                }
+
+                // 스틱을 중립으로 놓아야 다시 이동 가능
+                if (Mathf.Abs(moveInput.y) <= inputThreshold && !readyToMove)
+                {
+                    readyToMove = true;
+                }
+
+                // Enter 또는 A버튼으로 확정
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
+                {
+                    DialogueManager.Instance.SelectChoice();
+                }
+            }
+            else
+            {
+                // 일반 대사를 다음으로 진행
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
+                {
+                    DialogueManager.Instance.AdvanceDialogue();
+                }
+            }
+        }
+        else if (currentUIType == UIType.StageSelect)
+        {
+            if (moveInput.sqrMagnitude > inputThreshold * inputThreshold && readyToMove)
             {
                 readyToMove = false;
-                HandleDirectionInput(direction);
-            }
-        }
-        else
-        {
-            readyToMove = true;
-        }
+                Vector2Int direction = NormalizeDirection(moveInput);
 
-        // TODO: 게임패드에서의 A 버튼 처리 추가 필요
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            HandleConfirmInput();
-        }
-
-        // TODO: Esc 키와 게임패드에서의 B버튼 (또는 메뉴 버튼 처리 필요)
-    }
-
-    /** UI 내에서 방향키 입력 처리 */
-    private void HandleDirectionInput(Vector2Int direction)
-    {
-        switch (currentUIType)
-        {
-            case UIType.Dialogue:
-            case UIType.Advice:
-            case UIType.GameOver:
-                // 방향키 무시
-                break;
-
-            case UIType.Choice:
-                if (direction.y > 0)
-                {
-                    // DialogueManager.Instance?.SelectPreviousChoice();
-                }
-                else if (direction.y < 0)
-                {
-                    // DialogueManager.Instance?.SelectNextChoice();
-                }
-                break;
-
-            case UIType.StageSelect:
                 if (direction.x < 0)
                 {
                     // StageSelectManager.Instance?.SelectPreviousStage();
@@ -251,32 +257,26 @@ public class InputManager : MonoBehaviour
                 {
                     // StageSelectManager.Instance?.SelectNextStage();
                 }
-                break;
-        }
-    }
+            }
 
-    /** UI 내에서 확인 키 입력 처리 */
-    private void HandleConfirmInput()
-    {
-        switch (currentUIType)
-        {
-            case UIType.Dialogue:
-            case UIType.Advice:
-                // DialogueManager.Instance?.AdvanceDialogue();
-                break;
-            case UIType.GameOver:
-                SetState(GameState.Transition);
-                GameManager.Instance.RestartStage();
-                break;
+            if (moveInput.sqrMagnitude <= inputThreshold * inputThreshold && !readyToMove)
+            {
+                readyToMove = true;
+            }
 
-            case UIType.Choice:
-                // DialogueManager.Instance?.ConfirmChoice();
-                break;
-
-            case UIType.StageSelect:
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
+            {
                 // StageSelectManager.Instance?.ConfirmStage();
-                break;
+            }
         }
+        else if (currentUIType == UIType.GameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
+            {
+                GameManager.Instance.RestartStage();
+            }
+        }
+        // TODO: 일시정지 버튼 처리 필요
     }
 
     private bool IsAnyKeyPressed(Vector2 moveInput)
@@ -286,11 +286,10 @@ public class InputManager : MonoBehaviour
             return true;
         }
 
-        // TODO: 게임패드 키 대응 설정 필요
-        if (Input.GetKey(KeyCode.R)
-            || Input.GetKey(KeyCode.L)
-            || Input.GetKey(KeyCode.Return)
-            || Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.JoystickButton0) // A
+            || Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.JoystickButton1) // B
+            || Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.JoystickButton5) // RB
+            || Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.JoystickButton4)) // LB
         {
             return true;
         }

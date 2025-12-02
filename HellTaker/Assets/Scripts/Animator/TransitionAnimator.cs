@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class TransitionAnimator : MonoBehaviour
 {
+    public static TransitionAnimator Instance { get; private set; }
+
     [Header("애니메이션 설정")]
     [Tooltip("마지막 제외 프레임들")]
     public Sprite[] mainFrames;
@@ -26,6 +28,19 @@ public class TransitionAnimator : MonoBehaviour
     public float HalfDuration => TotalDuration * 0.5f;
 
     public bool IsPlaying => isPlaying;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
     private void Start()
     {

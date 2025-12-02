@@ -5,6 +5,8 @@ using TMPro;
 
 public class DialogueDeathAnimator : MonoBehaviour
 {
+    public static DialogueDeathAnimator Instance { get; private set; }
+
     [Header("애니메이션 설정")]
     [Tooltip("게임 오버 스프라이트 프레임 목록")]
     public Sprite[] dialogueDeathFrames;
@@ -20,8 +22,18 @@ public class DialogueDeathAnimator : MonoBehaviour
     private float timer = 0f;
     private bool isPlaying = false;
 
-    private void Start()
+    private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // 인스펙터에 CanvasGroup이 없을 경우 직접 생성
         if (canvasGroup == null)
         {
@@ -31,7 +43,9 @@ public class DialogueDeathAnimator : MonoBehaviour
                 canvasGroup = gameObject.AddComponent<CanvasGroup>();
             }
         }
-
+    }
+    private void Start()
+    {
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

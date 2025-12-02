@@ -21,11 +21,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("스테이지 텍스트")]
     public TextMeshProUGUI stageText;
 
-    [Header("애니메이션 참조")]
-    [SerializeField] private TransitionAnimator transitionAnimator;
-    [SerializeField] private DialogueDeathAnimator dialogueDeathAnimator;
-
-    private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
+    private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
     private bool isGameOver = false;
@@ -44,7 +40,7 @@ public class GameManager : MonoBehaviour
             return;
         }
     }
-    
+
     private void Start()
     {
         InitializeStage();
@@ -183,18 +179,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /** 레벨 클리어 */
     private void OnLevelClear()
     {
         isStageCleared = true;
         Debug.Log("=== 레벨 클리어! ===");
-        
-        // TODO: 캐릭터와의 대화 시스템 구현 후 활성화
-        // InputManager.Instance.SetState(GameState.UI, UIType.Dialogue);
-        // DialogueManager.Instacne.StartDialogue(currentStage);
 
-        // 임시 : 바로 다음 스테이지 로드
-        StartCoroutine(LoadNextStageDuringTransition());
+        // 대화 콜백 설정
+        DialogueManager.Instance.OnDialogueEnd = () =>
+        {
+            // 정답 선택 시 다음 스테이지로
+            StartCoroutine(TransitionToNextStage());
+        };
+
+        DialogueManager.Instance.OnWrongChoice = (gameOverMessage) =>
+        {
+            InputManager.Instance.SetState(GameState.UI, UIType.GameOver);
+            DialogueDeathAnimator.Instance.PlayGameOver(gameOverMessage);
+        };
+
+        // 대화 시작
+        DialogueManager.Instance.StartDialogue(currentStage);
+    }
+
+    public void ShowHint()
+    {
+        // 힌트 종료 시 게임으로 복귀
+        DialogueManager.Instance.OnDialogueEnd = () =>
+        {
+            InputManager.Instance.SetState(GameState.Playing);
+        };
+
+        // 인생 조언 시작
+        DialogueManager.Instance.StartAdvice(currentStage);
     }
 
     /** 게임 오버 (이동 횟수 초과) */
@@ -203,57 +219,50 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Debug.Log("=== 게임 오버! 이동 횟수 초과 ===");
 
-        InputManager.Instance.SetState(GameState.UI, UIType.GameOver);
+        // TODO: 캐릭터 죽는 애니메이션 만들고 재생
+        // DeathAnimation.Instance.PlayDeath(() => {
+        //     InputManager.Instance.SetState(GameState.UI, UIType.GameOver??);
+        // });
 
-        // TODO: 게임 오버 씬 테스트용. 추후 대화 선택지에서만 나오게 변경 후 여기는 트랜지션만 재생
-        if (dialogueDeathAnimator != null)
-        {
-            dialogueDeathAnimator.PlayGameOver();
-        }
-        else
-        {
-            StartCoroutine(RestartStageDuringTransition());
-        }
+        // 임시: 바로 재시작
+        RestartStage();
     }
 
-    /** 스테이지 재시작 */
     public void RestartStage()
     {
-        StartCoroutine(RestartStageDuringTransition());
+        StartCoroutine(TransitionToRestartStage());
     }
 
-    IEnumerator RestartStageDuringTransition()
+    IEnumerator TransitionToRestartStage()
     {
         InputManager.Instance.SetState(GameState.Transition);
 
-        // TODO: 잘못된 선택지 선택했을 때 GameOver가 뜨는 것으로 바꾸기
-        dialogueDeathAnimator.HideGameOver();
-        transitionAnimator.PlayTransition();
+        TransitionAnimator.Instance.PlayTransition();
 
         // 절반 상태 (화면이 덮인 상태)까지 대기
-        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+        yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
+        DialogueDeathAnimator.Instance.HideGameOver();
         // LevelManager에서 맵 리로드
         LevelManager.Instance.ReloadStage();
         ResetGameState();
 
         // 나머지 절반 (화면이 완전히 보이는 상태)까지 대기
-        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+        yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         InputManager.Instance.SetState(GameState.Playing);
         Debug.Log("[GameManager] 재시작 완료");
     }
 
-    /** 다음 스테이지 로드 */
-    IEnumerator LoadNextStageDuringTransition()
+    IEnumerator TransitionToNextStage()
     {
         InputManager.Instance.SetState(GameState.Transition);
 
         // 트랜지션 애니메이션 실행
-        transitionAnimator.PlayTransition();
+        TransitionAnimator.Instance.PlayTransition();
 
         // 절반 상태 (화면이 덮인 상태)까지 대기
-        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+        yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         // 스테이지 번호 증가, 맵 로드
         currentStage++;
@@ -261,39 +270,39 @@ public class GameManager : MonoBehaviour
         ResetGameState();
 
         // 나머지 절반 (화면이 완전히 보이는 상태)까지 대기
-        yield return new WaitForSeconds(transitionAnimator.HalfDuration);
+        yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         InputManager.Instance.SetState(GameState.Playing);
         Debug.Log($"[GameManager] {currentStage} 스테이지 맵 로드 완료");
     }
 
-    /** 남은 이동 횟수 반환 */
     public int GetRemainingMoves()
     {
         return Mathf.Max(0, maxMoveCount - currentMoveCount);
     }
 
-    /** 스테이지 클리어 여부 */
     public bool IsStageCleared()
     {
         return isStageCleared;
     }
 
-    /** 게임 오버 여부 */
     public bool IsGameOver()
     {
         return isGameOver;
     }
 
-    /** 키 획득 여부 확인 */
     public bool HasKey()
     {
         return hasKey;
     }
 
-    /** 키 획득 여부 변경 */
     public void SetKey(bool value)
     {
         hasKey = value;
+    }
+
+    public int GetCurrentStage()
+    {
+        return currentStage;
     }
 }
