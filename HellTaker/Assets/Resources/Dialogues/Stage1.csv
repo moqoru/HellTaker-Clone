@@ -1,7 +1,7 @@
 ﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
 1,Choice,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""지옥 고객센터의 판데모니카라고 합니다.\n무엇을 도와드릴까요?""","""우리 집에 가면 알 수 있겠지.""",101,"""글쎄, 내가 널 도와줘야겠는데?""",2,,
-2,Success,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""참 달콤한 제안이에요. 커피를 마시고 싶네요.\n피곤해서 정신을 못 차리겠어요.""",,,,,,
-101,Dialogue,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""지옥을 살아서 빠져나갈 수 있으리라 생각한 거야?\n꿈도 크셔라.""",,,,,,
+2,Success,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""참 달콤한 제안이에요. 커피를 마시고 싶네요.\n피곤해서 정신을 못 차리겠어요.""",,,,,,
+101,Dialogue,Scene/Characters/Pand_Idle,피곤한 악마 판데모니카,"""지옥을 살아서 빠져나갈 수 있으리라 생각한 거야?\n꿈도 크셔라.""",,,,,,
 102,GameOver,,,"""판데모니카는 당신의 얼굴을 손아귀로 가져가더니\n전문가다운 부드러운 동작으로 목을 꺾어 버렸다.""",,,,,,
 201,Advice,Scene/Characters/Beel_Fly,위대한 파리 베엘제붑,"""조언을 구하고 싶은 모양이지만 물어볼 이가 없구나.""",,,,,,
 202,Advice,Scene/Characters/Beel_Fly,위대한 파리 베엘제붑,"""아직 귀여운 악마들을 찾질 못 했지.""",,,,,,

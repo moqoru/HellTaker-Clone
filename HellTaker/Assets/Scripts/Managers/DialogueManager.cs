@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,17 +11,17 @@ public class DialogueManager : MonoBehaviour
     [Header("UI References")]
     public CanvasGroup dialoguePanel; // Alpha 제어용
     public Image characterImage;
-    public Text characterNameText;
-    public Text dialogueText;
+    public TextMeshProUGUI characterNameText;
+    public TextMeshProUGUI dialogueText;
     public CanvasGroup choicePanel; // 선택지 Alpha 제어용
     public List<Image> choiceBackgrounds; // 선택지 배경 (하이라이트용)
-    public List<Text> choiceTexts;
+    public List<TextMeshProUGUI> choiceTexts;
     public int normalFontSize = 24;
     public int highlightedFontSize = 48;
 
     [Header("UI Colors")]
-    public Color normalChoiceColor = Color.white;
-    public Color highlightedChoiceColor = Color.yellow;
+    public Color normalChoiceColor = new Color(0.3f, 0.3f, 0.3f);
+    public Color highlightedChoiceColor = new Color(0.8f, 0.8f, 0.3f);
 
     [Header("Character Sprites")]
     private Dictionary<string, Sprite> characterSprites;
@@ -543,13 +544,11 @@ public class DialogueManager : MonoBehaviour
         ShowDialogue(currentDialogueID);
     }
 
-    /// <summary>
-    /// 대화 종료 코루틴 (0번째: node 정보, 1번째: 스테이지 클리어 성공 여부를 bool로 처리)
-    /// </summary>
     IEnumerator HandleEndDialogue(DialogueNode node, bool isSuccess)
     {
-        // TODO : 확인 키 입력 대기로 변경
         yield return new WaitForSeconds(2f);
+
+        //yield return StartCoroutine(WaitForConfirmInput());
 
         // 대화 종료 후 클리어 or 게임오버 처리
         EndDialogue(isSuccess);
@@ -559,9 +558,6 @@ public class DialogueManager : MonoBehaviour
             OnWrongChoice?.Invoke(node.text);
     }
 
-    /// <summary>
-    /// 대화 종료 처리(인자는 스테이지 클리어 성공/실패를 bool로 처리)
-    /// </summary>
     private void EndDialogue(bool isSuccess)
     {
         IsActive = false;

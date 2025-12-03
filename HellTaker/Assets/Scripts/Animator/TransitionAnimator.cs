@@ -11,7 +11,7 @@ public class TransitionAnimator : MonoBehaviour
     [Tooltip("마지막 프레임의 좌, 우 부분")]
     public Sprite[] lastFrameSprites;
     [Tooltip("프레임당 지속 시간 (초")]
-    public float frameInterval = 0.067f;
+    public float frameInterval = 0.05f;
 
     [Header("자기 자신과 자식 오브젝트 할당")]
     public CanvasGroup parentCanvasGroup;

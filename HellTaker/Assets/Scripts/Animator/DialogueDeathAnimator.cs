@@ -11,7 +11,7 @@ public class DialogueDeathAnimator : MonoBehaviour
     [Tooltip("게임 오버 스프라이트 프레임 목록")]
     public Sprite[] dialogueDeathFrames;
     [Tooltip("프레임당 지속 시간 (초)")]
-    public float frameInterval = 0.067f;
+    public float frameInterval = 0.05f;
 
     [Header("자기 자신과 자식 오브젝트 할당")]
     public CanvasGroup canvasGroup;
