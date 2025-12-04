@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -136,7 +137,6 @@ public class DialogueManager : MonoBehaviour
         InputManager.Instance.SetState(GameState.UI, UIType.Advice);
     }
 
-    /** 대화 텍스트 내용을 불러오고 다음 대사 ID와 설정 */
     private void LoadDialogueData(string csvFileName)
     {
         currentDialogueData = new Dictionary<int, DialogueNode>();
@@ -228,7 +228,6 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"[DialogueManager] {csvFileName} 파일의 {currentDialogueData.Count} 노드의 정보를 로드했습니다.");
     }
 
-    /** CleanString 작업 후, csv 파일의 데이터를 칸별로 구분 */
     private string[] ParseCSVLine(string line)
     {
         List<string> result = new List<string>();
@@ -259,7 +258,9 @@ public class DialogueManager : MonoBehaviour
         return result.ToArray();
     }
 
-    /** 문자열에서 따옴표가 3쌍씩 생기는 문제와 \n 기호가 실제와 다른 것을 정상화 */
+    /// <summary>
+    /// 문자열에서 따옴표가 3쌍씩 생기는 문제와 \n 기호가 실제와 다른 것을 정상화
+    /// </summary>
     private string CleanString(string str)
     {
         if (string.IsNullOrEmpty(str)) return "";
@@ -283,7 +284,7 @@ public class DialogueManager : MonoBehaviour
         if (!currentDialogueData.ContainsKey(dialogueID))
         {
             Debug.LogError($"[DialogueManager] 현재 스테이지의 {dialogueID}번 대사를 불러오지 못했습니다.");
-            EndDialogue(true);
+            EndDialogue(false);
             return;
         }
 
@@ -324,7 +325,7 @@ public class DialogueManager : MonoBehaviour
         // 대사 텍스트 설정
         dialogueText.text = node.text;
 
-        // 타입에 따른 처리
+        // TODO: 타입 체크할 때 switch case문으로 바꾸기
         if (node.type == DialogueType.Choice)
         {
             ShowChoices(node);
@@ -333,13 +334,10 @@ public class DialogueManager : MonoBehaviour
         {
             ShowNumberChoice(node);
         }
-        else if (node.type == DialogueType.Success)
-        {
-            StartCoroutine(HandleEndDialogue(node, true));
-        }
         else if (node.type == DialogueType.GameOver)
         {
-            StartCoroutine(HandleEndDialogue(node, false));
+            EndDialogue(false);
+            OnWrongChoice?.Invoke(node.text);
         }
         else // Dialogue, Advice
         {
@@ -388,7 +386,7 @@ public class DialogueManager : MonoBehaviour
         // 숫자 선택 초기화
         numberChoiceMin = node.minValue;
         numberChoiceMax = node.maxValue;
-        // TODO: 이전에 한 숫자 선택 기억하기
+        // TODO: 이전에 한 숫자 선택 기억하기, 구조체나 클래스로 묶어서 관리해보기
         currentNumberValue = numberChoiceMin;
         numberChoiceNode = node;
 
@@ -410,7 +408,6 @@ public class DialogueManager : MonoBehaviour
         choiceBackgrounds[0].color = highlightedChoiceColor;
     }
 
-    // 다음 대사로 넘기기
     public void AdvanceDialogue()
     {
         if (IsShowingChoice) return; // 선택지가 보일 때는 넘기기 불가
@@ -440,13 +437,19 @@ public class DialogueManager : MonoBehaviour
             {
                 if (currentNode.type == DialogueType.Advice)
                 {
-                    EndDialogue(false); // 인생 조언 종료 - 아직 게임 클리어 아님
+                    EndDialogue(true); // 인생 조언 종료 - 아직 게임 클리어 아님
                 }
                 else
                 {
-                    EndDialogue(true); // 일반 대화 종료 (게임 클리어 처리?)
+                    Debug.LogWarning("[DialogueManager] Dialogue에서 다음 대사로 넘어가지 못했습니다.");
+                    EndDialogue(false); // 일반 대화 종료 (게임 클리어 처리?)
                 }
             }
+        }
+        else if (currentNode.type == DialogueType.Success)
+        {
+            EndDialogue(false);
+            OnDialogueEnd?.Invoke();
         }
     }
 
@@ -544,21 +547,7 @@ public class DialogueManager : MonoBehaviour
         ShowDialogue(currentDialogueID);
     }
 
-    IEnumerator HandleEndDialogue(DialogueNode node, bool isSuccess)
-    {
-        yield return new WaitForSeconds(2f);
-
-        //yield return StartCoroutine(WaitForConfirmInput());
-
-        // 대화 종료 후 클리어 or 게임오버 처리
-        EndDialogue(isSuccess);
-        if (isSuccess)
-            OnDialogueEnd?.Invoke();
-        else
-            OnWrongChoice?.Invoke(node.text);
-    }
-
-    private void EndDialogue(bool isSuccess)
+    private void EndDialogue(bool returnToGame)
     {
         IsActive = false;
         IsShowingChoice = false;
@@ -567,6 +556,12 @@ public class DialogueManager : MonoBehaviour
         // UI 비활성화
         StartCoroutine(FadeOut(dialoguePanel));
         StartCoroutine(FadeOut(choicePanel));
+
+        // 게임으로 복귀해야 할 경우 (인생 조언 종료 시)
+        if (returnToGame)
+        {
+            InputManager.Instance.SetState(GameState.Playing);
+        }
     }
 
     IEnumerator FadeIn(CanvasGroup group)
