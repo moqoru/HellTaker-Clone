@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
 
-    [Header("¹æÇâÅ° ÀÔ·Â °¨µµ ¼³Á¤")]
-    [Tooltip("¹æÇâÅ° ÀÔ·Â °¨µµ (0.5 ±ÇÀå)")]
+    [Header("ë°©í–¥í‚¤ ìž…ë ¥ ê°ë„ ì„¤ì •")]
+    [Tooltip("ë°©í–¥í‚¤ ìž…ë ¥ ê°ë„ (0.5 ê¶Œìž¥)")]
     public float inputThreshold = 0.5f;
 
-    // TODO : ÀÎÆ®·Î ´ëÈ­¾À ¿Ï¼º½Ã UI »óÅÂ·Î ½ÃÀÛÇÏµµ·Ï º¯°æ
+    // TODO : ì¸íŠ¸ë¡œ ëŒ€í™”ì”¬ ì™„ì„±ì‹œ UI ìƒíƒœë¡œ ì‹œìž‘í•˜ë„ë¡ ë³€ê²½
     private GameState currentState = GameState.Playing;
     private UIType currentUIType = UIType.Dialogue;
     private bool readyToMove = true;
@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
         {
             Instance = this;
         }
-        // ½Ì±ÛÅæ Áßº¹ ¹æÁö
+        // ì‹±ê¸€í†¤ ì¤‘ë³µ ë°©ì§€
         else if (Instance != this)
         {
             Destroy(gameObject);
@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
                 HandleUIInput();
                 break;
             case GameState.Transition:
-                // ÀÔ·Â Â÷´Ü
+                // ìž…ë ¥ ì°¨ë‹¨
                 break;
             // case GameState.Paused:
         }
@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
 
         if (currentState != newState)
         {
-            // state°¡ ¹Ù²î´Â »óÈ²ÀÌ¶ó¸é ÀÔ·Â ÃÊ±âÈ­ ´ë±â
+            // stateê°€ ë°”ë€ŒëŠ” ìƒí™©ì´ë¼ë©´ ìž…ë ¥ ì´ˆê¸°í™” ëŒ€ê¸°
             waitingForInputRelease = true;
             currentState = newState;
 
@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour
             {
                 if (uiType == UIType.None)
                 {
-                    Debug.LogError("[InputManager] UI »óÅÂ¿¡¼­ UITypeÀÌ NoneÀÏ ¼ö ¾ø½À´Ï´Ù.");
+                    Debug.LogError("[InputManager] UI ìƒíƒœì—ì„œ UITypeì´ Noneì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                     currentUIType = UIType.Dialogue;
                 }
                 else
@@ -78,13 +78,13 @@ public class InputManager : MonoBehaviour
         {
             if (uiType == UIType.None)
             {
-                Debug.LogError("[InputManager] UI »óÅÂ¿¡¼­ UITypeÀÌ NoneÀÏ ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogError("[InputManager] UI ìƒíƒœì—ì„œ UITypeì´ Noneì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 uiType = UIType.Dialogue;
             }
 
             if (currentUIType != uiType)
             {
-                // uiType°¡ ¹Ù²î´Â »óÈ²ÀÌ¶ó¸é ÀÔ·Â ÃÊ±âÈ­ ´ë±â
+                // uiTypeê°€ ë°”ë€ŒëŠ” ìƒí™©ì´ë¼ë©´ ìž…ë ¥ ì´ˆê¸°í™” ëŒ€ê¸°
                 waitingForInputRelease = true;
                 currentUIType = uiType;
             }
@@ -99,7 +99,7 @@ public class InputManager : MonoBehaviour
     {
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // ÀÔ·Â ÃÊ±âÈ­ ´ë±â ÁßÀÌ¸é ¸ðµç Å°°¡ ¶³¾îÁú ¶§±îÁö ´ë±â
+        // ìž…ë ¥ ì´ˆê¸°í™” ëŒ€ê¸° ì¤‘ì´ë©´ ëª¨ë“  í‚¤ê°€ ë–¨ì–´ì§ˆ ë•Œê¹Œì§€ ëŒ€ê¸°
         if (waitingForInputRelease)
         {
             if (IsAnyKeyPressed(moveInput))
@@ -108,10 +108,10 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                // ¸ðµç Å°°¡ ¶³¾îÁ³À¸¸é Á¦ÇÑ ÇØÁ¦
+                // ëª¨ë“  í‚¤ê°€ ë–¨ì–´ì¡Œìœ¼ë©´ ì œí•œ í•´ì œ
                 waitingForInputRelease = false;
                 readyToMove = true;
-                Debug.Log("[InputManager] Playing ÀÔ·Â ÃÊ±âÈ­ ¿Ï·á");
+                Debug.Log("[InputManager] Playing ìž…ë ¥ ì´ˆê¸°í™” ì™„ë£Œ");
             }
         }
 
@@ -121,7 +121,7 @@ public class InputManager : MonoBehaviour
             {
                 readyToMove = false;
 
-                // ¹æÇâ Á¤±ÔÈ­ (´ë°¢ ÀÔ·Â ¹æÁö)
+                // ë°©í–¥ ì •ê·œí™” (ëŒ€ê° ìž…ë ¥ ë°©ì§€)
                 Vector2Int direction = NormalizeDirection(moveInput);
 
                 if (Player.Instance != null)
@@ -130,7 +130,7 @@ public class InputManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("[InputManager] Player.Instance°¡ nullÀÔ´Ï´Ù!");
+                    Debug.LogWarning("[InputManager] Player.Instanceê°€ nullìž…ë‹ˆë‹¤!");
                 }
             }
         }
@@ -139,14 +139,14 @@ public class InputManager : MonoBehaviour
             readyToMove = true;
         }
 
-        // RÅ° or RB¹öÆ°: Àç½ÃÀÛ
+        // Rí‚¤ or RBë²„íŠ¼: ìž¬ì‹œìž‘
         if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton5))
         {
             SetState(GameState.Transition);
             GameManager.Instance.RestartStage();
         }
 
-        // LÅ° or LB¹öÆ°: ÀÎ»ý Á¶¾ð
+        // Lí‚¤ or LBë²„íŠ¼: ì¸ìƒ ì¡°ì–¸
         if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.JoystickButton4))
         {
             SetState(GameState.UI, UIType.Advice);
@@ -154,7 +154,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    /** ÀÔ·ÂÀ» 4¹æÇâ Áß ÇÏ³ª·Î Á¤±ÔÈ­ */
+    /** ìž…ë ¥ì„ 4ë°©í–¥ ì¤‘ í•˜ë‚˜ë¡œ ì •ê·œí™” */
     private Vector2Int NormalizeDirection(Vector2 input)
     {
         if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
@@ -171,7 +171,7 @@ public class InputManager : MonoBehaviour
     {
         Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // ÀÔ·Â ÃÊ±âÈ­ ´ë±â ÁßÀÌ¸é ¸ðµç Å°°¡ ¶³¾îÁú ¶§±îÁö ´ë±â
+        // ìž…ë ¥ ì´ˆê¸°í™” ëŒ€ê¸° ì¤‘ì´ë©´ ëª¨ë“  í‚¤ê°€ ë–¨ì–´ì§ˆ ë•Œê¹Œì§€ ëŒ€ê¸°
         if (waitingForInputRelease)
         {
             if (IsAnyKeyPressed(moveInput))
@@ -180,33 +180,33 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                // ¸ðµç Å°°¡ ¶³¾îÁ³À¸¸é Á¦ÇÑ ÇØÁ¦
+                // ëª¨ë“  í‚¤ê°€ ë–¨ì–´ì¡Œìœ¼ë©´ ì œí•œ í•´ì œ
                 waitingForInputRelease = false;
                 readyToMove = true;
-                Debug.Log("[InputManager] UI ÀÔ·Â ÃÊ±âÈ­ ¿Ï·á");
-                return; // ±× ´ÙÀ½ ÇÁ·¹ÀÓ¿¡¼­ ´Ù½Ã Ã³¸®ÇÏ±â.
+                Debug.Log("[InputManager] UI ìž…ë ¥ ì´ˆê¸°í™” ì™„ë£Œ");
+                return; // ê·¸ ë‹¤ìŒ í”„ë ˆìž„ì—ì„œ ë‹¤ì‹œ ì²˜ë¦¬í•˜ê¸°.
             }
         }
 
-        // Dialogue/Advice UI Ã³¸®
+        // Dialogue/Advice UI ì²˜ë¦¬
         if (currentUIType == UIType.Dialogue || currentUIType == UIType.Advice)
         {
             if (DialogueManager.Instance.IsNumberChoice)
             {
-                // ¼ýÀÚ ¼±ÅÃÁö - ÁÂ¿ì Å°·Î Áõ°¨
+                // ìˆ«ìž ì„ íƒì§€ - ì¢Œìš° í‚¤ë¡œ ì¦ê°
                 if (Mathf.Abs(moveInput.x) > inputThreshold && readyToMove)
                 {
                     DialogueManager.Instance.ChangeNumberValue(moveInput.x > 0 ? 1 : -1);
                     readyToMove = false;
                 }
 
-                // ½ºÆ½À» Áß¸³À¸·Î ³õ¾Æ¾ß ´Ù½Ã ÀÌµ¿ °¡´É
+                // ìŠ¤í‹±ì„ ì¤‘ë¦½ìœ¼ë¡œ ë†“ì•„ì•¼ ë‹¤ì‹œ ì´ë™ ê°€ëŠ¥
                 if (Mathf.Abs(moveInput.x) <= inputThreshold && !readyToMove)
                 {
                     readyToMove = true;
                 }
 
-                // Enter ¶Ç´Â A¹öÆ°À¸·Î È®Á¤
+                // Enter ë˜ëŠ” Aë²„íŠ¼ìœ¼ë¡œ í™•ì •
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
                 {
                     DialogueManager.Instance.SelectNumberChoice();
@@ -214,20 +214,20 @@ public class InputManager : MonoBehaviour
             }
             else if (DialogueManager.Instance.IsShowingChoice)
             {
-                // ÀÏ¹Ý ¼±ÅÃÁö - »óÇÏ Å°·Î ÀÌµ¿
+                // ì¼ë°˜ ì„ íƒì§€ - ìƒí•˜ í‚¤ë¡œ ì´ë™
                 if (Mathf.Abs(moveInput.y) > inputThreshold && readyToMove)
                 {
                     DialogueManager.Instance.MoveChoiceSelection(moveInput.y > 0 ? -1 : 1);
                     readyToMove = false;
                 }
 
-                // ½ºÆ½À» Áß¸³À¸·Î ³õ¾Æ¾ß ´Ù½Ã ÀÌµ¿ °¡´É
+                // ìŠ¤í‹±ì„ ì¤‘ë¦½ìœ¼ë¡œ ë†“ì•„ì•¼ ë‹¤ì‹œ ì´ë™ ê°€ëŠ¥
                 if (Mathf.Abs(moveInput.y) <= inputThreshold && !readyToMove)
                 {
                     readyToMove = true;
                 }
 
-                // Enter ¶Ç´Â A¹öÆ°À¸·Î È®Á¤
+                // Enter ë˜ëŠ” Aë²„íŠ¼ìœ¼ë¡œ í™•ì •
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
                 {
                     DialogueManager.Instance.SelectChoice();
@@ -235,7 +235,7 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                // ÀÏ¹Ý ´ë»ç¸¦ ´ÙÀ½À¸·Î ÁøÇà
+                // ì¼ë°˜ ëŒ€ì‚¬ë¥¼ ë‹¤ìŒìœ¼ë¡œ ì§„í–‰
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
                 {
                     DialogueManager.Instance.AdvanceDialogue();
@@ -276,7 +276,7 @@ public class InputManager : MonoBehaviour
                 GameManager.Instance.RestartStage();
             }
         }
-        // TODO: ÀÏ½ÃÁ¤Áö ¹öÆ° Ã³¸® ÇÊ¿ä
+        // TODO: ì¼ì‹œì •ì§€ ë²„íŠ¼ ì²˜ë¦¬ í•„ìš”
     }
 
     private bool IsAnyKeyPressed(Vector2 moveInput)

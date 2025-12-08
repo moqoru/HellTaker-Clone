@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
@@ -10,12 +10,13 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance { get; private set; }
 
     [Header("UI References")]
-    public CanvasGroup dialoguePanel; // Alpha Á¦¾î¿ë
+    public CanvasGroup dialoguePanel; // Alpha ì œì–´ìš©
+    public Image characterBackGroundImage;
     public Image characterImage;
     public TextMeshProUGUI characterNameText;
     public TextMeshProUGUI dialogueText;
-    public CanvasGroup choicePanel; // ¼±ÅÃÁö Alpha Á¦¾î¿ë
-    public List<Image> choiceBackgrounds; // ¼±ÅÃÁö ¹è°æ (ÇÏÀÌ¶óÀÌÆ®¿ë)
+    public CanvasGroup choicePanel; // ì„ íƒì§€ Alpha ì œì–´ìš©
+    public List<Image> choiceBackgrounds; // ì„ íƒì§€ ë°°ê²½ (í•˜ì´ë¼ì´íŠ¸ìš©)
     public List<TextMeshProUGUI> choiceTexts;
     public int normalFontSize = 24;
     public int highlightedFontSize = 48;
@@ -27,27 +28,27 @@ public class DialogueManager : MonoBehaviour
     [Header("Character Sprites")]
     private Dictionary<string, Sprite> characterSprites;
 
-    // ID ±¸ºĞ ¹øÈ£
+    // ID êµ¬ë¶„ ë²ˆí˜¸
     private const int DIALOGUE_START_ID = 1;
     private const int DIALOGUE_THRESHOLD_ID = 100;
     private const int ADVICE_START_ID = 201;
-    
+
     private Dictionary<int, DialogueNode> currentDialogueData;
     private int currentDialogueID;
     private int currentChoiceIndex = 0;
     private int activeChoiceCount = 0;
 
-    // NumberChoice Àü¿ë
+    // NumberChoice ì „ìš©
     private int currentNumberValue = 0;
     private int numberChoiceMin = 0;
     private int numberChoiceMax = 0;
     private DialogueNode numberChoiceNode = null;
 
-    // Äİ¹é
+    // ì½œë°±
     public System.Action OnDialogueEnd;
-    public System.Action<string> OnWrongChoice; // °ÔÀÓ¿À¹ö ¸Ş½ÃÁö Àü´Ş
+    public System.Action<string> OnWrongChoice; // ê²Œì„ì˜¤ë²„ ë©”ì‹œì§€ ì „ë‹¬
 
-    // ÇÁ·ÎÆÛÆ¼
+    // í”„ë¡œí¼í‹°
     public bool IsShowingChoice { get; private set; }
     public bool IsNumberChoice { get; private set; } = false;
     public bool IsActive { get; private set; }
@@ -58,19 +59,19 @@ public class DialogueManager : MonoBehaviour
         {
             Instance = this;
         }
-        // ½Ì±ÛÅæ Áßº¹ ¹æÁö
+        // ì‹±ê¸€í†¤ ì¤‘ë³µ ë°©ì§€
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
 
-        // ÃÊ±âÈ­
+        // ì´ˆê¸°í™”
         dialoguePanel.alpha = 0;
         choicePanel.alpha = 0;
         IsActive = false;
         IsShowingChoice = false;
 
-        // Ä³¸¯ÅÍ ½ºÇÁ¶óÀÌÆ® ·Îµå
+        // ìºë¦­í„° ìŠ¤í”„ë¼ì´íŠ¸ ë¡œë“œ
         LoadCharacterSprites();
     }
 
@@ -84,56 +85,56 @@ public class DialogueManager : MonoBehaviour
             characterSprites[sprite.name] = sprite;
         }
 
-        Debug.Log($"[DialogueManager] {characterSprites.Count}°³ÀÇ ½ºÆ®¶óÀÌÆ®¸¦ ·ÎµåÇß½À´Ï´Ù.");
+        Debug.Log($"[DialogueManager] {characterSprites.Count}ê°œì˜ ìŠ¤íŠ¸ë¼ì´íŠ¸ë¥¼ ë¡œë“œí–ˆìŠµë‹ˆë‹¤.");
     }
 
     public void StartDialogue(int stageNumber)
     {
-        // csv ÆÄÀÏ ·Îµå
+        // csv íŒŒì¼ ë¡œë“œ
         LoadDialogueData($"Stage{stageNumber}");
         
         if (currentDialogueData == null || currentDialogueData.Count == 0)
         {
-            Debug.LogError($"[DialogueManager] {stageNumber}½ºÅ×ÀÌÁöÀÇ ´ëÈ­ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù.");
+            Debug.LogError($"[DialogueManager] {stageNumber}ìŠ¤í…Œì´ì§€ì˜ ëŒ€í™” ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
-        // Ã¹ ¹øÂ° ´ë»ç Ç¥½Ã
+        // ì²« ë²ˆì§¸ ëŒ€ì‚¬ í‘œì‹œ
         currentDialogueID = DIALOGUE_START_ID;
         IsActive = true;
 
-        // UI È°¼ºÈ­
+        // UI í™œì„±í™”
         StartCoroutine(FadeIn(dialoguePanel));
 
-        // Ã¹ ´ë»ç Ç¥½Ã
+        // ì²« ëŒ€ì‚¬ í‘œì‹œ
         ShowDialogue(currentDialogueID);
 
-        // InputManager¿¡ »óÅÂ ¾Ë¸²
+        // InputManagerì— ìƒíƒœ ì•Œë¦¼
         InputManager.Instance.SetState(GameState.UI, UIType.Dialogue);
     }
 
     public void StartAdvice(int stageNumber)
     {
-        // ÈùÆ® ´ë»ç csv¿¡¼­ ·Îµå
+        // íŒíŠ¸ ëŒ€ì‚¬ csvì—ì„œ ë¡œë“œ
         LoadDialogueData($"Stage{stageNumber}");
 
         if (currentDialogueData == null || currentDialogueData.Count == 0)
         {
-            Debug.LogError($"[DialogueManager] {stageNumber}½ºÅ×ÀÌÁöÀÇ ´ëÈ­ µ¥ÀÌÅÍ¸¦ ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù.");
+            Debug.LogError($"[DialogueManager] {stageNumber}ìŠ¤í…Œì´ì§€ì˜ ëŒ€í™” ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
-        // ÀÎ»ı Á¶¾ğÀÇ ´ë»ç ID´Â 201ºÎÅÍ ½ÃÀÛ
+        // ì¸ìƒ ì¡°ì–¸ì˜ ëŒ€ì‚¬ IDëŠ” 201ë¶€í„° ì‹œì‘
         currentDialogueID = ADVICE_START_ID;
         IsActive = true;
 
-        // UI È°¼ºÈ­
+        // UI í™œì„±í™”
         StartCoroutine(FadeIn(dialoguePanel));
 
-        // Ã¹ ´ë»ç Ç¥½Ã
+        // ì²« ëŒ€ì‚¬ í‘œì‹œ
         ShowDialogue(currentDialogueID);
 
-        // InputManager¿¡ »óÅÂ ¾Ë¸²
+        // InputManagerì— ìƒíƒœ ì•Œë¦¼
         InputManager.Instance.SetState(GameState.UI, UIType.Advice);
     }
 
@@ -144,30 +145,30 @@ public class DialogueManager : MonoBehaviour
         TextAsset csvFile = Resources.Load<TextAsset>("Dialogues/" + csvFileName);
         if (csvFile == null)
         {
-            Debug.LogError($"[DialogueManager] {csvFileName} ÆÄÀÏÀ» ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù.");
+            Debug.LogError($"[DialogueManager] {csvFileName} íŒŒì¼ì„ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
         string[] lines = csvFile.text.Split('\n');
 
-        // 0¹øÂ° ÁÙÀº Çì´õ
+        // 0ë²ˆì§¸ ì¤„ì€ í—¤ë”
         for (int i = 1; i < lines.Length; i++)
         {
             if (string.IsNullOrWhiteSpace(lines[i])) continue;
 
             string[] values = ParseCSVLine(lines[i]);
 
-            if (values.Length < 5) continue; // ÇÊµåÀÇ ÃÖ¼Ú°ª ÀÌ»ó Ã¤¿öÁ® ÀÖ´ÂÁö Ã¼Å©
+            if (values.Length < 5) continue; // í•„ë“œì˜ ìµœì†Ÿê°’ ì´ìƒ ì±„ì›Œì ¸ ìˆëŠ”ì§€ ì²´í¬
 
             if (!int.TryParse(values[0], out int id))
             {
-                Debug.LogWarning($"[DialogueManager] csv {i}¹øÂ° ÁÙ: ID ÆÄ½Ì ½ÇÆĞ");
+                Debug.LogWarning($"[DialogueManager] csv {i}ë²ˆì§¸ ì¤„: ID íŒŒì‹± ì‹¤íŒ¨");
                 continue;
             }
 
             if (!System.Enum.TryParse(values[1], out DialogueType type))
             {
-                Debug.LogWarning($"[DialogueManager] csv {i}¹øÂ° ÁÙ: Å¸ÀÔ ÆÄ½Ì ½ÇÆĞ");
+                Debug.LogWarning($"[DialogueManager] csv {i}ë²ˆì§¸ ì¤„: íƒ€ì… íŒŒì‹± ì‹¤íŒ¨");
                 continue;
             }
 
@@ -180,10 +181,10 @@ public class DialogueManager : MonoBehaviour
                 text = CleanString(values[4]),
             };
 
-            // Choice Å¸ÀÔÀÏ ¶§ ¼±ÅÃÁö µ¥ÀÌÅÍ ÆÄ½Ì
+            // Choice íƒ€ì…ì¼ ë•Œ ì„ íƒì§€ ë°ì´í„° íŒŒì‹±
             if (node.type == DialogueType.Choice)
             {
-                // Á¤´ä ¼±ÅÃÁö ÀÎµ¦½º (Ã¹¹øÂ°¸¦ Á¤´äÀ¸·Î ÃÊ±â ¼³Á¤)
+                // ì •ë‹µ ì„ íƒì§€ ì¸ë±ìŠ¤ (ì²«ë²ˆì§¸ë¥¼ ì •ë‹µìœ¼ë¡œ ì´ˆê¸° ì„¤ì •)
                 node.correctChoiceIndex = 0;
 
                 int validChoices = 0;
@@ -200,7 +201,7 @@ public class DialogueManager : MonoBehaviour
                         node.choiceNextIDs[j] = int.Parse(values[choiceNextIndex]);
                         validChoices++;
 
-                        // ´ÙÀ½ ID ¹øÈ£°¡ ÇÑ ÀÚ¸´¼öÀÌ¸é ÀÏ¹İ ´ëÈ­ => Á¤´ä ¼±ÅÃÁö ÀÎµ¦½º·Î ¼³Á¤
+                        // ë‹¤ìŒ ID ë²ˆí˜¸ê°€ í•œ ìë¦¿ìˆ˜ì´ë©´ ì¼ë°˜ ëŒ€í™” => ì •ë‹µ ì„ íƒì§€ ì¸ë±ìŠ¤ë¡œ ì„¤ì •
                         if (node.choiceNextIDs[j] < DIALOGUE_THRESHOLD_ID)
                         {
                             node.correctChoiceIndex = j;
@@ -210,22 +211,22 @@ public class DialogueManager : MonoBehaviour
             }
             else if (node.type == DialogueType.NumberChoice)
             {
-                // NumberChoice: Choice1¿¡ ÃÖ¼Ú°ª, 2¿¡ ÃÖ´ñ°ª
+                // NumberChoice: Choice1ì— ìµœì†Ÿê°’, 2ì— ìµœëŒ“ê°’
                 node.minValue = int.Parse(CleanString(values[5]));
                 node.maxValue = int.Parse(CleanString(values[7]));
-                node.choiceNextIDs[0] = int.Parse(values[6]); // 1 ~ 9 ¼±ÅÃ
-                node.choiceNextIDs[1] = int.Parse(values[8]); // 10 ¼±ÅÃ
+                node.choiceNextIDs[0] = int.Parse(values[6]); // 1 ~ 9 ì„ íƒ
+                node.choiceNextIDs[1] = int.Parse(values[8]); // 10 ì„ íƒ
             }
             else if (node.type == DialogueType.Dialogue || node.type == DialogueType.Advice)
             {
-                // ÀÏ¹İÀûÀÎ °æ¿ì ´ÙÀ½ ´ë»ç ID´Â ¼øÂ÷ÀûÀ¸·Î Áõ°¡
+                // ì¼ë°˜ì ì¸ ê²½ìš° ë‹¤ìŒ ëŒ€ì‚¬ IDëŠ” ìˆœì°¨ì ìœ¼ë¡œ ì¦ê°€
                 node.nextDialogueID = node.dialogueID + 1;
             }
 
             currentDialogueData.Add(node.dialogueID, node);
         }
 
-        Debug.Log($"[DialogueManager] {csvFileName} ÆÄÀÏÀÇ {currentDialogueData.Count} ³ëµåÀÇ Á¤º¸¸¦ ·ÎµåÇß½À´Ï´Ù.");
+        Debug.Log($"[DialogueManager] {csvFileName} íŒŒì¼ì˜ {currentDialogueData.Count} ë…¸ë“œì˜ ì •ë³´ë¥¼ ë¡œë“œí–ˆìŠµë‹ˆë‹¤.");
     }
 
     private string[] ParseCSVLine(string line)
@@ -238,7 +239,7 @@ public class DialogueManager : MonoBehaviour
         {
             char c = line[i];
 
-            // ',' ±âÈ£°¡ Ä®·³ ±¸ºĞÀÚÀÎÁö, ¾Æ´Ï¸é µû¿ÈÇ¥ ¾È¿¡ ÀÖ´Â ¹®Àå ºÎÈ£ÀÎÁö ±¸ºĞÇÏ¿© ÀúÀå
+            // ',' ê¸°í˜¸ê°€ ì¹¼ëŸ¼ êµ¬ë¶„ìì¸ì§€, ì•„ë‹ˆë©´ ë”°ì˜´í‘œ ì•ˆì— ìˆëŠ” ë¬¸ì¥ ë¶€í˜¸ì¸ì§€ êµ¬ë¶„í•˜ì—¬ ì €ì¥
             if (c == '"')
             {
                 inQuotes = !inQuotes;
@@ -259,23 +260,23 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹®ÀÚ¿­¿¡¼­ µû¿ÈÇ¥°¡ 3½Ö¾¿ »ı±â´Â ¹®Á¦¿Í \n ±âÈ£°¡ ½ÇÁ¦¿Í ´Ù¸¥ °ÍÀ» Á¤»óÈ­
+    /// ë¬¸ìì—´ì—ì„œ ë”°ì˜´í‘œê°€ 3ìŒì”© ìƒê¸°ëŠ” ë¬¸ì œì™€ \n ê¸°í˜¸ê°€ ì‹¤ì œì™€ ë‹¤ë¥¸ ê²ƒì„ ì •ìƒí™”
     /// </summary>
     private string CleanString(string str)
     {
         if (string.IsNullOrEmpty(str)) return "";
 
-        // ¾ÕµÚ µû¿ÈÇ¥ Á¦°Å (µû¿ÈÇ¥ 3½Ö¾¿ ÀÖ´Â °æ¿ìµµ Æ÷ÇÔ)
+        // ì•ë’¤ ë”°ì˜´í‘œ ì œê±° (ë”°ì˜´í‘œ 3ìŒì”© ìˆëŠ” ê²½ìš°ë„ í¬í•¨)
         str = str.Trim();
         if (str.StartsWith("\"\"\"")) str = str.Substring(3);
         if (str.EndsWith("\"\"\"")) str = str.Substring(0, str.Length - 3);
         if (str.StartsWith("\"")) str = str.Substring(1);
         if (str.EndsWith("\"")) str = str.Substring(0, str.Length - 1);
 
-        // \nÀ» ½ÇÁ¦ ÁÙ¹Ù²ŞÀ¸·Î º¯°æ
+        // \nì„ ì‹¤ì œ ì¤„ë°”ê¿ˆìœ¼ë¡œ ë³€ê²½
         str = str.Replace("\\n", "\n");
 
-        // ¾Õ µÚ °ø¹é Á¦°ÅÇÏ¿© ±ò²ûÇÏ°Ô ¸¸µé±â
+        // ì• ë’¤ ê³µë°± ì œê±°í•˜ì—¬ ê¹”ë”í•˜ê²Œ ë§Œë“¤ê¸°
         return str.Trim();
     }
 
@@ -283,14 +284,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (!currentDialogueData.ContainsKey(dialogueID))
         {
-            Debug.LogError($"[DialogueManager] ÇöÀç ½ºÅ×ÀÌÁöÀÇ {dialogueID}¹ø ´ë»ç¸¦ ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù.");
+            Debug.LogError($"[DialogueManager] í˜„ì¬ ìŠ¤í…Œì´ì§€ì˜ {dialogueID}ë²ˆ ëŒ€ì‚¬ë¥¼ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
             EndDialogue(false);
             return;
         }
 
         DialogueNode node = currentDialogueData[dialogueID];
 
-        // Ä³¸¯ÅÍ ÀÌ¹ÌÁö ¼³Á¤
+        // ìºë¦­í„° ì´ë¯¸ì§€ ì„¤ì •
         if (!string.IsNullOrEmpty(node.characterImagePath))
         {
             string spriteName = System.IO.Path.GetFileNameWithoutExtension(node.characterImagePath);
@@ -298,11 +299,14 @@ public class DialogueManager : MonoBehaviour
             if (characterSprites.ContainsKey(spriteName))
             {
                 characterImage.sprite = characterSprites[spriteName];
+
+                characterImage.SetNativeSize();
+
                 characterImage.enabled = true;
             }
             else
             {
-                Debug.LogWarning($"[DialogueManager] Ä³¸¯ÅÍ ÀÌ¹ÌÁö¸¦ ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù: {spriteName}");
+                Debug.LogWarning($"[DialogueManager] ìºë¦­í„° ì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤: {spriteName}");
                 characterImage.enabled = false;
             }
         }
@@ -311,10 +315,10 @@ public class DialogueManager : MonoBehaviour
             characterImage.enabled = false;
         }
 
-        // Ä³¸¯ÅÍ ÀÌ¸§ ¼³Á¤
+        // ìºë¦­í„° ì´ë¦„ ì„¤ì •
         if (!string.IsNullOrEmpty(node.characterName))
         {
-            characterNameText.text = node.characterName;
+            characterNameText.text = $"â€¢ {node.characterName} â€¢";
             characterNameText.transform.parent.gameObject.SetActive(true);
         }
         else
@@ -322,10 +326,10 @@ public class DialogueManager : MonoBehaviour
             characterNameText.transform.parent.gameObject.SetActive(false);
         }
 
-        // ´ë»ç ÅØ½ºÆ® ¼³Á¤
+        // ëŒ€ì‚¬ í…ìŠ¤íŠ¸ ì„¤ì •
         dialogueText.text = node.text;
 
-        // TODO: Å¸ÀÔ Ã¼Å©ÇÒ ¶§ switch case¹®À¸·Î ¹Ù²Ù±â
+        // TODO: íƒ€ì… ì²´í¬í•  ë•Œ switch caseë¬¸ìœ¼ë¡œ ë°”ê¾¸ê¸°
         if (node.type == DialogueType.Choice)
         {
             ShowChoices(node);
@@ -354,7 +358,7 @@ public class DialogueManager : MonoBehaviour
         IsNumberChoice = false;
         currentChoiceIndex = 0;
 
-        // ¼±ÅÃÁö °³¼ö È®ÀÎ
+        // ì„ íƒì§€ ê°œìˆ˜ í™•ì¸
         activeChoiceCount = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -371,10 +375,10 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        // ¼±ÅÃÁö UI È°¼ºÈ­
+        // ì„ íƒì§€ UI í™œì„±í™”
         StartCoroutine(FadeIn(choicePanel));
 
-        // Ã¹ ¹øÂ° ¼±ÅÃÁö ÇÏÀÌ¶óÀÌÆ®
+        // ì²« ë²ˆì§¸ ì„ íƒì§€ í•˜ì´ë¼ì´íŠ¸
         UpdateChoiceHighlight();
     }
 
@@ -383,19 +387,19 @@ public class DialogueManager : MonoBehaviour
         IsShowingChoice = true;
         IsNumberChoice = true;
 
-        // ¼ıÀÚ ¼±ÅÃ ÃÊ±âÈ­
+        // ìˆ«ì ì„ íƒ ì´ˆê¸°í™”
         numberChoiceMin = node.minValue;
         numberChoiceMax = node.maxValue;
-        // TODO: ÀÌÀü¿¡ ÇÑ ¼ıÀÚ ¼±ÅÃ ±â¾ïÇÏ±â, ±¸Á¶Ã¼³ª Å¬·¡½º·Î ¹­¾î¼­ °ü¸®ÇØº¸±â
+        // TODO: ì´ì „ì— í•œ ìˆ«ì ì„ íƒ ê¸°ì–µí•˜ê¸°, êµ¬ì¡°ì²´ë‚˜ í´ë˜ìŠ¤ë¡œ ë¬¶ì–´ì„œ ê´€ë¦¬í•´ë³´ê¸°
         currentNumberValue = numberChoiceMin;
         numberChoiceNode = node;
 
-        // Ã¹ ¹øÂ° ¼±ÅÃÁö¸¸ »ç¿ë (¼ıÀÚ Ç¥½Ã)
+        // ì²« ë²ˆì§¸ ì„ íƒì§€ë§Œ ì‚¬ìš© (ìˆ«ì í‘œì‹œ)
         choiceBackgrounds[0].gameObject.SetActive(true);
         choiceBackgrounds[1].gameObject.SetActive(false);
         choiceBackgrounds[2].gameObject.SetActive(false);
 
-        // UI ¾÷µ¥ÀÌÆ®
+        // UI ì—…ë°ì´íŠ¸
         UpdateNumberChoiceDisplay();
 
         StartCoroutine(FadeIn(choicePanel));
@@ -410,22 +414,22 @@ public class DialogueManager : MonoBehaviour
 
     public void AdvanceDialogue()
     {
-        if (IsShowingChoice) return; // ¼±ÅÃÁö°¡ º¸ÀÏ ¶§´Â ³Ñ±â±â ºÒ°¡
+        if (IsShowingChoice) return; // ì„ íƒì§€ê°€ ë³´ì¼ ë•ŒëŠ” ë„˜ê¸°ê¸° ë¶ˆê°€
 
         DialogueNode currentNode = currentDialogueData[currentDialogueID];
 
         if (currentNode.type == DialogueType.Dialogue || currentNode.type == DialogueType.Advice)
         {
-            // ´ÙÀ½ ´ë»ç°¡ ÀÖ´ÂÁö È®ÀÎ
+            // ë‹¤ìŒ ëŒ€ì‚¬ê°€ ìˆëŠ”ì§€ í™•ì¸
             if (currentDialogueData.ContainsKey(currentNode.nextDialogueID))
             {
-                // ´ÙÀ½ ´ë»çÀÇ Å¸ÀÔ È®ÀÎ
+                // ë‹¤ìŒ ëŒ€ì‚¬ì˜ íƒ€ì… í™•ì¸
                 DialogueNode nextNode = currentDialogueData[currentNode.nextDialogueID];
 
-                // Advice¿¡¼­ Advice°¡ ¾Æ´Ñ ´ë»ç·Î ³Ñ¾î°¡¸é ÀÎ»ı Á¶¾ğ Á¾·á
+                // Adviceì—ì„œ Adviceê°€ ì•„ë‹Œ ëŒ€ì‚¬ë¡œ ë„˜ì–´ê°€ë©´ ì¸ìƒ ì¡°ì–¸ ì¢…ë£Œ
                 if (currentNode.type == DialogueType.Advice && nextNode.type != DialogueType.Advice)
                 {
-                    EndDialogue(false); // ÀÎ»ı Á¶¾ğ Á¾·á ÈÄ °ÔÀÓÀ¸·Î º¹±Í
+                    EndDialogue(false); // ì¸ìƒ ì¡°ì–¸ ì¢…ë£Œ í›„ ê²Œì„ìœ¼ë¡œ ë³µê·€
                     return;
                 }
 
@@ -437,12 +441,12 @@ public class DialogueManager : MonoBehaviour
             {
                 if (currentNode.type == DialogueType.Advice)
                 {
-                    EndDialogue(true); // ÀÎ»ı Á¶¾ğ Á¾·á - ¾ÆÁ÷ °ÔÀÓ Å¬¸®¾î ¾Æ´Ô
+                    EndDialogue(true); // ì¸ìƒ ì¡°ì–¸ ì¢…ë£Œ - ì•„ì§ ê²Œì„ í´ë¦¬ì–´ ì•„ë‹˜
                 }
                 else
                 {
-                    Debug.LogWarning("[DialogueManager] Dialogue¿¡¼­ ´ÙÀ½ ´ë»ç·Î ³Ñ¾î°¡Áö ¸øÇß½À´Ï´Ù.");
-                    EndDialogue(false); // ÀÏ¹İ ´ëÈ­ Á¾·á (°ÔÀÓ Å¬¸®¾î Ã³¸®?)
+                    Debug.LogWarning("[DialogueManager] Dialogueì—ì„œ ë‹¤ìŒ ëŒ€ì‚¬ë¡œ ë„˜ì–´ê°€ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
+                    EndDialogue(false); // ì¼ë°˜ ëŒ€í™” ì¢…ë£Œ (ê²Œì„ í´ë¦¬ì–´ ì²˜ë¦¬?)
                 }
             }
         }
@@ -459,7 +463,7 @@ public class DialogueManager : MonoBehaviour
 
         currentChoiceIndex += direction;
 
-        // ¼øÈ¯ °¡´ÉÇÑ Ä¿¼­ ÀÌµ¿ Ã³¸®
+        // ìˆœí™˜ ê°€ëŠ¥í•œ ì»¤ì„œ ì´ë™ ì²˜ë¦¬
         if (currentChoiceIndex < 0)
             currentChoiceIndex = activeChoiceCount - 1;
         else if (currentChoiceIndex >= activeChoiceCount)
@@ -491,18 +495,18 @@ public class DialogueManager : MonoBehaviour
 
         if (currentChoiceIndex == currentNode.correctChoiceIndex)
         {
-            // Á¤´ä ¼±ÅÃ - ´ÙÀ½ ´ë»ç·Î
+            // ì •ë‹µ ì„ íƒ - ë‹¤ìŒ ëŒ€ì‚¬ë¡œ
             int nextID = currentNode.choiceNextIDs[currentChoiceIndex];
             currentDialogueID = nextID;
         }
         else
         {
-            // ¿À´ä ¼±ÅÃ - °ÔÀÓ¿À¹ö ´ë»ç·Î
+            // ì˜¤ë‹µ ì„ íƒ - ê²Œì„ì˜¤ë²„ ëŒ€ì‚¬ë¡œ
             int gameOverID = currentNode.choiceNextIDs[currentChoiceIndex];
             currentDialogueID = gameOverID; 
         }
 
-        // ¼±ÅÃÁö ´Ù½Ã ¼û±â±â
+        // ì„ íƒì§€ ë‹¤ì‹œ ìˆ¨ê¸°ê¸°
         IsShowingChoice = false;
         StartCoroutine(FadeOut(choicePanel));
 
@@ -515,7 +519,7 @@ public class DialogueManager : MonoBehaviour
 
         currentNumberValue += delta;
 
-        // min°ú max »çÀÌ·Î ¹üÀ§ Á¦ÇÑ
+        // minê³¼ max ì‚¬ì´ë¡œ ë²”ìœ„ ì œí•œ
         if (currentNumberValue < numberChoiceMin)
             currentNumberValue = numberChoiceMin;
         else if (currentNumberValue > numberChoiceMax)
@@ -531,9 +535,9 @@ public class DialogueManager : MonoBehaviour
         IsNumberChoice = false;
         IsShowingChoice = false;
 
-        // ¼±ÅÃÇÑ ¼ıÀÚ¿¡ µû¶ó ºĞ±â
+        // ì„ íƒí•œ ìˆ«ìì— ë”°ë¼ ë¶„ê¸°
         int nextID;
-        if (currentNumberValue == numberChoiceMax) // 10ÀÏ ¶§¸¸ µÚÂÊ ºĞ±â·Î
+        if (currentNumberValue == numberChoiceMax) // 10ì¼ ë•Œë§Œ ë’¤ìª½ ë¶„ê¸°ë¡œ
         {
             nextID = numberChoiceNode.choiceNextIDs[1];
         }
@@ -553,11 +557,11 @@ public class DialogueManager : MonoBehaviour
         IsShowingChoice = false;
         IsNumberChoice = false;
 
-        // UI ºñÈ°¼ºÈ­
+        // UI ë¹„í™œì„±í™”
         StartCoroutine(FadeOut(dialoguePanel));
         StartCoroutine(FadeOut(choicePanel));
 
-        // °ÔÀÓÀ¸·Î º¹±ÍÇØ¾ß ÇÒ °æ¿ì (ÀÎ»ı Á¶¾ğ Á¾·á ½Ã)
+        // ê²Œì„ìœ¼ë¡œ ë³µê·€í•´ì•¼ í•  ê²½ìš° (ì¸ìƒ ì¡°ì–¸ ì¢…ë£Œ ì‹œ)
         if (returnToGame)
         {
             InputManager.Instance.SetState(GameState.Playing);

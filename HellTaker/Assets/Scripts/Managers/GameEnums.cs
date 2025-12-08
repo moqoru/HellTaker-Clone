@@ -1,25 +1,25 @@
-/// <summary>
-/// °ÔÀÓÀÇ ÀüÃ¼ »óÅÂ¸¦ ³ªÅ¸³¿
+ï»¿/// <summary>
+/// ê²Œì„ì˜ ì „ì²´ ìƒíƒœë¥¼ ë‚˜íƒ€ëƒ„
 /// </summary>
 public enum GameState
 {
     None = -1,
     Playing,
-    UI, // ¸ğµç UI »óÈ£ÀÛ¿ë
+    UI, // ëª¨ë“  UI ìƒí˜¸ì‘ìš©
     Transition,
-    // Paused, // ÇÊ¿ä½Ã UIType ¾ÈÀ¸·Î ÆíÀÔ
+    // Paused, // í•„ìš”ì‹œ UIType ì•ˆìœ¼ë¡œ í¸ì…
 }
 
 /// <summary>
-/// UI »óÈ£ÀÛ¿ë Å¸ÀÔ ¼³Á¤
+/// UI ìƒí˜¸ì‘ìš© íƒ€ì… ì„¤ì •
 /// </summary>
 public enum UIType
 {
     None = -1,
-    Dialogue, // ÀÏ¹İ ´ëÈ­, »ç½Ç»ó ±âº» »óÅÂ (Enter¸¸)
-    CutScene, // Dialogueº¸´Ù Å« ÀÌ¹ÌÁö + ´ëÈ­Ã¢ (Enter¸¸)
-    Advice, // Dialogue¿Í °°Áö¸¸ Æ®·£Áö¼Ç ¾øÀ½ (Enter¸¸)
-    GameOver, // ¼±ÅÃÁö ¿À´ä½Ã °ÔÀÓ ¿À¹ö (Enter·Î Àç½ÃÀÛ)
-    Choice, // ¼±ÅÃÁö (»óÇÏ + Enter)
-    StageSelect, // ½ºÅ×ÀÌÁö ¼±ÅÃ (ÁÂ¿ì + Enter)
+    Dialogue, // ì¼ë°˜ ëŒ€í™”, ì‚¬ì‹¤ìƒ ê¸°ë³¸ ìƒíƒœ (Enterë§Œ)
+    CutScene, // Dialogueë³´ë‹¤ í° ì´ë¯¸ì§€ + ëŒ€í™”ì°½ (Enterë§Œ)
+    Advice, // Dialogueì™€ ê°™ì§€ë§Œ íŠ¸ëœì§€ì…˜ ì—†ìŒ (Enterë§Œ)
+    GameOver, // ì„ íƒì§€ ì˜¤ë‹µì‹œ ê²Œì„ ì˜¤ë²„ (Enterë¡œ ì¬ì‹œì‘)
+    Choice, // ì„ íƒì§€ (ìƒí•˜ + Enter)
+    StageSelect, // ìŠ¤í…Œì´ì§€ ì„ íƒ (ì¢Œìš° + Enter)
 }

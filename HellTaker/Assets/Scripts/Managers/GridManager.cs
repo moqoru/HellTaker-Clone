@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
 
-    // À§Ä¡º° ¿ÀºêÁ§Æ® µñ¼Å³Ê¸® (key : ±×¸®µå ÁÂÇ¥, value : ÇØ´ç À§Ä¡ÀÇ ¿ÀºêÁ§Æ® ¸®½ºÆ®)
+    // ìœ„ì¹˜ë³„ ì˜¤ë¸Œì íŠ¸ ë”•ì…”ë„ˆë¦¬ (key : ê·¸ë¦¬ë“œ ì¢Œí‘œ, value : í•´ë‹¹ ìœ„ì¹˜ì˜ ì˜¤ë¸Œì íŠ¸ ë¦¬ìŠ¤íŠ¸)
     private Dictionary<Vector2Int, List<GameObject>> grid = new Dictionary<Vector2Int, List<GameObject>>();
 
     private void Awake()
@@ -15,14 +15,14 @@ public class GridManager : MonoBehaviour
         {
             Instance = this;
         }
-        // ½Ì±ÛÅæ Áßº¹ ¹æÁö
+        // ì‹±ê¸€í†¤ ì¤‘ë³µ ë°©ì§€
         else if (Instance != this) 
         {
             Destroy(gameObject);
         }
     }
 
-    /** ¿ÀºêÁ§Æ®¸¦ ±×¸®µå¿¡ µî·Ï */
+    /** ì˜¤ë¸Œì íŠ¸ë¥¼ ê·¸ë¦¬ë“œì— ë“±ë¡ */
     public void RegisterObject(GameObject obj)
     {
         Vector2Int gridPos = WorldToGrid(obj.transform.position);
@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    /** ¿ÀºêÁ§Æ®¸¦ ±×¸®µå¿¡¼­ Á¦°Å */
+    /** ì˜¤ë¸Œì íŠ¸ë¥¼ ê·¸ë¦¬ë“œì—ì„œ ì œê±° */
     public void UnregisterObject(GameObject obj)
     {
         Vector2Int gridPos = WorldToGrid(obj.transform.position);
@@ -55,12 +55,12 @@ public class GridManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ®¸¦ ÇÑ À§Ä¡¿¡¼­ ´Ù¸¥ À§Ä¡·Î ÀÌµ¿
-    /// <para> !!!ÁÖÀÇ!!! ÀÌµ¿ Àü¿¡ IsPositionBlocked¸¦ ¸ÕÀú ¼öÇàÇØ¾ß ÇÕ´Ï´Ù. </para>
+    /// ì˜¤ë¸Œì íŠ¸ë¥¼ í•œ ìœ„ì¹˜ì—ì„œ ë‹¤ë¥¸ ìœ„ì¹˜ë¡œ ì´ë™
+    /// <para> !!!ì£¼ì˜!!! ì´ë™ ì „ì— IsPositionBlockedë¥¼ ë¨¼ì € ìˆ˜í–‰í•´ì•¼ í•©ë‹ˆë‹¤. </para>
     /// </summary>
     public void MoveObject(GameObject obj, Vector2Int fromPos, Vector2Int toPos)
     {
-        // ±âÁ¸ À§Ä¡¿¡¼­ Á¦°Å
+        // ê¸°ì¡´ ìœ„ì¹˜ì—ì„œ ì œê±°
         if (grid.ContainsKey(fromPos))
         {
             grid[fromPos].Remove(obj);
@@ -70,7 +70,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        // ÀÌµ¿ÇÒ À§Ä¡¿¡ Ãß°¡
+        // ì´ë™í•  ìœ„ì¹˜ì— ì¶”ê°€
         if (!grid.ContainsKey(toPos))
         {
             grid[toPos] = new List<GameObject>();
@@ -84,7 +84,7 @@ public class GridManager : MonoBehaviour
         obj.transform.position = GridToWorld(toPos);
     }
 
-    /** Æ¯Á¤ À§Ä¡°¡ ¸·ÇôÀÖ´ÂÁö Ã¼Å©*/
+    /** íŠ¹ì • ìœ„ì¹˜ê°€ ë§‰í˜€ìˆëŠ”ì§€ ì²´í¬*/
     public bool IsPositionBlocked(Vector2Int pos)
     {
         if (!grid.ContainsKey(pos))
@@ -129,7 +129,7 @@ public class GridManager : MonoBehaviour
 
     }
 
-    /** Æ¯Á¤ À§Ä¡ÀÇ ¸ğµç ¿ÀºêÁ§Æ® È®ÀÎ */
+    /** íŠ¹ì • ìœ„ì¹˜ì˜ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ í™•ì¸ */
     public List<GameObject> GetObjectsAt(Vector2Int pos)
     {
         if (!grid.ContainsKey(pos))
@@ -149,7 +149,7 @@ public class GridManager : MonoBehaviour
         return validObjects;
     }
 
-    /** Æ¯Á¤ À§Ä¡ÀÇ Æ¯Á¤ ÅÂ±× ¿ÀºêÁ§Æ® È®ÀÎ */
+    /** íŠ¹ì • ìœ„ì¹˜ì˜ íŠ¹ì • íƒœê·¸ ì˜¤ë¸Œì íŠ¸ í™•ì¸ */
     public GameObject GetObjectWithTagAt(Vector2Int pos, string tag)
     {
         List<GameObject> objects = GetObjectsAt(pos);
@@ -164,7 +164,7 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    /** Æ¯Á¤ À§Ä¡¿¡ ¹Ğ ¼ö ÀÖ´Â ¿ÀºêÁ§Æ® ÀÖ´ÂÁö È®ÀÎ */
+    /** íŠ¹ì • ìœ„ì¹˜ì— ë°€ ìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ ìˆëŠ”ì§€ í™•ì¸ */
     public GameObject GetPushableAt(Vector2Int pos)
     {
         List<GameObject> objects = GetObjectsAt(pos);
@@ -180,7 +180,7 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    /** ¿ùµå ÁÂÇ¥¸¦ ±×¸®µå ÁÂÇ¥·Î º¯È¯ (=> Á¤¼ö) */
+    /** ì›”ë“œ ì¢Œí‘œë¥¼ ê·¸ë¦¬ë“œ ì¢Œí‘œë¡œ ë³€í™˜ (=> ì •ìˆ˜) */
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {
         Vector2 basePos = LevelManager.Instance.GetBasePosition();
@@ -191,7 +191,7 @@ public class GridManager : MonoBehaviour
         );
     }
 
-    /** ±×¸®µå ÁÂÇ¥¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯ (=> ½Ç¼ö) */
+    /** ê·¸ë¦¬ë“œ ì¢Œí‘œë¥¼ ì›”ë“œ ì¢Œí‘œë¡œ ë³€í™˜ (=> ì‹¤ìˆ˜) */
     public Vector3 GridToWorld(Vector2 gridPos)
     {
         Vector2 basePos = LevelManager.Instance.GetBasePosition();
@@ -203,16 +203,16 @@ public class GridManager : MonoBehaviour
         );
     }
 
-    /** ±×¸®µå ÀüÃ¼ ÃÊ±âÈ­ (·¹º§ ÀüÈ¯ ½Ã) */
+    /** ê·¸ë¦¬ë“œ ì „ì²´ ì´ˆê¸°í™” (ë ˆë²¨ ì „í™˜ ì‹œ) */
     public void ClearGrid()
     {
         grid.Clear();
     }
 
-    /** (µğ¹ö±ë) ÇöÀç ±×¸®µå »óÅÂ Ãâ·Â */
+    /** (ë””ë²„ê¹…) í˜„ì¬ ê·¸ë¦¬ë“œ ìƒíƒœ ì¶œë ¥ */
     public void DebugPrintGrid()
     {
-        Debug.Log($"=== ¸¸µé¾îÁø ±×¸®µå Ä­ ¼ö: {grid.Count} ===");
+        Debug.Log($"=== ë§Œë“¤ì–´ì§„ ê·¸ë¦¬ë“œ ì¹¸ ìˆ˜: {grid.Count} ===");
         foreach (var gridKVPair in grid)
         {
             string objNames = "";
@@ -223,7 +223,7 @@ public class GridManager : MonoBehaviour
                     objNames += obj.name + ", ";
                 }
             }
-            Debug.Log($"{gridKVPair.Key}ÀÇ °ª: {objNames}");
+            Debug.Log($"{gridKVPair.Key}ì˜ ê°’: {objNames}");
         }
     }
 }

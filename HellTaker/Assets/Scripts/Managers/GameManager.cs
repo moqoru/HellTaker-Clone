@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
 using TMPro;
@@ -9,16 +9,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("°ÔÀÓ ¼³Á¤")]
-    [Tooltip("ÇöÀç ½ºÅ×ÀÌÁöÀÇ Á¦ÇÑ ÀÌµ¿ È½¼ö")]
+    [Header("ê²Œì„ ì„¤ì •")]
+    [Tooltip("í˜„ì¬ ìŠ¤í…Œì´ì§€ì˜ ì œí•œ ì´ë™ íšŸìˆ˜")]
     public int maxMoveCount = 23;
-    [Tooltip("ÇöÀç ½ºÅ×ÀÌÁö ¹øÈ£")]
+    [Tooltip("í˜„ì¬ ìŠ¤í…Œì´ì§€ ë²ˆí˜¸")]
     public int currentStage = 1;
 
-    [Header("UI ÂüÁ¶")]
-    [Tooltip("ÀÌµ¿ °¡´É È½¼ö ÅØ½ºÆ®")]
+    [Header("UI ì°¸ì¡°")]
+    [Tooltip("ì´ë™ ê°€ëŠ¥ íšŸìˆ˜ í…ìŠ¤íŠ¸")]
     public TextMeshProUGUI turnText;
-    [Tooltip("½ºÅ×ÀÌÁö ÅØ½ºÆ®")]
+    [Tooltip("ìŠ¤í…Œì´ì§€ í…ìŠ¤íŠ¸")]
     public TextMeshProUGUI stageText;
 
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         // CheckWinCondition();
     }
 
-    /** ¸Ê ÃÊ±âÈ­ ¹× UI ¹İ¿µ */
+    /** ë§µ ì´ˆê¸°í™” ë° UI ë°˜ì˜ */
     private void InitializeStage()
     {
         StartCoroutine(EnableStageCoroutine());
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
         UpdateUI();
     }
-    /** ÀÌµ¿ È½¼ö ¹Ì¸® Â÷°¨ ¹æÁö¸¦ À§ÇØ µô·¹ÀÌ */
+    /** ì´ë™ íšŸìˆ˜ ë¯¸ë¦¬ ì°¨ê° ë°©ì§€ë¥¼ ìœ„í•´ ë”œë ˆì´ */
     IEnumerator EnableStageCoroutine()
     {
         while (InputManager.Instance == null)
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         ResetGameState();
         InputManager.Instance.SetState(GameState.Playing);
-        Debug.Log("[GameManager] Initialize ¿Ï·á");
+        Debug.Log("[GameManager] Initialize ì™„ë£Œ");
     }
 
     private void UpdateUI()
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("TurnText°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogWarning("TurnTextê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!");
         }
 
         if (stageText != null)
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("StageText°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogWarning("StageTextê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!");
         }
     }
 
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         player = playerObj;
     }
 
-    /** Å¬¸®¾î Á¶°Ç Ã¼Å© (ÇÃ·¹ÀÌ¾î »óÇÏÁÂ¿ì¿¡ Goal ÀÖ´Â Áö)*/
+    /** í´ë¦¬ì–´ ì¡°ê±´ ì²´í¬ (í”Œë ˆì´ì–´ ìƒí•˜ì¢Œìš°ì— Goal ìˆëŠ” ì§€)*/
     private void CheckWinCondition()
     {
         if (player == null)
@@ -155,10 +155,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /** ÀÌµ¿ È½¼ö Áõ°¡ (ÀÏ¹İ ÀÌµ¿ Ã³¸®) */
+    /** ì´ë™ íšŸìˆ˜ ì¦ê°€ (ì¼ë°˜ ì´ë™ ì²˜ë¦¬) */
     public void IncreaseMoveCount(int amount = 1)
     {
-        // TODO: °¡½Ã¿¡ ´ê¾Æ 2¹ø ÀÌµ¿ Æä³ÎÆ¼ Ã³¸® ½Ã UI¿Í ÀÌÆåÆ®·Î µ¥¹ÌÁö Ã³¸®
+        // TODO: ê°€ì‹œì— ë‹¿ì•„ 2ë²ˆ ì´ë™ í˜ë„í‹° ì²˜ë¦¬ ì‹œ UIì™€ ì´í™íŠ¸ë¡œ ë°ë¯¸ì§€ ì²˜ë¦¬
         if (isStageCleared || isGameOver)
         {
             return;
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
         CheckWinCondition();
 
-        // °ÔÀÓ ¹Ì Å¬¸®¾î½Ã, ÀÌµ¿ È½¼ö ÃÊ°ú Ã¼Å©
+        // ê²Œì„ ë¯¸ í´ë¦¬ì–´ì‹œ, ì´ë™ íšŸìˆ˜ ì´ˆê³¼ ì²´í¬
         if (isStageCleared) return;
 
         if (currentMoveCount >= maxMoveCount)
@@ -182,12 +182,12 @@ public class GameManager : MonoBehaviour
     private void OnLevelClear()
     {
         isStageCleared = true;
-        Debug.Log("=== ·¹º§ Å¬¸®¾î! ===");
+        Debug.Log("=== ë ˆë²¨ í´ë¦¬ì–´! ===");
 
-        // ´ëÈ­ Äİ¹é ¼³Á¤
+        // ëŒ€í™” ì½œë°± ì„¤ì •
         DialogueManager.Instance.OnDialogueEnd = () =>
         {
-            // Á¤´ä ¼±ÅÃ ½Ã ´ÙÀ½ ½ºÅ×ÀÌÁö·Î
+            // ì •ë‹µ ì„ íƒ ì‹œ ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¡œ
             StartCoroutine(TransitionToNextStage());
         };
 
@@ -197,34 +197,34 @@ public class GameManager : MonoBehaviour
             DialogueDeathAnimator.Instance.PlayGameOver(gameOverMessage);
         };
 
-        // ´ëÈ­ ½ÃÀÛ
+        // ëŒ€í™” ì‹œì‘
         DialogueManager.Instance.StartDialogue(currentStage);
     }
 
     public void ShowHint()
     {
-        // ÈùÆ® Á¾·á ½Ã °ÔÀÓÀ¸·Î º¹±Í
+        // íŒíŠ¸ ì¢…ë£Œ ì‹œ ê²Œì„ìœ¼ë¡œ ë³µê·€
         DialogueManager.Instance.OnDialogueEnd = () =>
         {
             InputManager.Instance.SetState(GameState.Playing);
         };
 
-        // ÀÎ»ı Á¶¾ğ ½ÃÀÛ
+        // ì¸ìƒ ì¡°ì–¸ ì‹œì‘
         DialogueManager.Instance.StartAdvice(currentStage);
     }
 
-    /** °ÔÀÓ ¿À¹ö (ÀÌµ¿ È½¼ö ÃÊ°ú) */
+    /** ê²Œì„ ì˜¤ë²„ (ì´ë™ íšŸìˆ˜ ì´ˆê³¼) */
     private void OnGameOver()
     {
         isGameOver = true;
-        Debug.Log("=== °ÔÀÓ ¿À¹ö! ÀÌµ¿ È½¼ö ÃÊ°ú ===");
+        Debug.Log("=== ê²Œì„ ì˜¤ë²„! ì´ë™ íšŸìˆ˜ ì´ˆê³¼ ===");
 
-        // TODO: Ä³¸¯ÅÍ Á×´Â ¾Ö´Ï¸ŞÀÌ¼Ç ¸¸µé°í Àç»ı
+        // TODO: ìºë¦­í„° ì£½ëŠ” ì• ë‹ˆë©”ì´ì…˜ ë§Œë“¤ê³  ì¬ìƒ
         // DeathAnimation.Instance.PlayDeath(() => {
         //     InputManager.Instance.SetState(GameState.UI, UIType.GameOver??);
         // });
 
-        // ÀÓ½Ã: ¹Ù·Î Àç½ÃÀÛ
+        // ì„ì‹œ: ë°”ë¡œ ì¬ì‹œì‘
         RestartStage();
     }
 
@@ -239,41 +239,41 @@ public class GameManager : MonoBehaviour
 
         TransitionAnimator.Instance.PlayTransition();
 
-        // Àı¹İ »óÅÂ (È­¸éÀÌ µ¤ÀÎ »óÅÂ)±îÁö ´ë±â
+        // ì ˆë°˜ ìƒíƒœ (í™”ë©´ì´ ë®ì¸ ìƒíƒœ)ê¹Œì§€ ëŒ€ê¸°
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         DialogueDeathAnimator.Instance.HideGameOver();
-        // LevelManager¿¡¼­ ¸Ê ¸®·Îµå
+        // LevelManagerì—ì„œ ë§µ ë¦¬ë¡œë“œ
         LevelManager.Instance.ReloadStage();
         ResetGameState();
 
-        // ³ª¸ÓÁö Àı¹İ (È­¸éÀÌ ¿ÏÀüÈ÷ º¸ÀÌ´Â »óÅÂ)±îÁö ´ë±â
+        // ë‚˜ë¨¸ì§€ ì ˆë°˜ (í™”ë©´ì´ ì™„ì „íˆ ë³´ì´ëŠ” ìƒíƒœ)ê¹Œì§€ ëŒ€ê¸°
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         InputManager.Instance.SetState(GameState.Playing);
-        Debug.Log("[GameManager] Àç½ÃÀÛ ¿Ï·á");
+        Debug.Log("[GameManager] ì¬ì‹œì‘ ì™„ë£Œ");
     }
 
     IEnumerator TransitionToNextStage()
     {
         InputManager.Instance.SetState(GameState.Transition);
 
-        // Æ®·£Áö¼Ç ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        // íŠ¸ëœì§€ì…˜ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         TransitionAnimator.Instance.PlayTransition();
 
-        // Àı¹İ »óÅÂ (È­¸éÀÌ µ¤ÀÎ »óÅÂ)±îÁö ´ë±â
+        // ì ˆë°˜ ìƒíƒœ (í™”ë©´ì´ ë®ì¸ ìƒíƒœ)ê¹Œì§€ ëŒ€ê¸°
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
-        // ½ºÅ×ÀÌÁö ¹øÈ£ Áõ°¡, ¸Ê ·Îµå
+        // ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ ì¦ê°€, ë§µ ë¡œë“œ
         currentStage++;
         LevelManager.Instance.LoadNextStage(currentStage);
         ResetGameState();
 
-        // ³ª¸ÓÁö Àı¹İ (È­¸éÀÌ ¿ÏÀüÈ÷ º¸ÀÌ´Â »óÅÂ)±îÁö ´ë±â
+        // ë‚˜ë¨¸ì§€ ì ˆë°˜ (í™”ë©´ì´ ì™„ì „íˆ ë³´ì´ëŠ” ìƒíƒœ)ê¹Œì§€ ëŒ€ê¸°
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         InputManager.Instance.SetState(GameState.Playing);
-        Debug.Log($"[GameManager] {currentStage} ½ºÅ×ÀÌÁö ¸Ê ·Îµå ¿Ï·á");
+        Debug.Log($"[GameManager] {currentStage} ìŠ¤í…Œì´ì§€ ë§µ ë¡œë“œ ì™„ë£Œ");
     }
 
     public int GetRemainingMoves()

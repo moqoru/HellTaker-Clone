@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
 
-    [Header("Å¸ÀÏ ÇÁ¸®ÆÕ")]
+    [Header("íƒ€ì¼ í”„ë¦¬íŒ¹")]
     public GameObject PlayerPrefab;
     public GameObject GoalPrefab;
     public GameObject WallPrefab;
@@ -20,10 +20,10 @@ public class LevelManager : MonoBehaviour
     public GameObject KeyPrefab;
     public GameObject LockBoxPrefab;
 
-    [Header("¹è°æ ÀÌ¹ÌÁö")]
+    [Header("ë°°ê²½ ì´ë¯¸ì§€")]
     public SpriteRenderer backGroundImage;
 
-    [Header("¸Ê ¼³Á¤")]
+    [Header("ë§µ ì„¤ì •")]
     public Vector2 basePosition = Vector2.zero;
     public float tileSize = 1f;
 
@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
     private int mapWidth;
     private int mapHeight;
 
-    // Å¸ÀÏ Å¸ÀÔ
+    // íƒ€ì¼ íƒ€ì…
     public const char TILE_EMPTY = '.';
     public const char TILE_WALL = '#';
     public const char TILE_BLOCK = 'B';
@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
-        // ½Ì±ÛÅæ Áßº¹ ¹æÁö
+        // ì‹±ê¸€í†¤ ì¤‘ë³µ ë°©ì§€
         else if (Instance != this)
         {
             Destroy(gameObject);
@@ -68,7 +68,7 @@ public class LevelManager : MonoBehaviour
     {
         MapFileName = $"Stages/Stage{GameManager.Instance.currentStage}";
         backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
-        // TODO: Epilogue´Â ¹øÈ£ ´Ù¸£°Ô ¼³Á¤
+        // TODO: EpilogueëŠ” ë²ˆí˜¸ ë‹¤ë¥´ê²Œ ì„¤ì •
 
         goalParent = new GameObject("Goals").transform;
         wallParent = new GameObject("Walls").transform;
@@ -80,13 +80,13 @@ public class LevelManager : MonoBehaviour
         GenerateMap();
     }
 
-    /** CSV ÆÄÀÏÀ» ÀĞ°í 2D ¹®ÀÚ ¹è¿­·Î º¯È¯ */
+    /** CSV íŒŒì¼ì„ ì½ê³  2D ë¬¸ì ë°°ì—´ë¡œ ë³€í™˜ */
     private void LoadMapFromCSV()
     {
         TextAsset csvFile = Resources.Load<TextAsset>(MapFileName);
         if (csvFile == null)
         {
-            Debug.LogError($"¸Ê ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù: {MapFileName}");
+            Debug.LogError($"ë§µ íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {MapFileName}");
             return;
         }
 
@@ -112,7 +112,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"ÀÌµ¿ È½¼ö¸¦ ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù: {mapInfo[0]}");
+            Debug.LogError($"ì´ë™ íšŸìˆ˜ë¥¼ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤: {mapInfo[0]}");
         }
 
         if (float.TryParse(mapInfo[1].Trim(), out float offsetX)
@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"¿ÀÇÁ¼Â ÁÂÇ¥¸¦ ºÒ·¯¿ÀÁö ¸øÇß½À´Ï´Ù: x => {mapInfo[1]} y => {mapInfo[2]}");
+            Debug.LogError($"ì˜¤í”„ì…‹ ì¢Œí‘œë¥¼ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆìŠµë‹ˆë‹¤: x => {mapInfo[1]} y => {mapInfo[2]}");
         }
 
         mapData = new string[mapHeight, mapWidth];
@@ -137,16 +137,16 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"¸Ê ·Îµå ¿Ï·á, Å©±â: {mapWidth}x{mapHeight}");
+        Debug.Log($"ë§µ ë¡œë“œ ì™„ë£Œ, í¬ê¸°: {mapWidth}x{mapHeight}");
 
     }
 
-    /** ·ÎµåµÈ ¸Ê µ¥ÀÌÅÍ¸¦ ±â¹İÀ¸·Î ¿ÀºêÁ§Æ® »ı¼º */
+    /** ë¡œë“œëœ ë§µ ë°ì´í„°ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì˜¤ë¸Œì íŠ¸ ìƒì„± */
     private void GenerateMap()
     {
         if(mapData == null)
         {
-            Debug.LogError("¸Ê µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Debug.LogError("ë§µ ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -154,7 +154,7 @@ public class LevelManager : MonoBehaviour
         {
             for (int x = 0; x < mapWidth; x++)
             {
-                // ÆÄÀÏÀÇ Áß½É ÁöÁ¡À» ±âÁØÀ¸·Î À§Ä¡ ÁöÁ¤
+                // íŒŒì¼ì˜ ì¤‘ì‹¬ ì§€ì ì„ ê¸°ì¤€ìœ¼ë¡œ ìœ„ì¹˜ ì§€ì •
                 Vector3 spawnPosition = new Vector3(
                     basePosition.x + (x - mapWidth / 2) * tileSize,
                     basePosition.y - (y - mapHeight / 2) * tileSize,
@@ -207,58 +207,58 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        Debug.Log("¸Ê »ı¼º ¿Ï·á");
+        Debug.Log("ë§µ ìƒì„± ì™„ë£Œ");
     }
 
-    /** ÇöÀç ¸ÊÀÇ ¸ğµç ¿ÀºêÁ§Æ® Á¦°Å */
+    /** í˜„ì¬ ë§µì˜ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ ì œê±° */
     public void ClearCurrentMap()
     {
-        // ¸ğµç ºÎ¸ğ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Ä »èÁ¦
+        // ëª¨ë“  ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ ì‚­ì œ
         DestroyAllChildren(goalParent,
             wallParent,
             blockParent,
             monsterParent,
             thornNormalParent);
 
-        // ´ÜÀÏ ¿ÀºêÁ§Æ®µéµµ ÇÔ²² »èÁ¦
+        // ë‹¨ì¼ ì˜¤ë¸Œì íŠ¸ë“¤ë„ í•¨ê»˜ ì‚­ì œ
         DestroyAllWithTagImmediate("Player", "Key", "LockBox");
 
-        // Grid ÃÊ±âÈ­
+        // Grid ì´ˆê¸°í™”
         GridManager.Instance.ClearGrid();
     }
 
-    /** ½ºÅ×ÀÌÁö ¸®·Îµå */
+    /** ìŠ¤í…Œì´ì§€ ë¦¬ë¡œë“œ */
     public void ReloadStage()
     {
         ClearCurrentMap();
         
-        // TODO: ÅÏ Á¤º¸, ¿ÀÇÁ¼Â Á¤º¸µµ CSV¿¡ ´ã¾Æ ¼³Á¤ÇÏ±â
+        // TODO: í„´ ì •ë³´, ì˜¤í”„ì…‹ ì •ë³´ë„ CSVì— ë‹´ì•„ ì„¤ì •í•˜ê¸°
         LoadMapFromCSV();
         GenerateMap();
     }
 
-    /** ´ÙÀ½ ½ºÅ×ÀÌÁö ·Îµå */
+    /** ë‹¤ìŒ ìŠ¤í…Œì´ì§€ ë¡œë“œ */
     public void LoadNextStage(int stageNum)
     {
         ClearCurrentMap();
 
-        // ¸Ê, ¹è°æ ÀÌ¹ÌÁö ÆÄÀÏ¸í Àç¼³Á¤
+        // ë§µ, ë°°ê²½ ì´ë¯¸ì§€ íŒŒì¼ëª… ì¬ì„¤ì •
         MapFileName = $"Stages/Stage{stageNum}";
         backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
-        // TODO: Epilogue´Â ¹øÈ£ ´Ù¸£°Ô ¼³Á¤
+        // TODO: EpilogueëŠ” ë²ˆí˜¸ ë‹¤ë¥´ê²Œ ì„¤ì •
 
-        // TODO: ¿ÀÇÁ¼Â Á¤º¸µµ CSV¿¡ ´ã¾Æ ¼³Á¤ÇÏ±â
+        // TODO: ì˜¤í”„ì…‹ ì •ë³´ë„ CSVì— ë‹´ì•„ ì„¤ì •í•˜ê¸°
         LoadMapFromCSV();
         GenerateMap();
     }
 
-    /** basePosition Àü´Ş */
+    /** basePosition ì „ë‹¬ */
     public Vector2 GetBasePosition()
     {
         return basePosition;
     }
 
-    /** (µğ¹ö±ë) Æ¯Á¤ ÁÂÇ¥ÀÇ Å¸ÀÏ ¹®ÀÚ È®ÀÎ */
+    /** (ë””ë²„ê¹…) íŠ¹ì • ì¢Œí‘œì˜ íƒ€ì¼ ë¬¸ì í™•ì¸ */
     public string GetTileAt(int x, int y)
     {
         if (x < 0 || y < 0 || x >= mapWidth || y >= mapHeight)
@@ -268,7 +268,7 @@ public class LevelManager : MonoBehaviour
         return mapData[y, x];
     }
 
-    /** (µğ¹ö±ë) ¸Ê Å©±â È®ÀÎ */
+    /** (ë””ë²„ê¹…) ë§µ í¬ê¸° í™•ì¸ */
     public Vector2Int GetMapSize()
     {
         return new Vector2Int(mapWidth, mapHeight);

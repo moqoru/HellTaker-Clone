@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-/** È®Àå ¸Ş¼­µå »ı¼º (static ÇÊ¼ö, this Å°¿öµå È°¿ë)*/
+/** í™•ì¥ ë©”ì„œë“œ ìƒì„± (static í•„ìˆ˜, this í‚¤ì›Œë“œ í™œìš©)*/
 public static class DestroyHelper
 {
-    /** TransformÀÇ ¸ğµç ÀÚ½Ä ¾ÈÀüÇÏ°Ô »èÁ¦ */
+    /** Transformì˜ ëª¨ë“  ìì‹ ì•ˆì „í•˜ê²Œ ì‚­ì œ */
     public static void DestroyAllChildren(this Transform parent)
     {
         if (parent == null) return;
 
-        // foreach ´ë½Å ¿ª¼ø ¼øÈ¸ (»èÁ¦ ½Ã ÀÎµ¦½º ²¿ÀÓ ¹æÁö, ¾ÈÁ¤¼º Çâ»ó)
+        // foreach ëŒ€ì‹  ì—­ìˆœ ìˆœíšŒ (ì‚­ì œ ì‹œ ì¸ë±ìŠ¤ ê¼¬ì„ ë°©ì§€, ì•ˆì •ì„± í–¥ìƒ)
         for (int i = parent.childCount - 1; i >= 0; i--)
         {
             Transform child = parent.GetChild(i);
@@ -19,7 +19,7 @@ public static class DestroyHelper
         }
     }
 
-    /** ¿©·¯ ºÎ¸ğÀÇ ÀÚ½Ä ¾ÈÀüÇÏ°Ô »èÁ¦ (¿À¹ö·Îµå) */
+    /** ì—¬ëŸ¬ ë¶€ëª¨ì˜ ìì‹ ì•ˆì „í•˜ê²Œ ì‚­ì œ (ì˜¤ë²„ë¡œë“œ) */
     public static void DestroyAllChildren(params Transform[] parents)
     {
         foreach (Transform parent in parents)
@@ -28,7 +28,7 @@ public static class DestroyHelper
         }
     }
 
-    /** Æ¯Á¤ ÅÂ±×ÀÇ ¸ğµç ¿ÀºêÁ§Æ® »èÁ¦ */
+    /** íŠ¹ì • íƒœê·¸ì˜ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ ì‚­ì œ */
     public static void DestroyAllWithTagImmediate(string tag)
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
@@ -41,7 +41,7 @@ public static class DestroyHelper
         }
     }
 
-    /** ¿©·¯ ÅÂ±×ÀÇ ¸ğµç ¿ÀºêÁ§Æ® »èÁ¦*/
+    /** ì—¬ëŸ¬ íƒœê·¸ì˜ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ ì‚­ì œ*/
     public static void DestroyAllWithTagImmediate(params string[] tags)
     {
         foreach (string tag in tags)

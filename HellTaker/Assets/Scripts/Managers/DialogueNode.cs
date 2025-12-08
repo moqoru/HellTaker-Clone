@@ -1,4 +1,4 @@
-[System.Serializable]
+ï»¿[System.Serializable]
 public class DialogueNode
 {
     public int dialogueID;
@@ -7,16 +7,16 @@ public class DialogueNode
     public string characterName;
     public string text;
 
-    // ¼±ÅÃÁö µ¥ÀÌÅÍ (Choice, NumberChoice)
+    // ì„ íƒì§€ ë°ì´í„° (Choice, NumberChoice)
     public string[] choiceTexts = new string[3];
     public int[] choiceNextIDs = new int[3];
     public int correctChoiceIndex;
 
-    // NumberChoice Àü¿ë
+    // NumberChoice ì „ìš©
     public int minValue;
     public int maxValue;
 
-    // ´ÙÀ½ ´ë»ç ID(Dialouge, Advice)
+    // ë‹¤ìŒ ëŒ€ì‚¬ ID(Dialouge, Advice)
     public int nextDialogueID;
 }
 

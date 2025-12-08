@@ -7,13 +7,13 @@ public class DialogueDeathAnimator : MonoBehaviour
 {
     public static DialogueDeathAnimator Instance { get; private set; }
 
-    [Header("¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤")]
-    [Tooltip("°ÔÀÓ ¿À¹ö ½ºÇÁ¶óÀÌÆ® ÇÁ·¹ÀÓ ¸ñ·Ï")]
+    [Header("ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •")]
+    [Tooltip("ê²Œì„ ì˜¤ë²„ ìŠ¤í”„ë¼ì´íŠ¸ í”„ë ˆì„ ëª©ë¡")]
     public Sprite[] dialogueDeathFrames;
-    [Tooltip("ÇÁ·¹ÀÓ´ç Áö¼Ó ½Ã°£ (ÃÊ)")]
+    [Tooltip("í”„ë ˆì„ë‹¹ ì§€ì† ì‹œê°„ (ì´ˆ)")]
     public float frameInterval = 0.05f;
 
-    [Header("ÀÚ±â ÀÚ½Å°ú ÀÚ½Ä ¿ÀºêÁ§Æ® ÇÒ´ç")]
+    [Header("ìê¸° ìì‹ ê³¼ ìì‹ ì˜¤ë¸Œì íŠ¸ í• ë‹¹")]
     public CanvasGroup canvasGroup;
     public Image heartAttackAnimation;
     public TextMeshProUGUI deathMessage;
@@ -34,7 +34,7 @@ public class DialogueDeathAnimator : MonoBehaviour
             return;
         }
 
-        // ÀÎ½ºÆåÅÍ¿¡ CanvasGroupÀÌ ¾øÀ» °æ¿ì Á÷Á¢ »ı¼º
+        // ì¸ìŠ¤í™í„°ì— CanvasGroupì´ ì—†ì„ ê²½ìš° ì§ì ‘ ìƒì„±
         if (canvasGroup == null)
         {
             canvasGroup = GetComponent<CanvasGroup>();
@@ -51,7 +51,6 @@ public class DialogueDeathAnimator : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
     }
 
-    /** ÀüÈ¯ ½Ã°£ °è»ê ¹× ÇÁ·¹ÀÓ ÀüÈ¯, Á¾·á Ã³¸® */
     private void Update()
     {
         if (!isPlaying) return;
@@ -74,7 +73,6 @@ public class DialogueDeathAnimator : MonoBehaviour
         }
     }
 
-    /** °ÔÀÓ ¿À¹ö ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı */
     public void PlayGameOver(string message = "Game Over : Press Enter to Restart")
     {
         canvasGroup.alpha = 1f;
@@ -87,19 +85,20 @@ public class DialogueDeathAnimator : MonoBehaviour
         timer = 0f;
         isPlaying = true;
 
+        // ì²« í”„ë ˆì„ì€ ì§ì ‘ í• ë‹¹
         if (dialogueDeathFrames.Length > 0)
         {
             heartAttackAnimation.sprite = dialogueDeathFrames[0];
         }
     }
 
-    /** ¾Ö´Ï¸ŞÀÌ¼Ç ¿Ï·á Ã³¸® */
+    /** ì• ë‹ˆë©”ì´ì…˜ ì™„ë£Œ ì²˜ë¦¬ */
     public void OnAnimationComplete()
     {
         isPlaying = false;
     }
 
-    /** °ÔÀÓ¿À¹ö È­¸é ¼û±â±â */
+    /** ê²Œì„ì˜¤ë²„ í™”ë©´ ìˆ¨ê¸°ê¸° */
     public void HideGameOver()
     {
         canvasGroup.alpha = 0f;

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,31 +29,31 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // ÀÔ·Â Ã³¸® ºÎºĞÀ» InputManager·Î ÀÌµ¿
+        // ì…ë ¥ ì²˜ë¦¬ ë¶€ë¶„ì„ InputManagerë¡œ ì´ë™
     }
 
     private void OnDestroy()
     {
-        // Player°¡ ÆÄ±«µÉ ¶§ Instance¸¦ null·Î ÃÊ±âÈ­, »õ·Î ¸¸µéµµ·Ï ÇÏ±â
+        // Playerê°€ íŒŒê´´ë  ë•Œ Instanceë¥¼ nullë¡œ ì´ˆê¸°í™”, ìƒˆë¡œ ë§Œë“¤ë„ë¡ í•˜ê¸°
         if (Instance == this)
         {
             Instance = null;
         }
     }
 
-    /** ÀÌµ¿ ½Ãµµ */
+    /** ì´ë™ ì‹œë„ */
     public void TryMove(Vector2Int direction)
     {
-        // Playing »óÅÂÀÏ ¶§¸¸ ÀÌµ¿ °¡´É
+        // Playing ìƒíƒœì¼ ë•Œë§Œ ì´ë™ ê°€ëŠ¥
         if (InputManager.Instance.GetState() != GameState.Playing)
         {
-            Debug.LogError("[Player] Playing »óÅÂ°¡ ¾Æ´Ò ¶§ ÀÌµ¿À» ½ÃµµÇß½À´Ï´Ù.");
+            Debug.LogError("[Player] Playing ìƒíƒœê°€ ì•„ë‹ ë•Œ ì´ë™ì„ ì‹œë„í–ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
         Vector2Int targetPos = currentGridPos + direction;
 
-        // ÀÚ¹°¼è Ã¼Å© (¿­¼è¸¦ °®°í ÀÖ´Ù¸é ÀÌµ¿ Àü '¹Ì¸®' ÀÚ¹°¼è Á¦°Å)
+        // ìë¬¼ì‡  ì²´í¬ (ì—´ì‡ ë¥¼ ê°–ê³  ìˆë‹¤ë©´ ì´ë™ ì „ 'ë¯¸ë¦¬' ìë¬¼ì‡  ì œê±°)
         GameObject lockBox = GridManager.Instance.GetObjectWithTagAt(targetPos, "LockBox");
         if (lockBox != null)
         {
@@ -67,41 +67,41 @@ public class Player : MonoBehaviour
             }
         }
 
-        // ÀÌµ¿ ºÒ°¡´ÉÇÏ¸é ÀÌµ¿ ¸·±â
+        // ì´ë™ ë¶ˆê°€ëŠ¥í•˜ë©´ ì´ë™ ë§‰ê¸°
         if (GridManager.Instance.IsPositionBlocked(targetPos))
         {
             return;
         }
 
-        // ¿­¼è È¹µæ Ã³¸®
+        // ì—´ì‡  íšë“ ì²˜ë¦¬
         GameObject key = GridManager.Instance.GetObjectWithTagAt(targetPos, "Key");
         if (key != null)
         {
             CollectKey(key);
         }
 
-        // ¹Ğ ¼ö ÀÖ´Â ¿ÀºêÁ§Æ®°¡ ¹Ğ¸®´ÂÁö Ã¼Å©
+        // ë°€ ìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ë°€ë¦¬ëŠ”ì§€ ì²´í¬
         GameObject pushable = GridManager.Instance.GetPushableAt(targetPos);
         if (pushable != null)
         {
-            // ¹Ğ ¼ö ÀÖ´Â °Ô ÀÖÀ¸¸é '°È¾î Â÷°í' À§Ä¡´Â ±×´ë·Î, ¾Æ´Ï¸é ±× À§Ä¡·Î ÀÌµ¿
+            // ë°€ ìˆ˜ ìˆëŠ” ê²Œ ìˆìœ¼ë©´ 'ê±·ì–´ ì°¨ê³ ' ìœ„ì¹˜ëŠ” ê·¸ëŒ€ë¡œ, ì•„ë‹ˆë©´ ê·¸ ìœ„ì¹˜ë¡œ ì´ë™
             if (!TryPushObject(pushable, targetPos, direction))
             {
                 return;
             }
-            // TODO: ºí·°À» °È¾î Âû °æ¿ì °È¾îÂ÷´Â ¸ğ¼Ç Àç»ı ÇÊ¿ä
+            // TODO: ë¸”ëŸ­ì„ ê±·ì–´ ì°° ê²½ìš° ê±·ì–´ì°¨ëŠ” ëª¨ì…˜ ì¬ìƒ í•„ìš”
             GameManager.Instance.IncreaseMoveCount(1);
         }
         else
         {
-            // ÀÌµ¿ È½¼ö ±âº» 1È¸, µµÂø ÁöÁ¡¿¡¼­ °¡½Ã¿¡ Âñ¸± °æ¿ì ÀÌµ¿ È½¼ö 2È¸
+            // ì´ë™ íšŸìˆ˜ ê¸°ë³¸ 1íšŒ, ë„ì°© ì§€ì ì—ì„œ ê°€ì‹œì— ì°”ë¦´ ê²½ìš° ì´ë™ íšŸìˆ˜ 2íšŒ
             int moveCount = 1;
             if (GridManager.Instance.IsPositionPunished(targetPos))
             {
                 moveCount++;
             }
 
-            // ÀÏ¹İ ÀÌµ¿ ¼öÇà
+            // ì¼ë°˜ ì´ë™ ìˆ˜í–‰
             GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
             currentGridPos = targetPos;
 
@@ -110,16 +110,16 @@ public class Player : MonoBehaviour
 
     }
 
-    /** ¿ÀºêÁ§Æ® ¹Ğ±â ½Ãµµ */
+    /** ì˜¤ë¸Œì íŠ¸ ë°€ê¸° ì‹œë„ */
     private bool TryPushObject(GameObject pushable, Vector2Int pushablePos, Vector2Int direction)
     {
         Vector2Int pushTargetPos = pushablePos + direction;
 
-        // ¹Ğ¸± À§Ä¡°¡ Àå¾Ö¹°ÀÌ³ª ´Ù¸¥ ¹Ğ¸®´Â ¿ÀºêÁ§Æ®·Î ¸·ÇôÀÖ´ÂÁö Ã¼Å©
+        // ë°€ë¦´ ìœ„ì¹˜ê°€ ì¥ì• ë¬¼ì´ë‚˜ ë‹¤ë¥¸ ë°€ë¦¬ëŠ” ì˜¤ë¸Œì íŠ¸ë¡œ ë§‰í˜€ìˆëŠ”ì§€ ì²´í¬
         if (GridManager.Instance.IsPositionBlocked(pushTargetPos)
             || GridManager.Instance.GetPushableAt(pushTargetPos))
         {
-            // Monster´Â º®¿¡ ¹Ğ¸®¸é Á¦°Å Ã³¸®
+            // MonsterëŠ” ë²½ì— ë°€ë¦¬ë©´ ì œê±° ì²˜ë¦¬
             if (pushable.CompareTag("Monster"))
             {
                 DestroyMonster(pushable, pushablePos);
@@ -127,43 +127,43 @@ public class Player : MonoBehaviour
                 return false;
             }
 
-            return false; // BlockÀº º®À¸·Î ¹Ğ ¼ö ¾øÀ½
+            return false; // Blockì€ ë²½ìœ¼ë¡œ ë°€ ìˆ˜ ì—†ìŒ
         }
 
-        // ¹Ğ¸± À§Ä¡¿¡ ´Ù¸¥ ¹Ğ ¼ö ÀÖ´Â ¿ÀºêÁ§Æ® ÀÖ´ÂÁö Ã¼Å©
+        // ë°€ë¦´ ìœ„ì¹˜ì— ë‹¤ë¥¸ ë°€ ìˆ˜ ìˆëŠ” ì˜¤ë¸Œì íŠ¸ ìˆëŠ”ì§€ ì²´í¬
         GameObject anotherPushable = GridManager.Instance.GetPushableAt(pushTargetPos);
         if (anotherPushable != null)
         {
-            return false; // BlockÀÌ ¿¬¼ÓÀ¸·Î ÀÖÀ¸¸é ¹Ğ ¼ö ¾øÀ½
+            return false; // Blockì´ ì—°ì†ìœ¼ë¡œ ìˆìœ¼ë©´ ë°€ ìˆ˜ ì—†ìŒ
         }
 
-        // ¹Ğ±â Ã³¸®
+        // ë°€ê¸° ì²˜ë¦¬
         GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos);
 
         return true;
     }
 
-    /** ¸ó½ºÅÍ Á¦°Å */
+    /** ëª¬ìŠ¤í„° ì œê±° */
     private void DestroyMonster(GameObject monster, Vector2Int monsterPos)
     {
         GridManager.Instance.UnregisterObject(monster);
         Destroy(monster);
     }
 
-    /** ¿­¼è È¹µæ Ã³¸® */
+    /** ì—´ì‡  íšë“ ì²˜ë¦¬ */
     private void CollectKey(GameObject key)
     {
         GameManager.Instance.SetKey(true);
         GridManager.Instance.UnregisterObject(key);
         Destroy(key);
-        Debug.Log("¿­¼è È¹µæ");
+        Debug.Log("ì—´ì‡  íšë“");
     }
 
-    /** ÀÚ¹°¼è ¿­±â Ã³¸® */
+    /** ìë¬¼ì‡  ì—´ê¸° ì²˜ë¦¬ */
     private void UnlockBox(GameObject lockBox, Vector2Int lockBoxPos)
     {
         GridManager.Instance.UnregisterObject(lockBox);
         Destroy(lockBox);
-        Debug.Log("ÀÚ¹°¼è ÇØÁ¦");
+        Debug.Log("ìë¬¼ì‡  í•´ì œ");
     }
 }

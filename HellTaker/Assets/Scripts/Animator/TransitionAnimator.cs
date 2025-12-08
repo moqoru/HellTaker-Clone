@@ -1,33 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class TransitionAnimator : MonoBehaviour
 {
     public static TransitionAnimator Instance { get; private set; }
 
-    [Header("¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤")]
-    [Tooltip("¸¶Áö¸· Á¦¿Ü ÇÁ·¹ÀÓµé")]
-    public Sprite[] mainFrames;
-    [Tooltip("¸¶Áö¸· ÇÁ·¹ÀÓÀÇ ÁÂ, ¿ì ºÎºĞ")]
-    public Sprite[] lastFrameSprites;
-    [Tooltip("ÇÁ·¹ÀÓ´ç Áö¼Ó ½Ã°£ (ÃÊ")]
+    [Header("ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •")]
+    [Tooltip("íŠ¸ëœì§€ì…˜ í”„ë ˆì„ ëª©ë¡")]
+    public Sprite[] transitionFrames;
+    [Tooltip("í”„ë ˆì„ë‹¹ ì§€ì† ì‹œê°„ (ì´ˆ")]
     public float frameInterval = 0.05f;
 
-    [Header("ÀÚ±â ÀÚ½Å°ú ÀÚ½Ä ¿ÀºêÁ§Æ® ÇÒ´ç")]
-    public CanvasGroup parentCanvasGroup;
-    public CanvasGroup mainCanvasGroup;
-    public CanvasGroup[] lastFrameCanvasGroups;
-    public Image mainImage;
-    public Image[] lastFrameImages;
+    [Header("ì˜¤ë¸Œì íŠ¸ í• ë‹¹")]
+    public CanvasGroup canvasGroup;
+    public Image transitionAnimation;
 
     private int currentFrame = 0;
     private float timer = 0f;
     private bool isPlaying = false;
 
-    public float TotalDuration => (mainFrames.Length + 2) * frameInterval;
+    public float TotalDuration => transitionFrames.Length * frameInterval;
     public float HalfDuration => TotalDuration * 0.5f;
-
-    public bool IsPlaying => isPlaying;
 
     private void Awake()
     {
@@ -40,51 +33,23 @@ public class TransitionAnimator : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        // ì¸ìŠ¤í™í„°ì— CanvasGroupì´ ì—†ì„ ê²½ìš° ì§ì ‘ ìƒì„±
+        if (canvasGroup == null)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            }
+        }
     }
 
     private void Start()
     {
-        // ÀÎ½ºÆåÅÍ¿¡ CanvasGroupÀÌ ¾øÀ» °æ¿ì Á÷Á¢ »ı¼º
-        if (parentCanvasGroup == null)
-        {
-            parentCanvasGroup = GetComponent<CanvasGroup>();
-            if (parentCanvasGroup == null)
-            {
-                parentCanvasGroup = gameObject.AddComponent<CanvasGroup>();
-            }
-        }
-        DeactiveCanvasGroup(parentCanvasGroup);
-
-        if (mainCanvasGroup == null)
-        {
-            mainCanvasGroup = mainImage.GetComponent<CanvasGroup>();
-            if (mainCanvasGroup == null)
-            {
-                mainCanvasGroup = mainImage.gameObject.AddComponent<CanvasGroup>();
-            }
-        }
-        DeactiveCanvasGroup(mainCanvasGroup);
-
-        // ¸¶Áö¸· ÇÁ·¹ÀÓ ÀÌ¹ÌÁö´Â Äµ¹ö½º ±×·ì°ú ÀÌ¹ÌÁö ¹è¿­ Å©±â°¡ ¾È ¸ÂÀ¸¸é Á¶Á¤
-        if (lastFrameCanvasGroups == null || lastFrameCanvasGroups.Length != lastFrameImages.Length)
-        {
-            lastFrameCanvasGroups = new CanvasGroup[lastFrameImages.Length];
-        }
-
-        for (int i = 0; i < lastFrameImages.Length; i++)
-        {
-            if (lastFrameCanvasGroups[i] == null)
-            {
-                lastFrameCanvasGroups[i] = lastFrameImages[i].GetComponent<CanvasGroup>();
-                if (lastFrameCanvasGroups[i] == null)
-                {
-                    lastFrameCanvasGroups[i] = lastFrameImages[i].gameObject.AddComponent<CanvasGroup>();
-                }
-            }
-            DeactiveCanvasGroup(lastFrameCanvasGroups[i]);
-        }
-
-        HideAllImages();
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
 
     private void Update()
@@ -98,15 +63,9 @@ public class TransitionAnimator : MonoBehaviour
             timer = 0f;
             currentFrame++;
 
-            // ÀÏ¹İ ÇÁ·¹ÀÓ (¸¶Áö¸· Àü±îÁö)
-            if (currentFrame < mainFrames.Length)
+            if (currentFrame < transitionFrames.Length)
             {
-                ShowMainFrame(currentFrame);
-            }
-            // ¸¶Áö¸· ÇÁ·¹ÀÓ
-            else if (currentFrame == mainFrames.Length)
-            {
-                ShowLastFrame();
+                transitionAnimation.sprite = transitionFrames[currentFrame];
             }
             else
             {
@@ -117,70 +76,26 @@ public class TransitionAnimator : MonoBehaviour
 
     public void PlayTransition()
     {
-        ActiveCanvasGroup(parentCanvasGroup);
+        canvasGroup.alpha = 1f;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
         
         currentFrame = 0;
         timer = 0f;
         isPlaying = true;
 
-        // ½ºÇÁ¶óÀÌÆ® ¹ÌÇÒ´ç ¿À·ù ¹æÁö
-        if (mainFrames.Length > 0)
+        // ì²« í”„ë ˆì„ì€ ì§ì ‘ í• ë‹¹
+        if (transitionFrames.Length > 0)
         {
-            ShowMainFrame(0);
-        }
-    }
-
-    private void ShowMainFrame(int frameIndex)
-    {
-        mainImage.sprite = mainFrames[frameIndex];
-        ActiveCanvasGroup(mainCanvasGroup);
-        
-        foreach (CanvasGroup cg in lastFrameCanvasGroups)
-        {
-            DeactiveCanvasGroup(cg);
-        }
-    }
-
-    private void ShowLastFrame()
-    {
-        DeactiveCanvasGroup(mainCanvasGroup);
-        
-        for (int i = 0; i < lastFrameCanvasGroups.Length && i < lastFrameSprites.Length; i++)
-        {
-            lastFrameImages[i].sprite = lastFrameSprites[i];
-            DeactiveCanvasGroup(lastFrameCanvasGroups[i]);
-        }
-    }
-
-    private void ActiveCanvasGroup(CanvasGroup cg)
-    {
-        cg.alpha = 1f;
-        cg.interactable = true;
-        cg.blocksRaycasts = true;
-    }
-
-    private void DeactiveCanvasGroup(CanvasGroup cg)
-    {
-        cg.alpha = 0f;
-        cg.interactable = false;
-        cg.blocksRaycasts = false;
-    }
-
-    /** Parent¸¦ Á¦¿ÜÇÑ ÀÌ¹ÌÁö ºñÈ°¼ºÈ­ */
-    private void HideAllImages()
-    {
-        DeactiveCanvasGroup(mainCanvasGroup);
-        foreach (CanvasGroup cg in lastFrameCanvasGroups)
-        {
-            DeactiveCanvasGroup(cg);
+            transitionAnimation.sprite = transitionFrames[0];
         }
     }
 
     private void OnTransitionEnd()
     {
-        isPlaying = false;
-        DeactiveCanvasGroup(parentCanvasGroup);
-        HideAllImages();
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
 
 }
