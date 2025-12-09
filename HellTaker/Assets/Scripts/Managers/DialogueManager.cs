@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,12 +17,12 @@ public class DialogueManager : MonoBehaviour
     public CanvasGroup choicePanel; // 선택지 Alpha 제어용
     public List<Image> choiceBackgrounds; // 선택지 배경 (하이라이트용)
     public List<TextMeshProUGUI> choiceTexts;
-    public int normalFontSize = 24;
+    public int normalFontSize = 36;
     public int highlightedFontSize = 48;
 
-    [Header("UI Colors")]
-    public Color normalChoiceColor = new Color(0.3f, 0.3f, 0.3f);
-    public Color highlightedChoiceColor = new Color(0.8f, 0.8f, 0.3f);
+    [Header("Choice Sprites")]
+    public Sprite selectedChoiceSprite;
+    public Sprite unselectedChoiceSprite;
 
     [Header("Character Sprites")]
     private Dictionary<string, Sprite> characterSprites;
@@ -409,7 +408,7 @@ public class DialogueManager : MonoBehaviour
     {
         choiceTexts[0].text = currentNumberValue.ToString();
         choiceTexts[0].fontSize = highlightedFontSize;
-        choiceBackgrounds[0].color = highlightedChoiceColor;
+        // choiceBackgrounds[0].color = highlightedChoiceColor;
     }
 
     public void AdvanceDialogue()
@@ -478,11 +477,13 @@ public class DialogueManager : MonoBehaviour
         {
             if (i == currentChoiceIndex)
             {
-                choiceBackgrounds[i].color = highlightedChoiceColor;
+                choiceBackgrounds[i].sprite = selectedChoiceSprite;
+                choiceBackgrounds[i].SetNativeSize();
             }
             else
             {
-                choiceBackgrounds[i].color = normalChoiceColor;
+                choiceBackgrounds[i].sprite = unselectedChoiceSprite;
+                choiceBackgrounds[i].SetNativeSize();
             }
         }
     }
