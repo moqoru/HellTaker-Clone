@@ -51,6 +51,12 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // 게임오버나 클리어 상태면 이동 불가
+        if (GameManager.Instance.IsGameOver() || GameManager.Instance.IsStageCleared())
+        {
+            return;
+        }
+
         Vector2Int targetPos = currentGridPos + direction;
 
         // 자물쇠 체크 (열쇠를 갖고 있다면 이동 전 '미리' 자물쇠 제거)

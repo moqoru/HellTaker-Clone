@@ -9,15 +9,17 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance { get; private set; }
 
     [Header("UI References")]
-    public CanvasGroup dialoguePanel; // Alpha 제어용
+    public CanvasGroup dialoguePanel;
     public Image characterBackGroundImage;
     public Image characterImage;
     public TextMeshProUGUI characterNameText;
     public TextMeshProUGUI dialogueText;
-    public CanvasGroup choicePanel; // 선택지 Alpha 제어용
-    public List<Image> choiceBackgrounds; // 선택지 배경 (하이라이트용)
+    public CanvasGroup choicePanel;
+    public List<Image> choiceBackgrounds;
     public List<TextMeshProUGUI> choiceTexts;
-    public int normalFontSize = 36;
+    public CanvasGroup successPanel;
+    public Image successImage;
+    public int normalFontSize = 29;
     public int highlightedFontSize = 48;
 
     [Header("Choice Sprites")]
@@ -328,25 +330,27 @@ public class DialogueManager : MonoBehaviour
         // 대사 텍스트 설정
         dialogueText.text = node.text;
 
-        // TODO: 타입 체크할 때 switch case문으로 바꾸기
-        if (node.type == DialogueType.Choice)
+        switch(node.type)
         {
-            ShowChoices(node);
-        }
-        else if (node.type == DialogueType.NumberChoice)
-        {
-            ShowNumberChoice(node);
-        }
-        else if (node.type == DialogueType.GameOver)
-        {
-            EndDialogue(false);
-            OnWrongChoice?.Invoke(node.text);
-        }
-        else // Dialogue, Advice
-        {
-            IsShowingChoice = false;
-            IsNumberChoice = false;
-            choicePanel.alpha = 0;
+            case DialogueType.Choice:
+                ShowChoices(node);
+                break;
+            case DialogueType.NumberChoice:
+                ShowNumberChoice(node);
+                break;
+            case DialogueType.GameOver:
+                EndDialogue(false);
+                OnWrongChoice?.Invoke(node.text);
+                break;
+            case DialogueType.Success:
+                // TODO : Glorius Success와 우효해골 이미지 나오는 스테이지 대응
+                successPanel.alpha = 1;
+                break;
+            default: // Dialogue, Advice
+                IsShowingChoice = false;
+                IsNumberChoice = false;
+                choicePanel.alpha = 0;
+                break;
         }
 
     }
@@ -426,9 +430,10 @@ public class DialogueManager : MonoBehaviour
                 DialogueNode nextNode = currentDialogueData[currentNode.nextDialogueID];
 
                 // Advice에서 Advice가 아닌 대사로 넘어가면 인생 조언 종료
+                // TODO : NumberChoice 완성 후, Advice에서 NumberChoice로 넘어갈 때는 자동으로 넘어가도록 처리
                 if (currentNode.type == DialogueType.Advice && nextNode.type != DialogueType.Advice)
                 {
-                    EndDialogue(false); // 인생 조언 종료 후 게임으로 복귀
+                    EndDialogue(true); // 인생 조언 종료 후 게임으로 복귀
                     return;
                 }
 
@@ -558,9 +563,15 @@ public class DialogueManager : MonoBehaviour
         IsShowingChoice = false;
         IsNumberChoice = false;
 
+        // 선택지와 성공 이미지를 페이드 아웃 전에 먼저 숨기기
+        // TODO : 트랜지션 화면이 '절반을 덮었을 때' 사라지도록 변경하기
+        choicePanel.alpha = 0;
+        successPanel.alpha = 0;
+
         // UI 비활성화
         StartCoroutine(FadeOut(dialoguePanel));
-        StartCoroutine(FadeOut(choicePanel));
+        // StartCoroutine(FadeOut(successPanel));
+        // StartCoroutine(FadeOut(choicePanel));
 
         // 게임으로 복귀해야 할 경우 (인생 조언 종료 시)
         if (returnToGame)

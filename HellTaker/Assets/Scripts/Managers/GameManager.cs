@@ -48,10 +48,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (isStageCleared || isGameOver)
         {
             return;
-        }
+        }*/
         // CheckWinCondition();
     }
 
@@ -165,18 +166,17 @@ public class GameManager : MonoBehaviour
         }
 
         currentMoveCount += amount;
-
         UpdateUI();
 
-        CheckWinCondition();
-
-        // 게임 미 클리어시, 이동 횟수 초과 체크
-        if (isStageCleared) return;
-
-        if (currentMoveCount >= maxMoveCount)
+        // 이동 횟수 초과 시 게임오버
+        // TODO : 게임오버시 캐릭터 사망 애니메이션 재생
+        if (currentMoveCount > maxMoveCount)
         {
             OnGameOver();
+            return;
         }
+
+        CheckWinCondition();
     }
 
     private void OnLevelClear()
