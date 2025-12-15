@@ -1,0 +1,10 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+1,Choice,Scene/Characters/Mal_Idle,시큰둥한 악마 말리나,"""대단하네, 또 골 빈 빡대가리들이야...\n너같이 못생긴 놈은 처음인데, 지옥에서 뭘 하고 있어?""","""너랑 같이 놀고 싶은데.""",2,"""기분 좋은데. 더 매도해 줘.""",101,,
+2,Success,Scene/Characters/Mal_Puzzled,시큰둥한 악마 말리나,"""뭐... 게임? 그래, 안 될 게 어디 있어.\n턴제 전략 게임이 괜찮다면야.""",,,,,,
+101,Dialogue,Scene/Characters/Mal_Idle,시큰둥한 악마 말리나,"""기가 막히네. 마조 새끼나 또 보고.""",,,,,,
+102,GameOver,,,"""말리나가 팔을 휘두르자 작살 난 당신 목에서\n피가 분수처럼 터져 나왔다.""",,,,,,
+201,Advice,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""이건 도움이 필요할 것 같진 않은데요.""",,,,,,
+202,Advice,Scene/Characters/Pand_Flust,피곤한 악마 판데모니카,"""아니면 그냥 잡담이라도 하고 싶은 건가요?""",,,,,,
+203,Advice,Scene/Characters/Cer_Idle,세 쌍둥이 악마 케르베로스,"""무슨 냄새 안 나? 오렌지, 딸기랑... 보드카?""",,,,,,
+204,Advice,Scene/Characters/Cer_Happy,세 쌍둥이 악마 케르베로스,"""확실해. 이거 분명 말리나일 거야.\n걘 비싸게 굴긴 해도, 너라면 친해질 수 있을거야.""",,,,,,
+205,Advice,Scene/Characters/Cer_Happy,세 쌍둥이 악마 케르베로스,"""그러고 나서 우리 다 같이 재밌게 놀자!""",,,,,,

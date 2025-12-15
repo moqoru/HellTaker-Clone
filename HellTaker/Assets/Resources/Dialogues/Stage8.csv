@@ -1,0 +1,11 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+1,Dialogue,Scene/Characters/Lu_Idle,지옥의 CEO 루시퍼,"""이제야 만나네. 넌 시련들을 통과하며 가치를 증명했어.""",,,,,,
+2,Choice,Scene/Characters/Lu_Idle,지옥의 CEO 루시퍼,"""영혼을 바치면 아끼는 종으로 삼아 주마.""","""네, 여왕님!""",101,"""사양할게. 내 하렘에 들어와라.""",3,,
+3,Choice,Scene/Characters/Lu_Angry,지옥의 CEO 루시퍼,"""뭘 하려는 거지? 악마를 굴복시킬 수 있을 거라고 생각해?""","""주인님이라고 불러라. 그리고 말을 꺼내기 전에 허락을 구해라.""",103,"""커피, 턴제 전략 게임과 초콜렛 팬케이크를 제공할 수 있지.""",4,,
+4,Dialogue,Scene/Characters/Lu_Angry,지옥의 CEO 루시퍼,"""정말? 그게 다야?\n여기까지 와 놓고선, 날 고작 팬케이크로 사려고?""",,,,,,
+5,Success,Scene/Characters/Lu_Happy,지옥의 CEO 루시퍼,"""내가 팬케이크를 좋아하니 운 좋은 줄 알아라.""",,,,,,
+6,Dialogue,Scene/Characters/Lu_Happy,지옥의 CEO 루시퍼,"""그럼 설득된 것 같네. 어쩌면 네 하렘이라는 게 재밌을 수도 있겠어.""",,,,,,
+101,Dialogue,Scene/Characters/Lu_Idle,지옥의 CEO 루시퍼,"""절절하고 어린 영혼이로고...""",,,,,,
+102,GameOver,,,"""당신이 무릎을 꿇자 루시퍼는 당신의 이마에 입을 맞췄다.\n당신의 생명은 그대로 녹아내렸다.""",,,,,,
+103,Dialogue,Scene/Characters/Lu_Angry,지옥의 CEO 루시퍼,"""네 주제를 가르쳐 줘야겠구나.""",,,,,,
+104,GameOver,,,"""루시퍼의 손짓에, 당신의 피는 모조리 식초로 변해 버렸다.\n참으로 형언하기 어려운 느낌이다.""",,,,,,

@@ -1,0 +1,8 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+1,Choice,Scene/Characters/Jus_Curious,끝내주는 악마 저스티스,"""야, 저 퍼즐을 풀었어? 끝내주는데!""","""푸느라 손 좀 갔지. 하렘에 들어올래?""",2,"""메뉴에서 그냥 건너뛰었어. 하렘에 들어올래?""",3,,
+2,Success,Scene/Characters/Jus_Idle,끝내주는 악마 저스티스,"""뭘 굳이 물어봐. 난 파티엔 안 빠져.""",,,,,,
+3,Success,Scene/Characters/Jus_Idle,끝내주는 악마 저스티스,"""나라도 그랬겠다.\n당연히 가지. 많을수록 즐겁잖아?",,,,,,
+201,Advice,Scene/Characters/Az_Idle,호기심 많은 천사 아자젤,"""이번 건 까다로워 보이네요.\n완벽한 풀이를 위해서 여러 번 시도할 필요가 있겠어요.""",,,,,,
+202,Advice,Scene/Characters/Az_Idle,호기심 많은 천사 아자젤,"""그럼, 천천히 하세요. 여기 모데우스 씨가 사랑에 관해\n꽤나 뒤틀린 관점을 풀어 주시네요.""",,,,,,
+203,Advice,Scene/Characters/Mod_Idle,음란한 악마 모데우스,"""...너무 폭력적으로 변할 수 있으니 적당히 하는 게 중요해.\n너무 사랑해 버리면 다들 죽더라고.""",,,,,,
+204,Advice,Scene/Characters/Az_Note,호기심 많은 천사 아자젤,"""재밌네요. 자세히 알아보고 싶은데 좀 더 설명 해 주세요.""",,,,,,

@@ -1,0 +1,9 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+1,Choice,Scene/Characters/Zd_Idle,상스러운 악마 즈드라다,"""야. 하렘 꾸린다고 들었는데. 나도 낄래.""","""잠깐만. 나중에 후회할 것 같은 기분인데.""",2,"""사실 하렘같은 거 때려치웠어. 턴제 전략 게임이나 할 거야.""",101,,
+2,Success,Scene/Characters/Zd_Laugh,상스러운 악마 즈드라다,"""안 됐지만 그래도 낄 거야. 막을 테면 막아 보던가.""",,,,,,
+101,Dialogue,Scene/Characters/Zd_Idle,상스러운 악마 즈드라다,"""어우 씨. 그 고통을 끝내줄게.""",,,,,,
+102,GameOver,,,"""갈비뼈 사이에 자루 깊숙이 박힌 칼을 끝으로\n당신의 시야는 흐려졌다.""",,,,,,
+201,Advice,Scene/Characters/Mal_Idle,시큰둥한 악마 말리나,"""뭐야, 리듬 돌죽을 해 본 적이 없어?""",,,,,,
+202,Advice,Scene/Characters/Mal_Idle,시큰둥한 악마 말리나,"""가시밭 타이밍이 안 맞는다면\n타이밍 맞을 때까지 옆에 돌덩이나 걷어 차.""",,,,,,
+203,Advice,Scene/Characters/Cer_Idle,세 쌍둥이 악마 케르베로스,"""여기 담배냄새가 진동을 하는데. 근처에 분명 즈드라다가 있어.""",,,,,,
+204,Advice,Scene/Characters/Mal_Puzzled,시큰둥한 악마 말리나,"""하... 제발...""",,,,,,
