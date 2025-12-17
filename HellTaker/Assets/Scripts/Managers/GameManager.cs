@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI stageText;
 
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
+    
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
     private bool isGameOver = false;
@@ -81,7 +82,6 @@ public class GameManager : MonoBehaviour
 
         ResetGameState();
         InputManager.Instance.SetState(GameState.Playing);
-        Debug.Log("[GameManager] Initialize 완료");
     }
 
     private void UpdateUI()
@@ -179,10 +179,20 @@ public class GameManager : MonoBehaviour
         CheckWinCondition();
     }
 
+    /** 스테이지 스킵 (테스트용, TODO: 이후 일시정지 메뉴로 넣기) */
+    public void SkipToDialogue()
+    {
+        if (isStageCleared || isGameOver)
+        {
+            return;
+        }
+
+        OnLevelClear();
+    }
+
     private void OnLevelClear()
     {
         isStageCleared = true;
-        Debug.Log("=== 레벨 클리어! ===");
 
         // 대화 콜백 설정
         DialogueManager.Instance.OnDialogueEnd = () =>
@@ -217,7 +227,6 @@ public class GameManager : MonoBehaviour
     private void OnGameOver()
     {
         isGameOver = true;
-        Debug.Log("=== 게임 오버! 이동 횟수 초과 ===");
 
         // TODO: 캐릭터 죽는 애니메이션 만들고 재생
         // DeathAnimation.Instance.PlayDeath(() => {
@@ -251,7 +260,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         InputManager.Instance.SetState(GameState.Playing);
-        Debug.Log("[GameManager] 재시작 완료");
     }
 
     IEnumerator TransitionToNextStage()
@@ -273,7 +281,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         InputManager.Instance.SetState(GameState.Playing);
-        Debug.Log($"[GameManager] {currentStage} 스테이지 맵 로드 완료");
     }
 
     public int GetRemainingMoves()

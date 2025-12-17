@@ -79,41 +79,38 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // 열쇠 획득 처리
-        GameObject key = GridManager.Instance.GetObjectWithTagAt(targetPos, "Key");
-        if (key != null)
-        {
-            CollectKey(key);
-        }
-
-        // 밀 수 있는 오브젝트가 밀리는지 체크
         GameObject pushable = GridManager.Instance.GetPushableAt(targetPos);
+
         if (pushable != null)
         {
-            // 밀 수 있는 게 있으면 '걷어 차고' 위치는 그대로, 아니면 그 위치로 이동
-            if (!TryPushObject(pushable, targetPos, direction))
-            {
-                return;
-            }
-            // TODO: 블럭을 걷어 찰 경우 걷어차는 모션 재생 필요
-            GameManager.Instance.IncreaseMoveCount(1);
+            // 밀 수 있는 게 있으면 제자리에서 그 물체만 걷어 차기
+            // TODO: 블럭을 걷어 찰 경우 걷어차는 모션 재생 필요, 블럭이 움직일 때와 안 움직일 때 모션 구분
+            TryPushObject(pushable, targetPos, direction);
         }
         else
-        {
-            // 이동 횟수 기본 1회, 도착 지점에서 가시에 찔릴 경우 이동 횟수 2회
-            int moveCount = 1;
-            if (GridManager.Instance.IsPositionPunished(targetPos))
-            {
-                moveCount++;
-            }
-
-            // 일반 이동 수행
+        { 
+            // 밀 수 있는 게 없으면 일반 이동 수행
             GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
             currentGridPos = targetPos;
 
-            GameManager.Instance.IncreaseMoveCount(moveCount);
+            // 열쇠 획득 처리
+            GameObject key = GridManager.Instance.GetObjectWithTagAt(currentGridPos, "Key");
+            if (key != null)
+            {
+                CollectKey(key);
+            }
         }
 
+        GridManager.Instance.ToggleThorns();
+
+        int moveCount = 1;
+        // 이동한 지점에서 가시에 찔릴 경우 이동 횟수 2회 처리
+        if (GridManager.Instance.IsPositionPunished(currentGridPos))
+        {
+            moveCount++;
+        }
+        
+        GameManager.Instance.IncreaseMoveCount(moveCount);
     }
 
     /** 오브젝트 밀기 시도 */
@@ -129,7 +126,6 @@ public class Player : MonoBehaviour
             if (pushable.CompareTag("Monster"))
             {
                 DestroyMonster(pushable, pushablePos);
-                GameManager.Instance.IncreaseMoveCount(1);
                 return false;
             }
 

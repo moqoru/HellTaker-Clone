@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
     public GameObject BlockPrefab;
     public GameObject MonsterPrefab;
     public GameObject ThornNormalPrefab;
+    public GameObject ThornTogglePrefab;
     public GameObject KeyPrefab;
     public GameObject LockBoxPrefab;
 
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
     private Transform blockParent;
     private Transform monsterParent;
     private Transform thornNormalParent;
+    private Transform thornToggleParent;
 
     private string MapFileName;
     private string[,] mapData;
@@ -46,8 +48,8 @@ public class LevelManager : MonoBehaviour
     public const char TILE_GOAL = 'G';
     public const char TILE_MONSTER = 'M';
     public const char TILE_THORN_NORMAL = 'T';
-    public const char TILE_THORN_TOGGLE_SHOWN = 'S';
-    public const char TILE_THORN_TOGGLE_HIDDEN = 'H';
+    public const char TILE_THORN_UP = 'U';
+    public const char TILE_THORN_DOWN = 'D';
     public const char TILE_KEY = 'K';
     public const char TILE_LOCKBOX = 'L';
 
@@ -75,6 +77,7 @@ public class LevelManager : MonoBehaviour
         blockParent = new GameObject("Blocks").transform;
         monsterParent = new GameObject("Monsters").transform;
         thornNormalParent = new GameObject("ThornsNormal").transform;
+        thornToggleParent = new GameObject("ThornsToggle").transform;
 
         LoadMapFromCSV();
         GenerateMap();
@@ -137,8 +140,6 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"맵 로드 완료, 크기: {mapWidth}x{mapHeight}");
-
     }
 
     /** 로드된 맵 데이터를 기반으로 오브젝트 생성 */
@@ -179,6 +180,23 @@ public class LevelManager : MonoBehaviour
                     spawnedObject = Instantiate(LockBoxPrefab, spawnPosition, Quaternion.identity, null);
                     GridManager.Instance.RegisterObject(spawnedObject);
                 }
+                if (tileData.Contains(TILE_THORN_NORMAL))
+                {
+                    spawnedObject = Instantiate(ThornNormalPrefab, spawnPosition, Quaternion.identity, thornNormalParent);
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
+                if (tileData.Contains(TILE_THORN_UP))
+                {
+                    spawnedObject = Instantiate(ThornTogglePrefab, spawnPosition, Quaternion.identity, thornToggleParent);
+                    spawnedObject.tag = "ThornUp";
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
+                if (tileData.Contains(TILE_THORN_DOWN))
+                {
+                    spawnedObject = Instantiate(ThornTogglePrefab, spawnPosition, Quaternion.identity, thornToggleParent);
+                    spawnedObject.tag = "ThornDown";
+                    GridManager.Instance.RegisterObject(spawnedObject);
+                }
                 if (tileData.Contains(TILE_GOAL))
                 {
                     spawnedObject = Instantiate(GoalPrefab, spawnPosition, Quaternion.identity, goalParent);
@@ -199,15 +217,9 @@ public class LevelManager : MonoBehaviour
                     spawnedObject = Instantiate(MonsterPrefab, spawnPosition, Quaternion.identity, monsterParent);
                     GridManager.Instance.RegisterObject(spawnedObject);
                 }
-                if (tileData.Contains(TILE_THORN_NORMAL))
-                {
-                    spawnedObject = Instantiate(ThornNormalPrefab, spawnPosition, Quaternion.identity, thornNormalParent);
-                    GridManager.Instance.RegisterObject(spawnedObject);
-                }
             }
         }
 
-        Debug.Log("맵 생성 완료");
     }
 
     /** 현재 맵의 모든 오브젝트 제거 */
@@ -218,7 +230,8 @@ public class LevelManager : MonoBehaviour
             wallParent,
             blockParent,
             monsterParent,
-            thornNormalParent);
+            thornNormalParent,
+            thornToggleParent);
 
         // 단일 오브젝트들도 함께 삭제
         DestroyAllWithTagImmediate("Player", "Key", "LockBox");

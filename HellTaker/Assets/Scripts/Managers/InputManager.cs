@@ -111,7 +111,6 @@ public class InputManager : MonoBehaviour
                 // 모든 키가 떨어졌으면 제한 해제
                 waitingForInputRelease = false;
                 readyToMove = true;
-                Debug.Log("[InputManager] Playing 입력 초기화 완료");
             }
         }
 
@@ -152,6 +151,12 @@ public class InputManager : MonoBehaviour
             SetState(GameState.UI, UIType.Advice);
             DialogueManager.Instance.StartAdvice(GameManager.Instance.GetCurrentStage());
         }
+
+        // Esc키 or B버튼: 스테이지 클리어(TODO: 일시정지 메뉴로 변경)
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton1))
+        {
+            GameManager.Instance.SkipToDialogue();
+        }
     }
 
     /** 입력을 4방향 중 하나로 정규화 */
@@ -183,7 +188,6 @@ public class InputManager : MonoBehaviour
                 // 모든 키가 떨어졌으면 제한 해제
                 waitingForInputRelease = false;
                 readyToMove = true;
-                Debug.Log("[InputManager] UI 입력 초기화 완료");
                 return; // 그 다음 프레임에서 다시 처리하기.
             }
         }

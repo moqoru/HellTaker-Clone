@@ -22,7 +22,6 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    /** 오브젝트를 그리드에 등록 */
     public void RegisterObject(GameObject obj)
     {
         Vector2Int gridPos = WorldToGrid(obj.transform.position);
@@ -38,7 +37,6 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    /** 오브젝트를 그리드에서 제거 */
     public void UnregisterObject(GameObject obj)
     {
         Vector2Int gridPos = WorldToGrid(obj.transform.position);
@@ -84,7 +82,25 @@ public class GridManager : MonoBehaviour
         obj.transform.position = GridToWorld(toPos);
     }
 
-    /** 특정 위치가 막혀있는지 체크*/
+    public void ToggleThorns()
+    {
+        foreach (var kvp in grid)
+        {
+            foreach (GameObject obj in kvp.Value)
+            {
+                if (obj == null) continue;
+
+                ThornToggle thorn = obj.GetComponent<ThornToggle>();
+
+                if (thorn != null)
+                {
+                    thorn.Toggle();
+                }
+
+            }
+        }
+    }
+
     public bool IsPositionBlocked(Vector2Int pos)
     {
         if (!grid.ContainsKey(pos))
@@ -119,7 +135,7 @@ public class GridManager : MonoBehaviour
             if (obj == null) continue;
 
             if (obj.CompareTag("ThornNormal")
-                || obj.CompareTag("ThornHidden"))
+                || obj.CompareTag("ThornUp"))
             {
                 return true;
             }
@@ -129,7 +145,6 @@ public class GridManager : MonoBehaviour
 
     }
 
-    /** 특정 위치의 모든 오브젝트 확인 */
     public List<GameObject> GetObjectsAt(Vector2Int pos)
     {
         if (!grid.ContainsKey(pos))
@@ -149,7 +164,6 @@ public class GridManager : MonoBehaviour
         return validObjects;
     }
 
-    /** 특정 위치의 특정 태그 오브젝트 확인 */
     public GameObject GetObjectWithTagAt(Vector2Int pos, string tag)
     {
         List<GameObject> objects = GetObjectsAt(pos);
@@ -164,7 +178,6 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    /** 특정 위치에 밀 수 있는 오브젝트 있는지 확인 */
     public GameObject GetPushableAt(Vector2Int pos)
     {
         List<GameObject> objects = GetObjectsAt(pos);
@@ -180,7 +193,6 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    /** 월드 좌표를 그리드 좌표로 변환 (=> 정수) */
     public Vector2Int WorldToGrid(Vector3 worldPos)
     {
         Vector2 basePos = LevelManager.Instance.GetBasePosition();
@@ -191,7 +203,6 @@ public class GridManager : MonoBehaviour
         );
     }
 
-    /** 그리드 좌표를 월드 좌표로 변환 (=> 실수) */
     public Vector3 GridToWorld(Vector2 gridPos)
     {
         Vector2 basePos = LevelManager.Instance.GetBasePosition();
@@ -203,13 +214,11 @@ public class GridManager : MonoBehaviour
         );
     }
 
-    /** 그리드 전체 초기화 (레벨 전환 시) */
     public void ClearGrid()
     {
         grid.Clear();
     }
 
-    /** (디버깅) 현재 그리드 상태 출력 */
     public void DebugPrintGrid()
     {
         Debug.Log($"=== 만들어진 그리드 칸 수: {grid.Count} ===");

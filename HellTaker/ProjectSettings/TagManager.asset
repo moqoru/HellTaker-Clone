@@ -11,8 +11,8 @@ TagManager:
   - Key
   - LockBox
   - ThornNormal
-  - ThornToggle
-  - Thorn
+  - ThornUp
+  - ThornDown
   layers:
   - Default
   - TransparentFX

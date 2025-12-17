@@ -2082,6 +2082,7 @@ MonoBehaviour:
   BlockPrefab: {fileID: 4948160910230035731, guid: 39aebd83a81808c41961340713481fa0, type: 3}
   MonsterPrefab: {fileID: 6967469443431534125, guid: 4b9ddfcfbcd5ecf4994af4f53af009af, type: 3}
   ThornNormalPrefab: {fileID: 2068864478604194003, guid: 0abc9aa1572fe3a44b97a4c424d74ebb, type: 3}
+  ThornTogglePrefab: {fileID: 3912555004276453381, guid: 1bfc98d421ea4e344bc9d7bc3037e8a0, type: 3}
   KeyPrefab: {fileID: 6967469443431534125, guid: e0f3a04917b5a074182b7420f51a6d0a, type: 3}
   LockBoxPrefab: {fileID: 6967469443431534125, guid: f4ff41c08f56b1e4980137e7435b40cf, type: 3}
   backGroundImage: {fileID: 1379358471}

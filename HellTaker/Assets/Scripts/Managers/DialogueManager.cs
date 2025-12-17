@@ -85,8 +85,6 @@ public class DialogueManager : MonoBehaviour
         {
             characterSprites[sprite.name] = sprite;
         }
-
-        Debug.Log($"[DialogueManager] {characterSprites.Count}개의 스트라이트를 로드했습니다.");
     }
 
     public void StartDialogue(int stageNumber)
@@ -227,7 +225,6 @@ public class DialogueManager : MonoBehaviour
             currentDialogueData.Add(node.dialogueID, node);
         }
 
-        Debug.Log($"[DialogueManager] {csvFileName} 파일의 {currentDialogueData.Count} 노드의 정보를 로드했습니다.");
     }
 
     private string[] ParseCSVLine(string line)
