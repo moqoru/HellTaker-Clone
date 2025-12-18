@@ -16,10 +16,9 @@ public class GameManager : MonoBehaviour
     public int currentStage = 1;
 
     [Header("UI 참조")]
-    [Tooltip("이동 가능 횟수 텍스트")]
     public TextMeshProUGUI turnText;
-    [Tooltip("스테이지 텍스트")]
     public TextMeshProUGUI stageText;
+    public TextMeshProUGUI keyGuideText;
 
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
     
