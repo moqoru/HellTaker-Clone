@@ -2902,7 +2902,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1512630070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c68ac91ec0f4a746b9ba6ed6ba189f7, type: 3}
+  m_Script: {fileID: 11500000, guid: efafe4c77c3106a49a52ba50ee9be123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationTest
 --- !u!1 &1526334463
