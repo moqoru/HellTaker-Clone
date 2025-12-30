@@ -13,6 +13,11 @@ public class PlayerAnimationTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            animator.SetTrigger("Kick");
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             animator.SetFloat("DirectionX", -1);

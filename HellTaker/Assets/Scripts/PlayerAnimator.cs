@@ -5,17 +5,27 @@ public class PlayerAnimator : MonoBehaviour
     private Animator animator;
     private Player player;
 
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
         player = GetComponent<Player>();
-        animator.SetFloat("DirectionX", 1);
+
+        if (animator != null && animator.runtimeAnimatorController != null)
+        {
+            animator.SetFloat("DirectionX", 1);
+        }
     }
 
     private void Update()
     {
-        float directionX = player.lastMoveDirection.x;
-        animator.SetFloat("DirectionX", directionX);
+        if (player.lastMoveDirection.x != 0)
+        {
+            animator.SetFloat("DirectionX", player.lastMoveDirection.x);
+        }
     }
 
     public void TriggerMove()

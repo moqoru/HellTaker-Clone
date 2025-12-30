@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public static Player Instance {  get; private set; }
 
     [HideInInspector] public Vector2Int lastMoveDirection = Vector2Int.right;
+    private PlayerAnimator playerAnimator;
     private Vector2Int currentGridPos;
 
     private void Awake()
@@ -20,6 +21,8 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void Start()
@@ -89,17 +92,12 @@ public class Player : MonoBehaviour
             // 밀 수 있는 게 있으면 제자리에서 그 물체만 걷어 차기
             // TODO: 블럭을 걷어 찰 경우 걷어차는 모션 재생 필요, 블럭이 움직일 때와 안 움직일 때 모션 구분
 
-            // 킥 애니메이션 트리거
-            // TODO: PlayerAnimator 추가 후 활성화
-            // GetComponent<PlayerAnimator>()?.TriggerKick();
-
+            playerAnimator?.TriggerKick();
             TryPushObject(pushable, targetPos, direction);
         }
         else
         {
-            // 이동 애니메이션 트리거
-            // TODO: PlayerAnimator 추가 후 활성화
-            // GetComponent<PlayerAnimator>()?.TriggerMove();
+            playerAnimator?.TriggerMove();
 
             // 밀 수 있는 게 없으면 일반 이동 수행
             GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
