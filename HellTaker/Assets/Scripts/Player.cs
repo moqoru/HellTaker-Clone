@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance {  get; private set; }
+    public static Player Instance { get; private set; }
 
     [HideInInspector] public Vector2Int lastMoveDirection = Vector2Int.right;
     private PlayerAnimator playerAnimator;
     private Vector2Int currentGridPos;
+
+    private Vector2Int? queuedInput = null;
 
     private void Awake()
     {
@@ -33,7 +35,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // 입력 처리 부분을 InputManager로 이동
+        // 애니메이션이 끝났고 큐에 입력이 남아 있으면 마저 실행
+        if (playerAnimator != null && !playerAnimator.IsAnimating && queuedInput.HasValue)
+        {
+            Vector2Int input = queuedInput.Value;
+            queuedInput = null;
+            TryMove(input);
+        }
     }
 
     private void OnDestroy()
@@ -45,10 +53,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    /** 이동 시도 */
     public void TryMove(Vector2Int direction)
-    {
-        lastMoveDirection = direction;
+    { 
 
         // Playing 상태일 때만 이동 가능
         if (InputManager.Instance.GetState() != GameState.Playing)
@@ -62,6 +68,16 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        // 애니메이션 재생 중이면 입력을 큐에 저장
+        if (playerAnimator != null && playerAnimator.IsAnimating)
+        {
+            queuedInput = direction;
+            return;
+        }
+
+        lastMoveDirection = direction;
+        playerAnimator?.UpdateDirection(direction);
 
         Vector2Int targetPos = currentGridPos + direction;
 
@@ -123,7 +139,6 @@ public class Player : MonoBehaviour
         GameManager.Instance.IncreaseMoveCount(moveCount);
     }
 
-    /** 오브젝트 밀기 시도 */
     private bool TryPushObject(GameObject pushable, Vector2Int pushablePos, Vector2Int direction)
     {
         Vector2Int pushTargetPos = pushablePos + direction;
