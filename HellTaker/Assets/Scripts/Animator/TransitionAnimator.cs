@@ -9,7 +9,7 @@ public class TransitionAnimator : MonoBehaviour
     [Tooltip("트랜지션 프레임 목록")]
     public Sprite[] transitionFrames;
     [Tooltip("프레임당 지속 시간 (초")]
-    public float frameInterval = 0.05f;
+    public float frameInterval = 0.04f;
 
     [Header("오브젝트 할당")]
     public CanvasGroup canvasGroup;
@@ -93,6 +93,7 @@ public class TransitionAnimator : MonoBehaviour
 
     private void OnTransitionEnd()
     {
+        isPlaying = false;
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

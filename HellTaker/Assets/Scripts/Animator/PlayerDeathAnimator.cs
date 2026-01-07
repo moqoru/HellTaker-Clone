@@ -1,26 +1,31 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UIElements.Experimental;
 
-public class DialogueDeathAnimator : MonoBehaviour
+public class PlayerDeathAnimator : MonoBehaviour
 {
-    public static DialogueDeathAnimator Instance { get; private set; }
+    public static PlayerDeathAnimator Instance { get; private set; }
 
-    [Header("ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •")]
-    [Tooltip("ê²Œì„ ì˜¤ë²„ ìŠ¤í”„ë¼ì´íŠ¸ í”„ë ˆì„ ëª©ë¡")]
-    public Sprite[] dialogueDeathFrames;
-    [Tooltip("í”„ë ˆì„ë‹¹ ì§€ì† ì‹œê°„ (ì´ˆ)")]
+    [Header("¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤")]
+    [Tooltip("°ÔÀÓ ¿À¹ö ½ºÇÁ¶óÀÌÆ® ÇÁ·¹ÀÓ ¸ñ·Ï")]
+    public Sprite[] playerDeathFrames;
+    [Tooltip("ÇÁ·¹ÀÓ´ç Áö¼Ó ½Ã°£ (ÃÊ)")]
     public float frameInterval = 0.04f;
 
-    [Header("ìê¸° ìì‹ ê³¼ ìì‹ ì˜¤ë¸Œì íŠ¸ í• ë‹¹")]
+    [Header("UI ¿ä¼Ò")]
     public CanvasGroup canvasGroup;
-    public Image heartAttackAnimation;
-    public TextMeshProUGUI deathMessage;
+    public Image playerDeathAnimation;
+
+    [Header("À§Ä¡ º¸Á¤")]
+    [Tooltip("Death ¾Ö´Ï¸ŞÀÌ¼Ç À§Ä¡ ¿ÀÇÁ¼Â (Unity Unit ´ÜÀ§)")]
+    public Vector2 worldOffset = new Vector2(0, 3f);
 
     private int currentFrame = 0;
     private float timer = 0f;
     private bool isPlaying = false;
+
+    public float TotalDuration => playerDeathFrames.Length * frameInterval;
 
     private void Awake()
     {
@@ -34,7 +39,7 @@ public class DialogueDeathAnimator : MonoBehaviour
             return;
         }
 
-        // ì¸ìŠ¤í™í„°ì— CanvasGroupì´ ì—†ì„ ê²½ìš° ì§ì ‘ ìƒì„±
+        // ÀÎ½ºÆåÅÍ¿¡ CanvasGroupÀÌ ¾øÀ» °æ¿ì Á÷Á¢ »ı¼º
         if (canvasGroup == null)
         {
             canvasGroup = GetComponent<CanvasGroup>();
@@ -44,6 +49,7 @@ public class DialogueDeathAnimator : MonoBehaviour
             }
         }
     }
+
     private void Start()
     {
         canvasGroup.alpha = 0f;
@@ -62,9 +68,9 @@ public class DialogueDeathAnimator : MonoBehaviour
             timer = 0f;
             currentFrame++;
 
-            if (currentFrame < dialogueDeathFrames.Length)
+            if (currentFrame < playerDeathFrames.Length)
             {
-                heartAttackAnimation.sprite = dialogueDeathFrames[currentFrame];
+                playerDeathAnimation.sprite = playerDeathFrames[currentFrame];
             }
             else
             {
@@ -73,34 +79,35 @@ public class DialogueDeathAnimator : MonoBehaviour
         }
     }
 
-    public void PlayGameOver(string message = "Game Over : Press Enter to Restart")
+    public void PlayDeath(Vector3 playerWorldPos)
     {
         canvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
 
-        deathMessage.text = message;
+        // ¿ùµå ÁÂÇ¥¿¡ ¿ÀÇÁ¼Â ¸ÕÀú Àû¿ë
+        Vector3 offsetWorldPos = playerWorldPos + new Vector3(worldOffset.x, worldOffset.y, 0);
+        // ¿ùµå ÁÂÇ¥¸¦ ½ºÅ©¸° ÁÂÇ¥·Î º¯È¯
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(offsetWorldPos);
+
+        // RectTransformÀÇ positionÀÇ ½ºÅ©¸° ÁÂÇ¥ ÇÒ´ç
+        RectTransform rt = playerDeathAnimation.GetComponent<RectTransform>();
+        rt.position = screenPos;
 
         currentFrame = 0;
         timer = 0f;
         isPlaying = true;
 
-        // ì²« í”„ë ˆì„ì€ ì§ì ‘ í• ë‹¹
-        if (dialogueDeathFrames.Length > 0)
+        // Ã¹ ÇÁ·¹ÀÓÀº Á÷Á¢ ÇÒ´ç
+        if (playerDeathFrames.Length > 0)
         {
-            heartAttackAnimation.sprite = dialogueDeathFrames[0];
+            playerDeathAnimation.sprite = playerDeathFrames[0];
         }
     }
 
-    /** ì• ë‹ˆë©”ì´ì…˜ ì™„ë£Œ ì²˜ë¦¬ */
-    public void OnAnimationComplete()
+    private void OnAnimationComplete()
     {
         isPlaying = false;
-    }
-
-    /** ê²Œì„ì˜¤ë²„ í™”ë©´ ìˆ¨ê¸°ê¸° */
-    public void HideGameOver()
-    {
         canvasGroup.alpha = 0f;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;

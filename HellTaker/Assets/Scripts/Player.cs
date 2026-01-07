@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private PlayerAnimator playerAnimator;
     private Vector2Int currentGridPos;
 
+    // 딜레이 입력 처리 (큐 활용)
     private Vector2Int? queuedInput = null;
 
     private void Awake()
@@ -35,6 +36,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        // 게임오버 대기 중엔 큐 입력도 막기
+        if (GameManager.Instance.IsPendingGameOver())
+        {
+            queuedInput = null;
+            return;
+        }
+
         // 애니메이션이 끝났고 큐에 입력이 남아 있으면 마저 실행
         if (playerAnimator != null && !playerAnimator.IsAnimating && queuedInput.HasValue)
         {
@@ -77,7 +85,6 @@ public class Player : MonoBehaviour
         }
 
         lastMoveDirection = direction;
-        playerAnimator?.UpdateDirection(direction);
 
         Vector2Int targetPos = currentGridPos + direction;
 
@@ -100,6 +107,16 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        // 게임오버 대기 상태라면 이동하지 않고 게임오버 처리
+        if (GameManager.Instance.IsPendingGameOver())
+        {
+            queuedInput = null;
+            GameManager.Instance.ExecutePendingGameOver();
+            return;
+        }
+
+        playerAnimator?.UpdateDirection(direction);
 
         GameObject pushable = GridManager.Instance.GetPushableAt(targetPos);
 

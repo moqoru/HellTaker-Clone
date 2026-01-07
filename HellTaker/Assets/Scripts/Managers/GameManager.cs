@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int currentMoveCount = 0;
     private bool isStageCleared = false;
     private bool isGameOver = false;
+    private bool isPendingGameOver = false;
     private bool hasKey = false;
     private GameObject player;
 
@@ -46,16 +47,6 @@ public class GameManager : MonoBehaviour
         InitializeStage();
     }
 
-    private void Update()
-    {
-        /*
-        if (isStageCleared || isGameOver)
-        {
-            return;
-        }*/
-        // CheckWinCondition();
-    }
-
     /** 맵 초기화 및 UI 반영 */
     private void InitializeStage()
     {
@@ -66,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         isStageCleared = false;
         isGameOver = false;
+        isPendingGameOver = false;
         hasKey = false;
         currentMoveCount = 0;
 
@@ -165,12 +157,10 @@ public class GameManager : MonoBehaviour
         currentMoveCount += amount;
         UpdateUI();
 
-        // 이동 횟수 초과 시 게임오버
-        // TODO : 게임오버시 캐릭터 사망 애니메이션 재생
-        if (currentMoveCount > maxMoveCount)
+        // 이동 횟수 초과 시 게임오버 대기 처리
+        if (currentMoveCount >= maxMoveCount && !isPendingGameOver)
         {
-            OnGameOver();
-            return;
+            isPendingGameOver = true;
         }
 
         CheckWinCondition();
@@ -236,22 +226,11 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayDeathAndRestart()
     {
-        if (player == null)
+        if (player != null)
         {
-            Debug.LogWarning("[GameManager] Player가 null입니다. 바로 재시작합니다.");
-            RestartStage();
-            yield break;
-        }
+            PlayerDeathAnimator.Instance.PlayDeath(player.transform.position);
 
-        if (player.TryGetComponent<PlayerAnimator>(out PlayerAnimator playerAnimator))
-        {
-            playerAnimator.TriggerDeath();
-
-            while (playerAnimator.IsAnimating)
-            {
-                yield return null;
-            }
-
+            yield return new WaitForSeconds(PlayerDeathAnimator.Instance.TotalDuration);
         }
 
         RestartStage();
@@ -272,7 +251,7 @@ public class GameManager : MonoBehaviour
         {
             if (player.TryGetComponent<PlayerAnimator>(out PlayerAnimator playerAnimator))
             {
-                playerAnimator.ResetDeath();
+                //playerAnimator.ResetDeath();
             }
         }
 
@@ -319,6 +298,20 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver()
     {
         return isGameOver;
+    }
+
+    public bool IsPendingGameOver()
+    {
+        return isPendingGameOver;
+    }
+
+    public void ExecutePendingGameOver()
+    {
+        if (isPendingGameOver)
+        {
+            isPendingGameOver = false;
+            OnGameOver();
+        }
     }
 
     public bool HasKey()

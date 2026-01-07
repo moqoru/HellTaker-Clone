@@ -5,31 +5,12 @@ public class PlayerAnimator : MonoBehaviour
     private Animator animator;
     private Player player;
     private bool isAnimating = false;
-    private bool isDead = false;
-
-    [Header("Death Settings")]
-    public SpriteRenderer deathBackground;
 
     public bool IsAnimating => isAnimating;
-    public bool IsDead => isDead; 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-
-        if (deathBackground == null)
-        {
-            Transform bg = transform.Find("DeathBackground");
-            if (bg != null)
-            {
-                deathBackground = bg.GetComponent<SpriteRenderer>();
-            }
-        }
-
-        if (deathBackground != null)
-        {
-            deathBackground.enabled = false;
-        }
     }
 
     private void Start()
@@ -54,8 +35,7 @@ public class PlayerAnimator : MonoBehaviour
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         bool isPlayingAction = stateInfo.IsName("Move")
-                            || stateInfo.IsName("Kick")
-                            || stateInfo.IsName("Death");
+                            || stateInfo.IsName("Kick");
 
         if (isPlayingAction && stateInfo.normalizedTime < 1.0f)
         {
@@ -98,37 +78,4 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetTrigger("Kick");
         isAnimating = true;
     }
-
-    public void TriggerDeath()
-    {
-        if (animator == null || animator.runtimeAnimatorController == null)
-        {
-            Debug.LogError("[PlayerAnimator] TriggerDeath 호출 실패");
-            return;
-        }
-
-        if (deathBackground != null)
-        {
-            deathBackground.enabled = true;
-        }
-        else
-        {
-            Debug.LogWarning("[PlayerAnimator] deathBackground가 할당되지 않음");
-        }
-
-        isDead = true;
-        animator.SetTrigger("Death");
-        isAnimating = true;
-    }
-
-    public void ResetDeath()
-    {
-        isDead = false;
-
-        if (deathBackground != null)
-        {
-            deathBackground.enabled = false;
-        }
-    }
-
 }
