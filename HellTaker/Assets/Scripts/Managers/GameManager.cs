@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
         player = playerObj;
     }
 
-    /** 클리어 조건 체크 (플레이어 상하좌우에 Goal 있는 지)*/
     private void CheckWinCondition()
     {
         if (player == null)
@@ -155,7 +154,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /** 이동 횟수 증가 (일반 이동 처리) */
     public void IncreaseMoveCount(int amount = 1)
     {
         // TODO: 가시에 닿아 2번 이동 페널티 처리 시 UI와 이펙트로 데미지 처리
@@ -178,7 +176,7 @@ public class GameManager : MonoBehaviour
         CheckWinCondition();
     }
 
-    /** 스테이지 스킵 (테스트용, TODO: 이후 일시정지 메뉴로 넣기) */
+    /** 스테이지 스킵 (TODO: 이후 일시정지 메뉴로 넣기) */
     public void SkipToDialogue()
     {
         if (isStageCleared || isGameOver)
@@ -222,23 +220,41 @@ public class GameManager : MonoBehaviour
         DialogueManager.Instance.StartAdvice(currentStage);
     }
 
-    /** 게임 오버 (이동 횟수 초과) */
     private void OnGameOver()
     {
         isGameOver = true;
 
-        // TODO: 캐릭터 죽는 애니메이션 만들고 재생
-        // DeathAnimation.Instance.PlayDeath(() => {
-        //     InputManager.Instance.SetState(GameState.UI, UIType.GameOver??);
-        // });
+        InputManager.Instance.SetState(GameState.Transition);
 
-        // 임시: 바로 재시작
-        RestartStage();
+        StartCoroutine(PlayDeathAndRestart());
     }
 
     public void RestartStage()
     {
         StartCoroutine(TransitionToRestartStage());
+    }
+
+    IEnumerator PlayDeathAndRestart()
+    {
+        if (player == null)
+        {
+            Debug.LogWarning("[GameManager] Player가 null입니다. 바로 재시작합니다.");
+            RestartStage();
+            yield break;
+        }
+
+        if (player.TryGetComponent<PlayerAnimator>(out PlayerAnimator playerAnimator))
+        {
+            playerAnimator.TriggerDeath();
+
+            while (playerAnimator.IsAnimating)
+            {
+                yield return null;
+            }
+
+        }
+
+        RestartStage();
     }
 
     IEnumerator TransitionToRestartStage()
@@ -251,7 +267,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
 
         DialogueDeathAnimator.Instance.HideGameOver();
-        // LevelManager에서 맵 리로드
+
+        if (player != null)
+        {
+            if (player.TryGetComponent<PlayerAnimator>(out PlayerAnimator playerAnimator))
+            {
+                playerAnimator.ResetDeath();
+            }
+        }
+
         LevelManager.Instance.ReloadStage();
         ResetGameState();
 
