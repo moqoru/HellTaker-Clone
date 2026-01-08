@@ -103,5 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7bf89b3a67c2147a79107e4b598136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThornToggle
-  spriteUp: {fileID: 21300000, guid: 456a95b64447d964ab01acd8e5e8f536, type: 3}
-  spriteDown: {fileID: 21300000, guid: df3f14f9a77892346917be852881c11a, type: 3}
+  thornFrames:
+  - {fileID: 21300000, guid: 6c509e2050e759b46ae0fa678c1b1bbd, type: 3}
+  - {fileID: 21300000, guid: 0ffc366d9c70f414d93e9a1e70f6faaa, type: 3}
+  - {fileID: 21300000, guid: 95ec6a391129ec2478dd458301f2633e, type: 3}
+  - {fileID: 21300000, guid: 084c8b777660a124b89b877197fd8371, type: 3}
+  - {fileID: 21300000, guid: df3f14f9a77892346917be852881c11a, type: 3}
+  frameInterval: 0.04

@@ -90,11 +90,11 @@ public class GridManager : MonoBehaviour
             {
                 if (obj == null) continue;
 
-                ThornToggle thorn = obj.GetComponent<ThornToggle>();
+                ThornToggleAnimator thornAnim = obj.GetComponent<ThornToggleAnimator>();
 
-                if (thorn != null)
+                if (thornAnim != null)
                 {
-                    thorn.Toggle();
+                    thornAnim.Toggle();
                 }
 
             }
