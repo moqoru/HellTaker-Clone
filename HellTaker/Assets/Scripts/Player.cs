@@ -198,6 +198,7 @@ public class Player : MonoBehaviour
     private void CollectKey(GameObject key)
     {
         GameManager.Instance.SetKey(true);
+        EffectManager.Instance.PlayEffectAtObject(EffectType.KeyCollect, key);
         GridManager.Instance.UnregisterObject(key);
         Destroy(key);
         Debug.Log("열쇠 획득");
