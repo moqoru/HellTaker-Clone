@@ -63,7 +63,6 @@ public class Player : MonoBehaviour
 
     public void TryMove(Vector2Int direction)
     { 
-
         // Playing 상태일 때만 이동 가능
         if (InputManager.Instance.GetState() != GameState.Playing)
         {
@@ -88,20 +87,6 @@ public class Player : MonoBehaviour
 
         Vector2Int targetPos = currentGridPos + direction;
 
-        // 자물쇠 체크 (열쇠를 갖고 있다면 이동 전 '미리' 자물쇠 제거)
-        GameObject lockBox = GridManager.Instance.GetObjectWithTagAt(targetPos, "LockBox");
-        if (lockBox != null)
-        {
-            if (GameManager.Instance.HasKey())
-            {
-                UnlockBox(lockBox, targetPos);
-            }
-            else
-            {
-                return;
-            }
-        }
-
         // 이동 불가능하면 이동 막기
         if (GridManager.Instance.IsPositionBlocked(targetPos))
         {
@@ -116,21 +101,46 @@ public class Player : MonoBehaviour
             return;
         }
 
-        playerAnimator?.UpdateDirection(direction);
+        if (playerAnimator != null)
+        {
+            playerAnimator.UpdateDirection(direction);
+        }
 
         GameObject pushable = GridManager.Instance.GetPushableAt(targetPos);
 
         if (pushable != null)
         {
-            // 밀 수 있는 게 있으면 제자리에서 그 물체만 걷어 차기
-            // TODO: 블럭을 걷어 찰 경우 걷어차는 모션 재생 필요, 블럭이 움직일 때와 안 움직일 때 모션 구분
+            // 자물쇠를 열쇠로 열 경우만 특별 처리
+            if (pushable.CompareTag("LockBox") && GameManager.Instance.HasKey())
+            {
+                if (playerAnimator != null)
+                {
+                    playerAnimator.TriggerMove();
+                }
 
-            playerAnimator?.TriggerKick();
-            TryPushObject(pushable, targetPos, direction);
+                UnlockBox(pushable);
+
+                // 자물쇠 있던 자리로 이동
+                GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
+                currentGridPos = targetPos;
+            }
+            else
+            {
+                // 블록/몬스터/열쇠 없는 자물쇠 → 킥 애니메이션 + 제자리
+                if (playerAnimator != null)
+                {
+                    playerAnimator.TriggerKick();
+                }
+
+                TryPushObject(pushable, targetPos, direction);
+            }
         }
         else
         {
-            playerAnimator?.TriggerMove();
+            if (playerAnimator != null)
+            {
+                playerAnimator.TriggerMove();
+            }
 
             // 밀 수 있는 게 없으면 일반 이동 수행
             GridManager.Instance.MoveObject(gameObject, currentGridPos, targetPos);
@@ -159,6 +169,17 @@ public class Player : MonoBehaviour
     private bool TryPushObject(GameObject pushable, Vector2Int pushablePos, Vector2Int direction)
     {
         Vector2Int pushTargetPos = pushablePos + direction;
+        Block block;
+
+        // LockBox인데 열쇠가 없을 경우
+        if (pushable.CompareTag("LockBox"))
+        {
+            if (pushable.TryGetComponent(out LockBox lockBox))
+            {
+                lockBox.OnBlocked(pushablePos);
+            }
+            return false;
+        }
 
         // 밀릴 위치가 장애물이나 다른 밀리는 오브젝트로 막혀있는지 체크
         if (GridManager.Instance.IsPositionBlocked(pushTargetPos)
@@ -171,44 +192,59 @@ public class Player : MonoBehaviour
                 return false;
             }
 
-            return false; // Block은 벽으로 밀 수 없음
+            // Block은 벽으로 밀 수 없음 -> 움찔거리는 효과 적용
+            if (pushable.CompareTag("Block") && pushable.TryGetComponent(out block))
+            {
+                block.OnBlocked(pushablePos);
+            }
+
+            return false;
         }
 
         // 밀릴 위치에 다른 밀 수 있는 오브젝트 있는지 체크
         GameObject anotherPushable = GridManager.Instance.GetPushableAt(pushTargetPos);
         if (anotherPushable != null)
         {
+            // Block이 연속으로 있을 때 -> 움찔거리는 효과 적용
+            if (pushable.CompareTag("Block") && pushable.TryGetComponent(out block))
+            {
+                block.OnBlocked(pushablePos);
+            }
             return false; // Block이 연속으로 있으면 밀 수 없음
         }
 
         // 밀기 처리
-        GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos);
-
+        if (pushable.CompareTag("Block") && pushable.TryGetComponent(out block))
+        {
+            block.OnSlid(pushablePos, pushTargetPos);
+            GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos, updateTransform: false);
+        }
+        else // TODO : 몬스터도 밀리는 처리 필요, GridManager 쪽에서 updateTransform 도로 제거
+        {
+            GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos);
+        }
         return true;
     }
 
-    /** 몬스터 제거 */
     private void DestroyMonster(GameObject monster, Vector2Int monsterPos)
     {
         GridManager.Instance.UnregisterObject(monster);
         Destroy(monster);
     }
 
-    /** 열쇠 획득 처리 */
     private void CollectKey(GameObject key)
     {
         GameManager.Instance.SetKey(true);
         EffectManager.Instance.PlayEffectAtObject(EffectType.KeyCollect, key);
         GridManager.Instance.UnregisterObject(key);
         Destroy(key);
-        Debug.Log("열쇠 획득");
     }
 
-    /** 자물쇠 열기 처리 */
-    private void UnlockBox(GameObject lockBox, Vector2Int lockBoxPos)
+    private void UnlockBox(GameObject lockBox)
     {
         GridManager.Instance.UnregisterObject(lockBox);
         Destroy(lockBox);
-        Debug.Log("자물쇠 해제");
+
+        GameManager.Instance.SetKey(false);
     }
 }

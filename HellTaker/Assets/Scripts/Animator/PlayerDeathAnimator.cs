@@ -40,13 +40,9 @@ public class PlayerDeathAnimator : MonoBehaviour
         }
 
         // 인스펙터에 CanvasGroup이 없을 경우 직접 생성
-        if (canvasGroup == null)
+        if (canvasGroup == null && !TryGetComponent(out canvasGroup))
         {
-            canvasGroup = GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                canvasGroup = gameObject.AddComponent<CanvasGroup>();
-            }
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
     }
 

@@ -18,7 +18,7 @@ public class EffectManager : MonoBehaviour
 
     [Header("Effect Prefabs")]
     [SerializeField] private GameObject moveEffectPrefab;
-    [SerializeField] private GameObject kickEffectPrefab;
+    [SerializeField] private GameObject[] kickEffectPrefabs;
     [SerializeField] private GameObject damageEffectPrefab;
     [SerializeField] private GameObject keyCollectEffectPrefab;
     [SerializeField] private GameObject monsterDestroyEffectPrefab;
@@ -83,7 +83,15 @@ public class EffectManager : MonoBehaviour
                 prefab = moveEffectPrefab;
                 break;
             case EffectType.Kick:
-                prefab = kickEffectPrefab;
+                if (kickEffectPrefabs != null && kickEffectPrefabs.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, kickEffectPrefabs.Length);
+                    prefab = kickEffectPrefabs[randomIndex];
+                }
+                else
+                {
+                    prefab = null;
+                }
                 break;
             case EffectType.Damage:
                 prefab = damageEffectPrefab;

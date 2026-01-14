@@ -56,9 +56,8 @@ public class GridManager : MonoBehaviour
     /// 오브젝트를 한 위치에서 다른 위치로 이동
     /// <para> !!!주의!!! 이동 전에 IsPositionBlocked를 먼저 수행해야 합니다. </para>
     /// </summary>
-    public void MoveObject(GameObject obj, Vector2Int fromPos, Vector2Int toPos)
+    public void MoveObject(GameObject obj, Vector2Int fromPos, Vector2Int toPos, bool updateTransform = true)
     {
-        // 기존 위치에서 제거
         if (grid.ContainsKey(fromPos))
         {
             grid[fromPos].Remove(obj);
@@ -68,7 +67,6 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        // 이동할 위치에 추가
         if (!grid.ContainsKey(toPos))
         {
             grid[toPos] = new List<GameObject>();
@@ -79,7 +77,10 @@ public class GridManager : MonoBehaviour
             grid[toPos].Add(obj);
         }
 
-        obj.transform.position = GridToWorld(toPos);
+        if (updateTransform)
+        {
+            obj.transform.position = GridToWorld(toPos);
+        }
     }
 
     public void ToggleThorns()
@@ -113,8 +114,7 @@ public class GridManager : MonoBehaviour
             if (obj == null) continue;
 
             if (obj.CompareTag("Wall")
-                || obj.CompareTag("Goal")
-                || obj.CompareTag("LockBox"))
+                || obj.CompareTag("Goal"))
             {
                 return true;
             }
@@ -184,7 +184,8 @@ public class GridManager : MonoBehaviour
         foreach (GameObject obj in objects)
         {
             if (obj.CompareTag("Block")
-                || obj.CompareTag("Monster"))
+                || obj.CompareTag("Monster")
+                || obj.CompareTag("LockBox"))
             {
                 return obj;
             }
