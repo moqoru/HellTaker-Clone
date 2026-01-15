@@ -17,11 +17,11 @@ public class EffectManager : MonoBehaviour
     public static EffectManager Instance { get; private set; }
 
     [Header("Effect Prefabs")]
-    [SerializeField] private GameObject moveEffectPrefab;
-    [SerializeField] private GameObject[] kickEffectPrefabs;
-    [SerializeField] private GameObject damageEffectPrefab;
-    [SerializeField] private GameObject keyCollectEffectPrefab;
-    [SerializeField] private GameObject monsterDestroyEffectPrefab;
+    [SerializeField] private GameObject[] effectMovePrefabs;
+    [SerializeField] private GameObject[] effectKickPrefabs;
+    [SerializeField] private GameObject[] effectDamagePrefabs;
+    [SerializeField] private GameObject effectKeyCollectPrefab;
+    [SerializeField] private GameObject effectMonsterDestroyPrefab;
 
     private void Awake()
     {
@@ -80,27 +80,19 @@ public class EffectManager : MonoBehaviour
         switch(type)
         {
             case EffectType.Move:
-                prefab = moveEffectPrefab;
+                prefab = GetRandomPrefab(effectMovePrefabs);
                 break;
             case EffectType.Kick:
-                if (kickEffectPrefabs != null && kickEffectPrefabs.Length > 0)
-                {
-                    int randomIndex = Random.Range(0, kickEffectPrefabs.Length);
-                    prefab = kickEffectPrefabs[randomIndex];
-                }
-                else
-                {
-                    prefab = null;
-                }
+                prefab = GetRandomPrefab(effectKickPrefabs);
                 break;
             case EffectType.Damage:
-                prefab = damageEffectPrefab;
+                prefab = GetRandomPrefab(effectDamagePrefabs);
                 break;
             case EffectType.KeyCollect:
-                prefab = keyCollectEffectPrefab;
+                prefab = effectKeyCollectPrefab;
                 break;
             case EffectType.MonsterDestroy:
-                prefab = monsterDestroyEffectPrefab;
+                prefab = effectMonsterDestroyPrefab;
                 break;
             default:
                 prefab = null;
@@ -108,6 +100,16 @@ public class EffectManager : MonoBehaviour
         }
 
         return prefab != null;
+    }
+
+    private GameObject GetRandomPrefab(GameObject[] prefabArray)
+    {
+        if (prefabArray == null || prefabArray.Length == 0)
+        {
+            return null;
+        }
+        int randomIndex = Random.Range(0, prefabArray.Length);
+        return prefabArray[randomIndex];
     }
 
 }

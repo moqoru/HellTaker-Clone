@@ -2116,7 +2116,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   PlayerPrefab: {fileID: 2068864478604194003, guid: ff3a7ade927cfef4297d2bae54095b42, type: 3}
-  GoalPrefab: {fileID: 6373084058508665410, guid: cb6bccfd91f7a4b4d93a4e79dad3f494, type: 3}
+  GoalPrefabs:
+  - {fileID: 752616919016306322, guid: cb6bccfd91f7a4b4d93a4e79dad3f494, type: 3}
+  - {fileID: 752616919016306322, guid: f07b762c82bd3e240a3985802a87f428, type: 3}
+  - {fileID: 752616919016306322, guid: 763ea6d5837700e47842f6f82d8927cf, type: 3}
+  - {fileID: 752616919016306322, guid: 161b3d80b738bed49b03edfdd6155632, type: 3}
   WallPrefab: {fileID: 4856647904000467685, guid: 733b0eff4c65fee43aaccf10553e91dc, type: 3}
   BlockPrefab: {fileID: 4948160910230035731, guid: 39aebd83a81808c41961340713481fa0, type: 3}
   MonsterPrefab: {fileID: 6967469443431534125, guid: 4b9ddfcfbcd5ecf4994af4f53af009af, type: 3}
@@ -3918,13 +3922,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f9ac00a73bb6e4484ce6921225775e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectManager
-  moveEffectPrefab: {fileID: 0}
-  kickEffectPrefabs:
+  effectMovePrefabs:
+  - {fileID: 1107175891536681524, guid: 6c1e5a9b7f368814faee7499d290b098, type: 3}
+  - {fileID: 1107175891536681524, guid: fefb2b937af228b4bba3d6e3c03197a2, type: 3}
+  - {fileID: 1107175891536681524, guid: 5f3b5fed78d23e34797872eaeb7b2a6f, type: 3}
+  effectKickPrefabs:
   - {fileID: 1107175891536681524, guid: 436e2233f59014b4686a5bbe0f2cb3bf, type: 3}
   - {fileID: 1107175891536681524, guid: 9959917d48076764a85c4fba05f5dc1e, type: 3}
-  damageEffectPrefab: {fileID: 0}
-  keyCollectEffectPrefab: {fileID: 1107175891536681524, guid: 937d486d27ee51a47aa576d00fa49f91, type: 3}
-  monsterDestroyEffectPrefab: {fileID: 0}
+  effectDamagePrefabs:
+  - {fileID: 1107175891536681524, guid: 3c8e260e4de64c242996b7bdaa649ebd, type: 3}
+  - {fileID: 1107175891536681524, guid: bf48a6aa7a4e014479374b745891b5a8, type: 3}
+  - {fileID: 1107175891536681524, guid: aa506345dceaa414fba4cced75da7ba0, type: 3}
+  effectKeyCollectPrefab: {fileID: 1107175891536681524, guid: 937d486d27ee51a47aa576d00fa49f91, type: 3}
+  effectMonsterDestroyPrefab: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

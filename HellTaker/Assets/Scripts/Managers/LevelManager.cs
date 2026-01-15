@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 using System.Linq;
-
+using UnityEngine;
+using UnityEngine.UIElements;
 using static DestroyHelper;
 
 public class LevelManager : MonoBehaviour
@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("타일 프리팹")]
     public GameObject PlayerPrefab;
-    public GameObject GoalPrefab;
+    public GameObject[] GoalPrefabs;
     public GameObject WallPrefab;
     public GameObject BlockPrefab;
     public GameObject MonsterPrefab;
@@ -40,6 +40,9 @@ public class LevelManager : MonoBehaviour
     private int mapWidth;
     private int mapHeight;
 
+    private Dictionary<string, GameObject> goalPrefabMap;
+    private string currentGoalCharacter = "PandeMonica";
+
     // 타일 타입
     public const char TILE_EMPTY = '.';
     public const char TILE_WALL = '#';
@@ -64,6 +67,8 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        InitializeGoalPrefabs();
     }
 
     private void Start()
@@ -83,7 +88,18 @@ public class LevelManager : MonoBehaviour
         GenerateMap();
     }
 
-    /** CSV 파일을 읽고 2D 문자 배열로 변환 */
+    private void InitializeGoalPrefabs()
+    {
+        goalPrefabMap = new Dictionary<string, GameObject>();
+
+        string[] characterNames = { "PandeMonica", "Modeus", "Cerberus", "Malina", "Zdrada", "Azazel", "Justice", "Lucifer" };
+
+        for (int i = 0; i < GoalPrefabs.Length && i < characterNames.Length; i++)
+        {
+            goalPrefabMap[characterNames[i]] = GoalPrefabs[i];
+        }
+    }
+
     private void LoadMapFromCSV()
     {
         TextAsset csvFile = Resources.Load<TextAsset>(MapFileName);
@@ -115,7 +131,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"이동 횟수를 불러오지 못했습니다: {mapInfo[0]}");
+            Debug.LogError($"[LevelManager] 이동 횟수를 불러오지 못했습니다: {mapInfo[0]}");
         }
 
         if (float.TryParse(mapInfo[1].Trim(), out float offsetX)
@@ -126,7 +142,17 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"오프셋 좌표를 불러오지 못했습니다: x => {mapInfo[1]} y => {mapInfo[2]}");
+            Debug.LogError($"[LevelManager] 오프셋 좌표를 불러오지 못했습니다: x => {mapInfo[1]} y => {mapInfo[2]}");
+        }
+
+        if (mapInfo.Length > 3 && !string.IsNullOrWhiteSpace(mapInfo[3]))
+        {
+            currentGoalCharacter = mapInfo[3].Trim();
+        }
+        else
+        {
+            Debug.LogWarning($"[LevelManager] 골 캐릭터를 불러오지 못했습니다. 기본 캐릭터인 판데모니카로 설정합니다.");
+            currentGoalCharacter = "PandeMonica";
         }
 
         mapData = new string[mapHeight, mapWidth];
@@ -142,12 +168,11 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    /** 로드된 맵 데이터를 기반으로 오브젝트 생성 */
     private void GenerateMap()
     {
         if(mapData == null)
         {
-            Debug.LogError("맵 데이터가 없습니다.");
+            Debug.LogError("[LevelManager] 맵 데이터가 없습니다.");
             return;
         }
 
@@ -199,7 +224,8 @@ public class LevelManager : MonoBehaviour
                 }
                 if (tileData.Contains(TILE_GOAL))
                 {
-                    spawnedObject = Instantiate(GoalPrefab, spawnPosition, Quaternion.identity, goalParent);
+                    GameObject goalPrefab = GetGoalPrefab(currentGoalCharacter);
+                    spawnedObject = Instantiate(goalPrefab, spawnPosition, Quaternion.identity, goalParent);
                     GridManager.Instance.RegisterObject(spawnedObject);
                 }
                 if (tileData.Contains(TILE_WALL))
@@ -222,7 +248,16 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    /** 현재 맵의 모든 오브젝트 제거 */
+    private GameObject GetGoalPrefab(string characterName)
+    {
+        if (goalPrefabMap.ContainsKey(characterName))
+        {
+            return goalPrefabMap[characterName];
+        }
+
+        Debug.LogWarning($"[LevelManager] 캐릭터 '{characterName}'의 프리팹을 찾을 수 없습니다. 기본 캐릭터의 프리팹으로 설정합니다.");
+        return GoalPrefabs[0];
+    }
     public void ClearCurrentMap()
     {
         // 모든 부모 오브젝트의 자식 삭제
@@ -240,7 +275,6 @@ public class LevelManager : MonoBehaviour
         GridManager.Instance.ClearGrid();
     }
 
-    /** 스테이지 리로드 */
     public void ReloadStage()
     {
         ClearCurrentMap();
@@ -250,7 +284,6 @@ public class LevelManager : MonoBehaviour
         GenerateMap();
     }
 
-    /** 다음 스테이지 로드 */
     public void LoadNextStage(int stageNum)
     {
         ClearCurrentMap();
@@ -265,7 +298,6 @@ public class LevelManager : MonoBehaviour
         GenerateMap();
     }
 
-    /** basePosition 전달 */
     public Vector2 GetBasePosition()
     {
         return basePosition;
