@@ -2121,6 +2121,10 @@ MonoBehaviour:
   - {fileID: 752616919016306322, guid: f07b762c82bd3e240a3985802a87f428, type: 3}
   - {fileID: 752616919016306322, guid: 763ea6d5837700e47842f6f82d8927cf, type: 3}
   - {fileID: 752616919016306322, guid: 161b3d80b738bed49b03edfdd6155632, type: 3}
+  - {fileID: 752616919016306322, guid: 0b3da19652ceb6b4ebc447bd47099687, type: 3}
+  - {fileID: 752616919016306322, guid: 1e5eb6475ef7e9447a5a44ba75c96bc5, type: 3}
+  - {fileID: 752616919016306322, guid: 0127acffbd027794e890bd1e447b5f99, type: 3}
+  - {fileID: 752616919016306322, guid: a82725199236054469d89241fb3ee9f2, type: 3}
   WallPrefab: {fileID: 4856647904000467685, guid: 733b0eff4c65fee43aaccf10553e91dc, type: 3}
   BlockPrefab: {fileID: 4948160910230035731, guid: 39aebd83a81808c41961340713481fa0, type: 3}
   MonsterPrefab: {fileID: 6967469443431534125, guid: 4b9ddfcfbcd5ecf4994af4f53af009af, type: 3}
