@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Transactions;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI stageText;
     public TextMeshProUGUI keyGuideText;
 
+    [Header("이동 횟수 이펙트")]
+    [Tooltip("글자 크기 펀치 강도")]
+    public float movePunchScale = 0.3f;
+    [Tooltip("이펙트 지속 시간")]
+    public float moveEffectDuration = 0.2f;
+    [Tooltip("페널티 색상")]
+    public Color penaltyColor = Color.red;
+
     private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
     
     private int currentMoveCount = 0;
@@ -28,6 +36,8 @@ public class GameManager : MonoBehaviour
     private bool isPendingGameOver = false;
     private bool hasKey = false;
     private GameObject player;
+    private Color originalTurnTextColor;
+    private Vector3 originalTurnTextScale;
 
     private void Awake()
     {
@@ -44,10 +54,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (turnText != null)
+        {
+            originalTurnTextColor = turnText.color;
+            originalTurnTextScale = turnText.transform.localScale;
+        }
+        else
+        {
+            Debug.LogWarning("[GameManager] TurnText가 할당되지 않았습니다!");
+        }
         InitializeStage();
     }
 
-    /** 맵 초기화 및 UI 반영 */
     private void InitializeStage()
     {
         StartCoroutine(EnableStageCoroutine());
@@ -63,6 +81,7 @@ public class GameManager : MonoBehaviour
 
         UpdateUI();
     }
+
     /** 이동 횟수 미리 차감 방지를 위해 딜레이 */
     IEnumerator EnableStageCoroutine()
     {
@@ -91,7 +110,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("TurnText가 할당되지 않았습니다!");
+            Debug.LogWarning("[GameManager] TurnText가 할당되지 않았습니다!");
         }
 
         if (stageText != null)
@@ -107,7 +126,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("StageText가 할당되지 않았습니다!");
+            Debug.LogWarning("[GameManager] StageText가 할당되지 않았습니다!");
         }
     }
 
@@ -148,7 +167,7 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseMoveCount(int amount = 1)
     {
-        // TODO: 가시에 닿아 2번 이동 페널티 처리 시 UI와 이펙트로 데미지 처리
+        
         if (isStageCleared || isGameOver)
         {
             return;
@@ -157,6 +176,8 @@ public class GameManager : MonoBehaviour
         currentMoveCount += amount;
         UpdateUI();
 
+        PlayMoveEffect(amount);
+
         // 이동 횟수 초과 시 게임오버 대기 처리
         if (currentMoveCount >= maxMoveCount && !isPendingGameOver)
         {
@@ -164,6 +185,32 @@ public class GameManager : MonoBehaviour
         }
 
         CheckWinCondition();
+    }
+
+    private void PlayMoveEffect(int amount)
+    {
+        if (turnText == null) return;
+
+        turnText.transform.DOKill();
+        turnText.DOKill();
+
+        turnText.transform.localScale = originalTurnTextScale;
+        turnText.color = originalTurnTextColor;
+
+        turnText.transform.DOPunchScale(
+            Vector3.one * movePunchScale,
+            moveEffectDuration,
+            vibrato: 3,
+            elasticity: 0.5f
+        );
+
+        if (amount >= 2)
+        {
+            Sequence colorSequence = DOTween.Sequence();
+            colorSequence.Append(turnText.DOColor(penaltyColor, moveEffectDuration * 0.5f));
+            colorSequence.Append(turnText.DOColor(originalTurnTextColor, moveEffectDuration * 0.5f));
+        }
+
     }
 
     /** 스테이지 스킵 (TODO: 이후 일시정지 메뉴로 넣기) */
