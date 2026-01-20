@@ -2949,6 +2949,9 @@ MonoBehaviour:
   turnText: {fileID: 1337796012}
   stageText: {fileID: 257994832}
   keyGuideText: {fileID: 2091529542}
+  movePunchScale: 0.3
+  moveEffectDuration: 0.2
+  penaltyColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1535077457
 GameObject:
   m_ObjectHideFlags: 0
@@ -3938,7 +3941,7 @@ MonoBehaviour:
   - {fileID: 1107175891536681524, guid: bf48a6aa7a4e014479374b745891b5a8, type: 3}
   - {fileID: 1107175891536681524, guid: aa506345dceaa414fba4cced75da7ba0, type: 3}
   effectKeyCollectPrefab: {fileID: 1107175891536681524, guid: 937d486d27ee51a47aa576d00fa49f91, type: 3}
-  effectMonsterDestroyPrefab: {fileID: 0}
+  effectMonsterDestroyPrefab: {fileID: 184056947969662681, guid: 9f25556def5bbdc44b23b5941b658f8a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

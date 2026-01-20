@@ -35,7 +35,7 @@ public class EffectManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    
     public void PlayEffect(EffectType type, Vector3 worldPosition)
     {
         
@@ -47,7 +47,7 @@ public class EffectManager : MonoBehaviour
 
         Instantiate(prefab, worldPosition, Quaternion.identity);
     }
-
+    
     public void PlayEffectAtObject(EffectType type, GameObject obj)
     {
         if (obj == null)
@@ -59,6 +59,7 @@ public class EffectManager : MonoBehaviour
         Vector2Int gridPos = GridManager.Instance.WorldToGrid(obj.transform.position);
         PlayEffectAtGrid(type, gridPos);
     }
+
 
     public void PlayEffectAtGrid(EffectType type, Vector2Int gridPos)
     {

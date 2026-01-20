@@ -163,6 +163,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+
     }
 
     public void IncreaseMoveCount(int amount = 1)

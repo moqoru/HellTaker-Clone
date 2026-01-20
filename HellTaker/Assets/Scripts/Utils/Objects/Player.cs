@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -196,6 +197,12 @@ public class Player : MonoBehaviour
             // Monster는 벽에 밀리면 제거 처리
             if (pushable.CompareTag("Monster"))
             {
+                // 밀린 방향에 따라 몬스터 방향 전환 및 Hit 애니메이션
+                if (pushable.TryGetComponent(out MonsterAnimator monsterAnimator))
+                {
+                    monsterAnimator.OnPushed(direction);
+                }
+
                 DestroyMonster(pushable, pushablePos);
                 return false;
             }
@@ -228,8 +235,13 @@ public class Player : MonoBehaviour
             block.OnSlid(pushablePos, pushTargetPos);
             GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos, updateTransform: false);
         }
-        else // TODO : 몬스터도 밀리는 처리 필요, GridManager 쪽에서 updateTransform 도로 제거
+        else
         {
+            if (pushable.TryGetComponent(out MonsterAnimator monsterAnimator))
+            {
+                monsterAnimator.OnPushed(direction);
+            }
+
             EffectManager.Instance.PlayEffectAtGrid(EffectType.Move, pushablePos);
             GridManager.Instance.MoveObject(pushable, pushablePos, pushTargetPos);
         }
@@ -238,6 +250,9 @@ public class Player : MonoBehaviour
 
     private void DestroyMonster(GameObject monster, Vector2Int monsterPos)
     {
+        // 파괴 이펙트 재생
+        EffectManager.Instance.PlayEffectAtGrid(EffectType.MonsterDestroy, monsterPos);
+
         GridManager.Instance.UnregisterObject(monster);
         Destroy(monster);
     }

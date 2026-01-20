@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &184056947969662681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1051990976640202113}
+  - component: {fileID: 6366091577664495883}
+  m_Layer: 0
+  m_Name: EffectMonsterDestroy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1051990976640202113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184056947969662681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 214.66006, y: 136.43987, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6366091577664495883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184056947969662681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a42f7fa82e06fe42a23548a26eb73f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterDestroyEffect
+  pieceSprites:
+  - {fileID: -152876466178417037, guid: ff1aeaf64efa50a4fb885ff40cbd8c1c, type: 3}
+  - {fileID: 1809923621234421784, guid: 9a7c9695503c29f419ed2c3c2b83933d, type: 3}
+  - {fileID: -2730024651141679290, guid: 87da71360e725b54f8564fbdd3484446, type: 3}
+  - {fileID: -7328383657369146394, guid: 4d960e9b15851144aaaf1c829ed9366b, type: 3}
+  - {fileID: 182167342761516575, guid: 8d55facb12c0edb479894bb555a8ba66, type: 3}
+  - {fileID: 957418578745304615, guid: 418c05121eb1a8c42aebb0a74e957982, type: 3}
+  - {fileID: -4387770681633399067, guid: 5392795d6c0104142957484f91f912da, type: 3}
+  pieceCount: 7
+  explosionForce: 4
+  explosionRadius: 3
+  gravity: 9.8
+  rotationSpeed: 360
+  duration: 1
+  fadeOutDuration: 0.3
