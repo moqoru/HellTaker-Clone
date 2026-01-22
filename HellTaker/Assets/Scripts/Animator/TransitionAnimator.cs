@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TransitionAnimator : MonoBehaviour
@@ -21,6 +23,7 @@ public class TransitionAnimator : MonoBehaviour
 
     public float TotalDuration => transitionFrames.Length * frameInterval;
     public float HalfDuration => TotalDuration * 0.5f;
+    public float OffSFXDuration => TotalDuration * 0.75f;
 
     private void Awake()
     {
@@ -84,6 +87,21 @@ public class TransitionAnimator : MonoBehaviour
         if (transitionFrames.Length > 0)
         {
             transitionAnimation.sprite = transitionFrames[0];
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(SFXType.TransitionOn);
+            StartCoroutine(PlayTransitionOffSound());
+        }
+    }
+
+    private IEnumerator PlayTransitionOffSound()
+    {
+        yield return new WaitForSeconds(OffSFXDuration);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(SFXType.TransitionOff);
         }
     }
 

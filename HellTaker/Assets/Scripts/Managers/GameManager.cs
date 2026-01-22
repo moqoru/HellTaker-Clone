@@ -63,6 +63,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("[GameManager] TurnText가 할당되지 않았습니다!");
         }
+
+        if (AudioManager.Instance != null && AudioManager.Instance.gameBGM != null)
+        {
+            AudioManager.Instance.PlayBGM(BGMType.Game);
+        }
         InitializeStage();
     }
 

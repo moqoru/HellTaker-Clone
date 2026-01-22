@@ -1632,6 +1632,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969056440}
   m_CullTransparentMesh: 1
+--- !u!1 &1050406814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1050406815}
+  - component: {fileID: 1050406816}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1050406815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050406814}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.84867, y: -0.08141, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1050406816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050406814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d8700d0cf3bb346afa8d628599e4e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  openingBGM: {fileID: 8300000, guid: bb1649dee9f9c154d9608dc893c79521, type: 3}
+  gameBGM: {fileID: 8300000, guid: ec830aa45e03ec64b9708e810f4e0761, type: 3}
+  endingBGM: {fileID: 8300000, guid: 5ca235db431ce4b41b6d7fa5751fbd67, type: 3}
+  transitionOn: {fileID: 8300000, guid: 141f0d0a0cda0d94886fb37bb489eae2, type: 3}
+  transitionOff: {fileID: 8300000, guid: 874412b3cadfbe749a2f9f3815b119f3, type: 3}
+  playerMove: {fileID: 8300000, guid: a6ed005ecd868d14b965067aba5257bf, type: 3}
+  playerDamage: {fileID: 8300000, guid: 583e1458a21ed3a45a0987f8abdec75b, type: 3}
+  playerDeath: {fileID: 8300000, guid: e954aa430ea05034493ee5d071bb3e96, type: 3}
+  blockPush: {fileID: 8300000, guid: 937a4b0770ec0d040bb2af71fdd3ac73, type: 3}
+  blockMove: {fileID: 8300000, guid: 76e440d5d29240d48a3be8471af5bc1c, type: 3}
+  monsterMove: {fileID: 8300000, guid: d793e91ea6a38614c9ec5d7eaaf58eb8, type: 3}
+  monsterDestroy: {fileID: 8300000, guid: e638c50f0ad60e5479fd953ff2231651, type: 3}
+  keyGet: {fileID: 8300000, guid: a65802d2de318a64b8da71858d849c1d, type: 3}
+  lockBoxOpen: {fileID: 8300000, guid: 9a66a485d5e27be4b9fe800cb8c08203, type: 3}
+  dialogueOpen: {fileID: 8300000, guid: 175489d45b5e4f04dbe76ccb3e871ffe, type: 3}
+  dialogueAdvance: {fileID: 8300000, guid: 4ec77ce078a65c2439808b991e0be7d3, type: 3}
+  dialogueSelect: {fileID: 8300000, guid: 26cbce22ec64e9f46a1bafd2137ffd5e, type: 3}
+  dialogueConfirm: {fileID: 8300000, guid: f29b4c2328688424c8d6b3464b0d8d4e, type: 3}
+  dialogueDeath: {fileID: 8300000, guid: 6ba8fd0fc4907e84899e5e04cb9a8c6e, type: 3}
+  dialogueSuccess: {fileID: 8300000, guid: c597a22df3eb6b444af97b2f25b9b060, type: 3}
+  bgmVolume: 0.7
+  sfxVolume: 1
 --- !u!1 &1094038635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3947,6 +4013,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 1050406815}
   - {fileID: 109076388}
   - {fileID: 619394802}
   - {fileID: 1379358472}
