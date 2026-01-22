@@ -22,12 +22,15 @@ public class Block : MonoBehaviour
 
         // 킥 이펙트 재생
         EffectManager.Instance.PlayEffectAtGrid(EffectType.Kick, blockPos);
+        AudioManager.Instance.PlaySFX(SFXType.BlockKick);
     }
 
     public void OnSlid(Vector2Int kickedFromPos, Vector2Int targetPos)
     {
         // 킥 이펙트 재생
         EffectManager.Instance.PlayEffectAtGrid(EffectType.Kick, kickedFromPos);
+        AudioManager.Instance.PlaySFX(SFXType.BlockKick);
+        AudioManager.Instance.PlaySFX(SFXType.BlockMove);
 
         // 목표 위치로 부드럽게 이동
         Vector3 targetWorldPos = GridManager.Instance.GridToWorld(targetPos);

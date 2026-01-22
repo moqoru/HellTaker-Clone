@@ -86,6 +86,8 @@ public class DialogueDeathAnimator : MonoBehaviour
         {
             heartAttackAnimation.sprite = dialogueDeathFrames[0];
         }
+
+        AudioManager.Instance.PlaySFX(SFXType.DialogueDeath);
     }
 
     /** 애니메이션 완료 처리 */

@@ -1684,7 +1684,7 @@ MonoBehaviour:
   playerMove: {fileID: 8300000, guid: a6ed005ecd868d14b965067aba5257bf, type: 3}
   playerDamage: {fileID: 8300000, guid: 583e1458a21ed3a45a0987f8abdec75b, type: 3}
   playerDeath: {fileID: 8300000, guid: e954aa430ea05034493ee5d071bb3e96, type: 3}
-  blockPush: {fileID: 8300000, guid: 937a4b0770ec0d040bb2af71fdd3ac73, type: 3}
+  blockKick: {fileID: 8300000, guid: 937a4b0770ec0d040bb2af71fdd3ac73, type: 3}
   blockMove: {fileID: 8300000, guid: 76e440d5d29240d48a3be8471af5bc1c, type: 3}
   monsterMove: {fileID: 8300000, guid: d793e91ea6a38614c9ec5d7eaaf58eb8, type: 3}
   monsterDestroy: {fileID: 8300000, guid: e638c50f0ad60e5479fd953ff2231651, type: 3}

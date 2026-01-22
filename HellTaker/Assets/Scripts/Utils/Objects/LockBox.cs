@@ -19,6 +19,7 @@ public class LockBox : MonoBehaviour
 
         // Å± ÀÌÆåÆ® Àç»ý
         EffectManager.Instance.PlayEffectAtGrid(EffectType.Kick, blockPos);
+        AudioManager.Instance.PlaySFX(SFXType.BlockKick);
     }
 
 }

@@ -69,5 +69,7 @@ public class MonsterAnimator : MonoBehaviour
 
         animator.SetTrigger("Hit");
         isAnimating = true;
+
+        AudioManager.Instance.PlaySFX(SFXType.MonsterMove);
     }
 }

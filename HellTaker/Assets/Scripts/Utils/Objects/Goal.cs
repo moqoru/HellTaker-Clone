@@ -30,6 +30,6 @@ public class Goal : MonoBehaviour
 
     private void OnDestroy()
     {
-        loveSign?.DOKill();
+        loveSign.DOKill();
     }
 }

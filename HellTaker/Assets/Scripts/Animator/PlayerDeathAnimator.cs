@@ -94,6 +94,8 @@ public class PlayerDeathAnimator : MonoBehaviour
         timer = 0f;
         isPlaying = true;
 
+        AudioManager.Instance.PlaySFX(SFXType.PlayerDeath);
+        
         // 첫 프레임은 직접 할당
         if (playerDeathFrames.Length > 0)
         {

@@ -98,18 +98,15 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        // 첫 번째 대사 표시
         currentDialogueID = DIALOGUE_START_ID;
         IsActive = true;
 
-        // UI 활성화
         StartCoroutine(FadeIn(dialoguePanel));
 
-        // 첫 대사 표시
         ShowDialogue(currentDialogueID);
 
-        // InputManager에 상태 알림
         InputManager.Instance.SetState(GameState.UI, UIType.Dialogue);
+        AudioManager.Instance.PlaySFX(SFXType.DialogueOpen);
     }
 
     public void StartAdvice(int stageNumber)
@@ -127,14 +124,12 @@ public class DialogueManager : MonoBehaviour
         currentDialogueID = ADVICE_START_ID;
         IsActive = true;
 
-        // UI 활성화
         StartCoroutine(FadeIn(dialoguePanel));
 
-        // 첫 대사 표시
         ShowDialogue(currentDialogueID);
 
-        // InputManager에 상태 알림
         InputManager.Instance.SetState(GameState.UI, UIType.Advice);
+        AudioManager.Instance.PlaySFX(SFXType.DialogueOpen);
     }
 
     private void LoadDialogueData(string csvFileName)
@@ -382,6 +377,7 @@ public class DialogueManager : MonoBehaviour
         UpdateChoiceHighlight();
     }
 
+    /** NumberChoice 시스템 (현재 미사용, 향후 기능 구현시 자동 작동) */
     private void ShowNumberChoice(DialogueNode node)
     {
         IsShowingChoice = true;
@@ -414,12 +410,15 @@ public class DialogueManager : MonoBehaviour
 
     public void AdvanceDialogue()
     {
-        if (IsShowingChoice) return; // 선택지가 보일 때는 넘기기 불가
+        if (IsShowingChoice) return; // 선택지가 보일 때는 넘기기 
 
         DialogueNode currentNode = currentDialogueData[currentDialogueID];
 
         if (currentNode.type == DialogueType.Dialogue || currentNode.type == DialogueType.Advice)
         {
+            // 게임 클리어가 아닐 경우에는 모두 넘기기 효과음 재생
+            AudioManager.Instance.PlaySFX(SFXType.DialogueAdvance);
+
             // 다음 대사가 있는지 확인
             if (currentDialogueData.ContainsKey(currentNode.nextDialogueID))
             {
@@ -446,21 +445,30 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("[DialogueManager] Dialogue에서 다음 대사로 넘어가지 못했습니다.");
+                    Debug.LogWarning("[DialogueManager] 다음 대사를 찾을 수 없습니다.");
                     EndDialogue(false); // 일반 대화 종료 (게임 클리어 처리?)
                 }
+                return;
             }
         }
         else if (currentNode.type == DialogueType.Success)
         {
             EndDialogue(false);
             OnDialogueEnd?.Invoke();
+            return;
+        }
+        else
+        {
+            Debug.LogError("[DialogueManager] 다음 대사로 넘어가지 못했습니다.");
+            return;
         }
     }
 
     public void MoveChoiceSelection(int direction)
     {
         if (!IsShowingChoice || IsNumberChoice) return;
+
+        AudioManager.Instance.PlaySFX(SFXType.DialogueSelect);
 
         currentChoiceIndex += direction;
 
@@ -501,12 +509,16 @@ public class DialogueManager : MonoBehaviour
             // 정답 선택 - 다음 대사로
             int nextID = currentNode.choiceNextIDs[currentChoiceIndex];
             currentDialogueID = nextID;
+
+            AudioManager.Instance.PlaySFX(SFXType.DialogueSuccess);
         }
         else
         {
             // 오답 선택 - 게임오버 대사로
             int gameOverID = currentNode.choiceNextIDs[currentChoiceIndex];
-            currentDialogueID = gameOverID; 
+            currentDialogueID = gameOverID;
+
+            AudioManager.Instance.PlaySFX(SFXType.DialogueConfirm);
         }
 
         // 선택지 다시 숨기기
@@ -516,9 +528,12 @@ public class DialogueManager : MonoBehaviour
         ShowDialogue(currentDialogueID);
     }
 
+    /** NumberChoice 시스템 (현재 미사용, 향후 기능 구현시 자동 작동) */
     public void ChangeNumberValue(int delta)
     {
         if (!IsNumberChoice) return;
+
+        AudioManager.Instance.PlaySFX(SFXType.DialogueSelect);
 
         currentNumberValue += delta;
 
@@ -531,9 +546,12 @@ public class DialogueManager : MonoBehaviour
         UpdateNumberChoiceDisplay();
     }
 
+    /** NumberChoice 시스템 (현재 미사용, 향후 기능 구현시 자동 작동) */
     public void SelectNumberChoice()
     {
         if (!IsNumberChoice) return;
+
+        AudioManager.Instance.PlaySFX(SFXType.DialogueConfirm);
 
         IsNumberChoice = false;
         IsShowingChoice = false;

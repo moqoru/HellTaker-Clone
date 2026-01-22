@@ -25,6 +25,8 @@ public class MonsterDestroyEffect : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySFX(SFXType.MonsterDestroy);
+
         CreateAndScatterPieces();
 
         Destroy(gameObject, duration + fadeOutDuration + 0.5f);

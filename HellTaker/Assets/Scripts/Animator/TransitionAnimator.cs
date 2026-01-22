@@ -89,20 +89,14 @@ public class TransitionAnimator : MonoBehaviour
             transitionAnimation.sprite = transitionFrames[0];
         }
 
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySFX(SFXType.TransitionOn);
-            StartCoroutine(PlayTransitionOffSound());
-        }
+        AudioManager.Instance.PlaySFX(SFXType.TransitionOn);
+        StartCoroutine(PlayTransitionOffSound());
     }
 
     private IEnumerator PlayTransitionOffSound()
     {
         yield return new WaitForSeconds(OffSFXDuration);
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySFX(SFXType.TransitionOff);
-        }
+        AudioManager.Instance.PlaySFX(SFXType.TransitionOff);
     }
 
     private void OnTransitionEnd()

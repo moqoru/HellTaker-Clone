@@ -119,6 +119,8 @@ public class Player : MonoBehaviour
                     playerAnimator.TriggerMove();
                 }
 
+                AudioManager.Instance.PlaySFX(SFXType.LockBoxOpen);
+                
                 UnlockBox(pushable);
 
                 // 자물쇠 있던 자리로 이동
@@ -154,6 +156,7 @@ public class Player : MonoBehaviour
             if (key != null)
             {
                 CollectKey(key);
+                AudioManager.Instance.PlaySFX(SFXType.KeyGet);
             }
         }
 
@@ -165,6 +168,7 @@ public class Player : MonoBehaviour
         {
             moveCount++;
             EffectManager.Instance.PlayEffectAtGrid(EffectType.Damage, currentGridPos);
+            AudioManager.Instance.PlaySFX(SFXType.PlayerDamage);
 
             if (playerAnimator != null)
             {
@@ -173,6 +177,7 @@ public class Player : MonoBehaviour
         }
         
         GameManager.Instance.IncreaseMoveCount(moveCount);
+        AudioManager.Instance.PlaySFX(SFXType.PlayerMove);
     }
 
     private bool TryPushObject(GameObject pushable, Vector2Int pushablePos, Vector2Int direction)

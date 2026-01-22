@@ -16,7 +16,7 @@ public enum SFXType
     PlayerMove,
     PlayerDamage,
     PlayerDeath,
-    BlockPush,
+    BlockKick,
     BlockMove,
     MonsterMove,
     MonsterDestroy,
@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip playerMove; // player_move
     public AudioClip playerDamage; // player_damage
     public AudioClip playerDeath; // player_death
-    public AudioClip blockPush; // stone_kick_001
+    public AudioClip blockKick; // stone_kick_001
     public AudioClip blockMove; // stone_move_001
     public AudioClip monsterMove; // enemy_kick_001
     public AudioClip monsterDestroy; // enemy_die_001
@@ -170,7 +170,7 @@ public class AudioManager : MonoBehaviour
             case SFXType.PlayerMove: return playerMove;
             case SFXType.PlayerDamage: return playerDamage;
             case SFXType.PlayerDeath: return playerDeath;
-            case SFXType.BlockPush: return blockPush;
+            case SFXType.BlockKick: return blockKick;
             case SFXType.BlockMove: return blockMove;
             case SFXType.MonsterMove: return monsterMove;
             case SFXType.MonsterDestroy: return monsterDestroy;

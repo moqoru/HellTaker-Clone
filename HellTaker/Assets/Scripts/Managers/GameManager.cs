@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("페널티 색상")]
     public Color penaltyColor = Color.red;
 
-    private string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
+    private static readonly string[] romanNumeral = { "O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI" };
     
     private int currentMoveCount = 0;
     private bool isStageCleared = false;

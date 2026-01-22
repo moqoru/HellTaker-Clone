@@ -81,7 +81,11 @@ public class PlayerAnimator : MonoBehaviour
 
     public void FlashDamage()
     {
-        spriteRenderer.DOColor(Color.red, 0.15f).
-            SetLoops(2, LoopType.Yoyo);
+        spriteRenderer.DOKill();
+        spriteRenderer.color = Color.white;
+
+        spriteRenderer.DOColor(Color.red, 0.15f)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() => spriteRenderer.color = Color.white);
     }
 }
