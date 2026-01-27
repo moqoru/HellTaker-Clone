@@ -29,4 +29,5 @@ public enum DialogueType
     Success,
     GameOver,
     Advice,
+    CutScene,
 }

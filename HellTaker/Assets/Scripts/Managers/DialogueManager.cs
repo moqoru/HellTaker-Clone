@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class DialogueManager : MonoBehaviour
     public List<TextMeshProUGUI> choiceTexts;
     public CanvasGroup successPanel;
     public Image successImage;
+    public CanvasGroup cutScenePanel;
+    public Image cutSceneImage;
+    public TextMeshProUGUI cutSceneText;
     public int normalFontSize = 29;
     public int highlightedFontSize = 48;
 
@@ -33,6 +37,8 @@ public class DialogueManager : MonoBehaviour
     private const int DIALOGUE_START_ID = 1;
     private const int DIALOGUE_THRESHOLD_ID = 100;
     private const int ADVICE_START_ID = 201;
+    private const int CUTSCENE_OPENING_START_ID = 301;
+    private const int CUTSCENE_ENDING_START_ID = 401;
 
     private Dictionary<int, DialogueNode> currentDialogueData;
     private int currentDialogueID;
@@ -44,6 +50,8 @@ public class DialogueManager : MonoBehaviour
     private int numberChoiceMin = 0;
     private int numberChoiceMax = 0;
     private DialogueNode numberChoiceNode = null;
+
+    private Dictionary<string, Sprite> cutSceneSprites;
 
     // 콜백
     public System.Action OnDialogueEnd;
@@ -69,11 +77,13 @@ public class DialogueManager : MonoBehaviour
         // 초기화
         dialoguePanel.alpha = 0;
         choicePanel.alpha = 0;
+        cutScenePanel.alpha = 0;    
         IsActive = false;
         IsShowingChoice = false;
 
-        // 캐릭터 스프라이트 로드
+        // 스프라이트 로드
         LoadCharacterSprites();
+        LoadCutSceneSprites();
     }
 
     private void LoadCharacterSprites()
@@ -87,9 +97,39 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void LoadCutSceneSprites()
+    {
+        cutSceneSprites = new Dictionary<string, Sprite>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Scene/CutScene");
+
+        foreach (Sprite sprite in sprites)
+        {
+            cutSceneSprites[sprite.name] = sprite;
+        }
+    }
+
+    public void StartCutScene(string cutSceneName)
+    {
+        LoadDialogueData(cutSceneName);
+
+        if (currentDialogueData == null || currentDialogueData.Count == 0)
+        {
+            Debug.LogError($"[DialogueManager] {cutSceneName} 컷신 데이터를 불러오지 못했습니다.");
+            return;
+        }
+
+        currentDialogueID = cutSceneName == "Opening" ? CUTSCENE_OPENING_START_ID : CUTSCENE_ENDING_START_ID;
+        IsActive = true;
+
+        cutScenePanel.alpha = 1;
+
+        ShowCutScene(currentDialogueID);
+
+        InputManager.Instance.SetState(GameState.UI, UIType.CutScene);
+    }
+
     public void StartDialogue(int stageNumber)
     {
-        // csv 파일 로드
         LoadDialogueData($"Stage{stageNumber}");
         
         if (currentDialogueData == null || currentDialogueData.Count == 0)
@@ -211,7 +251,9 @@ public class DialogueManager : MonoBehaviour
                 node.choiceNextIDs[0] = int.Parse(values[6]); // 1 ~ 9 선택
                 node.choiceNextIDs[1] = int.Parse(values[8]); // 10 선택
             }
-            else if (node.type == DialogueType.Dialogue || node.type == DialogueType.Advice)
+            else if (node.type == DialogueType.Dialogue
+                || node.type == DialogueType.Advice
+                || node.type == DialogueType.CutScene)
             {
                 // 일반적인 경우 다음 대사 ID는 순차적으로 증가
                 node.nextDialogueID = node.dialogueID + 1;
@@ -266,11 +308,53 @@ public class DialogueManager : MonoBehaviour
         if (str.StartsWith("\"")) str = str.Substring(1);
         if (str.EndsWith("\"")) str = str.Substring(0, str.Length - 1);
 
+        // 이스케이프된 따옴표 처리
+        str = str.Replace("\"\"", "\"");
+
         // \n을 실제 줄바꿈으로 변경
         str = str.Replace("\\n", "\n");
 
         // 앞 뒤 공백 제거하여 깔끔하게 만들기
         return str.Trim();
+    }
+
+    private void ShowCutScene(int dialogueID)
+    {
+        if (!currentDialogueData.ContainsKey(dialogueID))
+        {
+            Debug.LogError($"[DialogueManager] {dialogueID}번 컷신을 불러오지 못했습니다.");
+            EndCutScene();
+            return;
+        }
+
+        DialogueNode node = currentDialogueData[dialogueID];
+
+        // 컷신 이미지 설정
+        if (!string.IsNullOrEmpty(node.characterImagePath))
+        {
+            string spriteName = System.IO.Path.GetFileNameWithoutExtension(node.characterImagePath);
+
+            if (cutSceneSprites.ContainsKey(spriteName))
+            {
+                cutSceneImage.sprite = cutSceneSprites[spriteName];
+                cutSceneImage.SetNativeSize();
+                cutSceneImage.enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning($"[DialogueManager] 컷신 이미지를 불러오지 못했습니다.");
+                cutSceneImage.enabled = false;
+            }
+        }
+        else
+        {
+            cutSceneImage.enabled = false;
+        }
+
+        cutSceneText.text = node.text;
+
+        IsShowingChoice = false;
+        IsNumberChoice = false;
     }
 
     private void ShowDialogue(int dialogueID)
@@ -416,7 +500,6 @@ public class DialogueManager : MonoBehaviour
 
         if (currentNode.type == DialogueType.Dialogue || currentNode.type == DialogueType.Advice)
         {
-            // 게임 클리어가 아닐 경우에는 모두 넘기기 효과음 재생
             AudioManager.Instance.PlaySFX(SFXType.DialogueAdvance);
 
             // 다음 대사가 있는지 확인
@@ -450,6 +533,21 @@ public class DialogueManager : MonoBehaviour
                 }
                 return;
             }
+        }
+        else if (currentNode.type == DialogueType.CutScene)
+        {
+            AudioManager.Instance.PlaySFX(SFXType.DialogueAdvance);
+
+            if (currentDialogueData.ContainsKey(currentNode.nextDialogueID))
+            {
+                currentDialogueID = currentNode.nextDialogueID;
+                ShowCutScene(currentDialogueID);
+            }
+            else
+            {
+                EndCutScene();
+            }
+            return;
         }
         else if (currentNode.type == DialogueType.Success)
         {
@@ -504,20 +602,16 @@ public class DialogueManager : MonoBehaviour
 
         DialogueNode currentNode = currentDialogueData[currentDialogueID];
 
-        if (currentChoiceIndex == currentNode.correctChoiceIndex)
-        {
-            // 정답 선택 - 다음 대사로
-            int nextID = currentNode.choiceNextIDs[currentChoiceIndex];
-            currentDialogueID = nextID;
+        int nextID = currentNode.choiceNextIDs[currentChoiceIndex];
+        currentDialogueID = nextID;
 
+        // nextID가 100 미만이면 정답 (다음 대사로 진행)
+        if (nextID < DIALOGUE_THRESHOLD_ID)
+        {
             AudioManager.Instance.PlaySFX(SFXType.DialogueSuccess);
         }
-        else
+        else // 아니면 오답 (게임오버로 진행)
         {
-            // 오답 선택 - 게임오버 대사로
-            int gameOverID = currentNode.choiceNextIDs[currentChoiceIndex];
-            currentDialogueID = gameOverID;
-
             AudioManager.Instance.PlaySFX(SFXType.DialogueConfirm);
         }
 
@@ -572,6 +666,14 @@ public class DialogueManager : MonoBehaviour
         ShowDialogue(currentDialogueID);
     }
 
+    private void EndCutScene()
+    {
+        IsActive = false;
+
+        // 콜백 실행
+        OnDialogueEnd?.Invoke();
+    }
+
     private void EndDialogue(bool returnToGame)
     {
         IsActive = false;
@@ -582,11 +684,10 @@ public class DialogueManager : MonoBehaviour
         // TODO : 트랜지션 화면이 '절반을 덮었을 때' 사라지도록 변경하기
         choicePanel.alpha = 0;
         successPanel.alpha = 0;
+        cutScenePanel.alpha = 0;
 
         // UI 비활성화
         StartCoroutine(FadeOut(dialoguePanel));
-        // StartCoroutine(FadeOut(successPanel));
-        // StartCoroutine(FadeOut(choicePanel));
 
         // 게임으로 복귀해야 할 경우 (인생 조언 종료 시)
         if (returnToGame)

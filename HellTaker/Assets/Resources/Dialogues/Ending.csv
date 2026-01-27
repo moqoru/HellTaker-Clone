@@ -1,0 +1,5 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+401,CutScene,Scene/CutScene/CutScene_Epil_001,,"""그리하여 당신의 여정은 끝이 났다.\n악마들을 지옥에서 무사히 데려왔다.\n그리고 헬테이커라고 알려지게 됐지.""",,,,,,
+402,CutScene,Scene/CutScene/CutScene_Epil_002,,"""하지만 쉽지 않은 삶일 터이다.\n분명 짧고, 또 고난으로 가득하리.""",,,,,,
+403,CutScene,Scene/CutScene/CutScene_Epil_003,,"""하지만 어떻게 살아가든 삶이란 고달픈 법.\n그러니 그 순간만큼은 즐기는 게 낫겠지.""",,,,,,
+404,CutScene,Scene/CutScene/CutScene_Ending,,"""모작 - 서영준 (a.k.a Moqoru)\n원작 - Lukasz Piskorz (@vanripperart)\n한글 번역 - 김치쇼군 / 번역 검수 - 유심무심""",,,,,,

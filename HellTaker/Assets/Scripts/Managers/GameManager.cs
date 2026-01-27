@@ -4,6 +4,7 @@ using System.Transactions;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -64,13 +65,34 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("[GameManager] TurnText가 할당되지 않았습니다!");
         }
 
-        if (AudioManager.Instance != null && AudioManager.Instance.gameBGM != null)
+        if (currentStage == 1)
         {
-            AudioManager.Instance.PlayBGM(BGMType.Game);
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayBGM(BGMType.Opening);
+            }
+            StartOpening();
         }
-        InitializeStage();
+        else
+        {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayBGM(BGMType.Game);
+            }
+            InitializeStage();
+        }
     }
 
+    private void StartOpening()
+    {
+        DialogueManager.Instance.OnDialogueEnd = () =>
+        {
+            StartCoroutine(TransitionAfterOpening());
+        };
+
+        DialogueManager.Instance.StartCutScene("Opening");
+    }
+    
     private void InitializeStage()
     {
         StartCoroutine(EnableStageCoroutine());
@@ -85,18 +107,6 @@ public class GameManager : MonoBehaviour
         currentMoveCount = 0;
 
         UpdateUI();
-    }
-
-    /** 이동 횟수 미리 차감 방지를 위해 딜레이 */
-    IEnumerator EnableStageCoroutine()
-    {
-        while (InputManager.Instance == null)
-        {
-            yield return null;
-        }
-
-        ResetGameState();
-        InputManager.Instance.SetState(GameState.Playing);
     }
 
     private void UpdateUI()
@@ -277,6 +287,62 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TransitionToRestartStage());
     }
 
+    private void StartEnding()
+    {
+        DialogueManager.Instance.OnDialogueEnd = () =>
+        {
+            QuitGame();
+        };
+
+        DialogueManager.Instance.StartCutScene("Ending");
+    }
+
+    private void QuitGame()
+    {
+        Debug.Log("[GameManager] 게임을 종료합니다.");
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    IEnumerator TransitionAfterOpening()
+    {
+        InputManager.Instance.SetState(GameState.Transition);
+
+        TransitionAnimator.Instance.PlayTransition();
+
+        yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
+
+        DialogueManager.Instance.cutScenePanel.alpha = 0;
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayBGM(BGMType.Game);
+        }
+
+        LevelManager.Instance.LoadNextStage(1);
+        ResetGameState();
+
+        yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
+
+        InputManager.Instance.SetState(GameState.Playing);
+    }
+
+    /** 이동 횟수 미리 차감 방지를 위해 딜레이 */
+    IEnumerator EnableStageCoroutine()
+    {
+        while (InputManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        ResetGameState();
+        InputManager.Instance.SetState(GameState.Playing);
+    }
+
     IEnumerator PlayDeathAndRestart()
     {
         if (player != null)
@@ -321,11 +387,21 @@ public class GameManager : MonoBehaviour
     {
         InputManager.Instance.SetState(GameState.Transition);
 
-        // 트랜지션 애니메이션 실행
         TransitionAnimator.Instance.PlayTransition();
 
         // 절반 상태 (화면이 덮인 상태)까지 대기
         yield return new WaitForSeconds(TransitionAnimator.Instance.HalfDuration);
+
+        // 마지막 스테이지 클리어 시 엔딩 컷신 전환
+        if (currentStage == 7)
+        {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayBGM(BGMType.Ending);
+            }
+            StartEnding();
+            yield break;
+        }
 
         // 스테이지 번호 증가, 맵 로드
         currentStage++;

@@ -73,16 +73,18 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        MapFileName = $"Stages/Stage{GameManager.Instance.currentStage}";
-        backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
-        // TODO: Epilogue는 번호 다르게 설정
-
         goalParent = new GameObject("Goals").transform;
         wallParent = new GameObject("Walls").transform;
         blockParent = new GameObject("Blocks").transform;
         monsterParent = new GameObject("Monsters").transform;
         thornNormalParent = new GameObject("ThornsNormal").transform;
         thornToggleParent = new GameObject("ThornsToggle").transform;
+
+        if (GameManager.Instance.currentStage == 1) return;
+
+        MapFileName = $"Stages/Stage{GameManager.Instance.currentStage}";
+        backGroundImage.sprite = Resources.Load<Sprite>($"BackGround/ChapterBG_00{GameManager.Instance.currentStage}");
+        // TODO: Epilogue는 번호 다르게 설정
 
         LoadMapFromCSV();
         GenerateMap();

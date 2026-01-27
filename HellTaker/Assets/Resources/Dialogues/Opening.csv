@@ -1,0 +1,4 @@
+﻿DialogueID,Type,CharacterImage,CharacterName,Text,Choice1,Choice1Next,Choice2,Choice2Next,Choice3,Choice3Next
+301,CutScene,Scene/CutScene/Cutscene1_001,,"""어느 날 당신은 악마들로 가득찬\n하렘을 꿈꾸고 일어났네.""",,,,,,
+302,CutScene,Scene/CutScene/Cutscene1_002,,"""하지만 결코 이루기 쉽지 않은 꿈이지.\n어쩌면 네 목숨을 앗아갈지도 모르고.""",,,,,,
+303,CutScene,Scene/CutScene/Cutscene1_003,,"""""악마 하렘이 달렸다면, 그 어떤 대가도 싸지.""\n그리하여 당신은 지옥으로 모험을 떠났네.""",,,,,,

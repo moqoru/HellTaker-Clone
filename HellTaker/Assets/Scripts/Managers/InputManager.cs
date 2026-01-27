@@ -41,14 +41,13 @@ public class InputManager : MonoBehaviour
             case GameState.Transition:
                 // 입력 차단
                 break;
-            // case GameState.Paused:
+                // case GameState.Paused:
         }
     }
 
     public void SetState(GameState newState, UIType uiType = UIType.None)
     {
-        Debug.Log($"[InputManager] {currentState} -> {newState}" +
-            (newState == GameState.UI ? $" ({uiType})" : ""));
+        // Debug.Log($"[InputManager] {currentState} -> {newState}" + (newState == GameState.UI ? $" ({uiType})" : ""));
 
         if (currentState != newState)
         {
@@ -192,8 +191,10 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        // Dialogue/Advice UI 처리
-        if (currentUIType == UIType.Dialogue || currentUIType == UIType.Advice)
+        // Dialogue/Advice/CutScene UI 처리
+        if (currentUIType == UIType.Dialogue
+            || currentUIType == UIType.Advice
+            || currentUIType == UIType.CutScene)
         {
             if (DialogueManager.Instance.IsNumberChoice)
             {
@@ -239,7 +240,7 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                // 일반 대사를 다음으로 진행
+                // 일반/컷신 대사를 다음으로 진행
                 if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.JoystickButton0))
                 {
                     DialogueManager.Instance.AdvanceDialogue();
