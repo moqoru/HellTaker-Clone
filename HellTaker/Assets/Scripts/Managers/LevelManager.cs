@@ -209,6 +209,7 @@ public class LevelManager : MonoBehaviour
                 }
                 if (tileData.Contains(TILE_THORN_NORMAL))
                 {
+                    // Debug.Log($"[LevelManager] 일반 가시 생성: Stage{GameManager.Instance.currentStage}, 위치: {spawnPosition}");
                     spawnedObject = Instantiate(ThornNormalPrefab, spawnPosition, Quaternion.identity, thornNormalParent);
                     GridManager.Instance.RegisterObject(spawnedObject);
                 }
