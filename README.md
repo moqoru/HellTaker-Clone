@@ -1,6 +1,7 @@
 # Helltaker (헬테이커) 모작
 
 - 그리드 기반 퍼즐 게임인 [Helltaker](https://store.steampowered.com/app/1289310/Helltaker/)의 Unity, C# 기반 모작입니다.
+- 시연 영상 : [Youtube](https://youtu.be/DSWAkPyQHjs)
 - 개발 인원 : 1명
 - 제작 기간 : 3개월 (2025.10.21 - 2026.01.31)
 
