@@ -37,6 +37,22 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    // GridMovementTests용으로 오버로드하여 추가
+    public void RegisterObject(GameObject obj, Vector2 basePos)
+    {
+        Vector2Int gridPos = WorldToGrid(obj.transform.position, basePos);
+
+        if (!grid.ContainsKey(gridPos))
+        {
+            grid[gridPos] = new List<GameObject>();
+        }
+
+        if (!grid[gridPos].Contains(obj))
+        {
+            grid[gridPos].Add(obj);
+        }
+    }
+
     public void UnregisterObject(GameObject obj)
     {
         Vector2Int gridPos = WorldToGrid(obj.transform.position);
@@ -204,6 +220,15 @@ public class GridManager : MonoBehaviour
         );
     }
 
+    // GridMovementTests용으로 오버로드하여 추가
+    public Vector2Int WorldToGrid(Vector3 worldPos, Vector2 basePos)
+    {
+        return new Vector2Int(
+            Mathf.RoundToInt(worldPos.x - basePos.x),
+            Mathf.RoundToInt(worldPos.y - basePos.y)
+        );
+    }
+
     public Vector3 GridToWorld(Vector2 gridPos)
     {
         Vector2 basePos = LevelManager.Instance.GetBasePosition();
@@ -215,6 +240,15 @@ public class GridManager : MonoBehaviour
         );
     }
 
+    // GridMovementTests용으로 오버로드하여 추가
+    public Vector3 GridToWorld(Vector2 gridPos, Vector2 basePos)
+    {
+        return new Vector3(
+            gridPos.x + basePos.x,
+            gridPos.y + basePos.y,
+            0
+        );
+    }
     public void ClearGrid()
     {
         grid.Clear();
