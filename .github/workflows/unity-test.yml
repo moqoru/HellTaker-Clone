@@ -1,9 +1,10 @@
 name: Unity Tests
 
+# master 푸시(머지 시) + master로 향하는 PR 시 EditMode 단위 테스트 실행
 on:
   push:
     branches:
-      - feature/unity-test-runner
+      - master
   pull_request:
     branches:
       - master
@@ -35,6 +36,7 @@ jobs:
           testMode: editmode
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport'
 
+      # 테스트 결과 + 커버리지 리포트 아티팩트로 업로드 (실패 시에도 업로드)
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         if: always()
