@@ -1,11 +1,27 @@
 # Helltaker (헬테이커) 모작
 
- ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
-
 - 그리드 기반 퍼즐 게임인 [Helltaker](https://store.steampowered.com/app/1289310/Helltaker/)의 Unity, C# 기반 모작입니다.
 - 시연 영상 : [Youtube](https://youtu.be/DSWAkPyQHjs)
 - 개발 인원 : 1명
 - 제작 기간 : 3개월 (2025.10.21 - 2026.01.31)
+
+## 테스트 자동화
+
+ ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
+
+본 프로젝트는 Unity Test Framework 기반의 단위 테스트와 GitHub Actions CI를 운영합니다.
+
+- **Edit Mode 단위 테스트 15개** — `GridManager`의 좌표 변환, 충돌 판정, 오브젝트 등록/이동 로직 검증
+- **테스트 가능한 구조** — `GameLogic.asmdef`로 게임 로직 어셈블리 분리, `LevelManager` 의존성을 우회할 수 있도록 좌표 기준점 주입 가능한 메서드 오버로드 설계
+- **CI 자동화** — master 푸시 및 PR 시 GitHub Actions에서 테스트 자동 실행, 초록불 미달 시 머지 차단
+
+| 테스트 카테고리                       | 항목 수 |
+| ------------------------------------- | ------- |
+| 좌표 변환 (WorldToGrid/GridToWorld)   | 2       |
+| 위치 판정 (Blocked/Punished)          | 5       |
+| 오브젝트 등록/이동/제거               | 4       |
+| 푸시 가능 판정 (TestCase 데이터 주도) | 4       |
+| 그리드 초기화                         | 1       |
 
 # 핵심 기능
 
