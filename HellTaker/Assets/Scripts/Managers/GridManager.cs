@@ -68,6 +68,22 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    // GridMovementTests용으로 오버로드하여 추가
+    public void UnregisterObject(GameObject obj, Vector2 basePos)
+    {
+        Vector2Int gridPos = WorldToGrid(obj.transform.position, basePos);
+
+        if (grid.ContainsKey(gridPos))
+        {
+            grid[gridPos].Remove(obj);
+
+            if (grid[gridPos].Count == 0)
+            {
+                grid.Remove(gridPos);
+            }
+        }
+    }
+
     /// <summary>
     /// 오브젝트를 한 위치에서 다른 위치로 이동
     /// <para> !!!주의!!! 이동 전에 IsPositionBlocked를 먼저 수행해야 합니다. </para>
