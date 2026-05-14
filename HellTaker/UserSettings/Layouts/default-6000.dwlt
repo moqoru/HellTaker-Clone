@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1280
     height: 644
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Console
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 498}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 141
+  controlID: 143
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -167,8 +167,8 @@ MonoBehaviour:
     y: 0
     width: 581.3333
     height: 296
-  m_MinSize: {x: 900, y: 216}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 901, y: 242}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 17}
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -199,17 +199,17 @@ MonoBehaviour:
     y: 296
     width: 581.3333
     height: 292
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 16}
+  m_MinSize: {x: 51, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 16}
   - {fileID: 24}
   - {fileID: 25}
   - {fileID: 26}
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 4
+  m_Selected: 4
+  m_LastSelected: 0
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -255,8 +255,8 @@ MonoBehaviour:
     y: 0
     width: 365.33337
     height: 295.33334
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 27}
   m_Panes:
   - {fileID: 27}
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 142
+  controlID: 144
   draggingID: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -359,8 +359,8 @@ MonoBehaviour:
     y: 294.66666
     width: 333.3333
     height: 293.33334
-  m_MinSize: {x: 50, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 51, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 30}
   m_Panes:
   - {fileID: 30}
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 635
+    ID: 609
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_TestListGUIs:
   - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: 4a3b171c-5c01-4d02-a3c0-11f6f41a3d0c
+      RunGuid: 0d070e3b-8bf2-4a33-a033-898963ff8902
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999997
+      Progress: 0.9999996
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
@@ -467,7 +467,7 @@ MonoBehaviour:
       name: Helltaker_Clone
       fullName: Helltaker_Clone
       resultStatus: 1
-      duration: 0.0228629
+      duration: 0.0298648
       messages: 
       output: 
       stacktrace: 
@@ -478,12 +478,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1018
+    - id: 1034
       uniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.0228629
+      duration: 0.0298648
       messages: 
       output: 
       stacktrace: 
@@ -492,14 +492,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1023
+      parentId: 1039
       parentUniqueId: '[Helltaker_Clone][suite]'
     - id: 1001
       uniqueId: 'Tests.dll/[Tests][GridManagerTests][suite]'
       name: GridManagerTests
       fullName: GridManagerTests
       resultStatus: 1
-      duration: 0.0228629
+      duration: 0.0240396
       messages: 
       output: 
       stacktrace: 
@@ -508,14 +508,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1018
+      parentId: 1034
       parentUniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
     - id: 1008
       uniqueId: 'Tests.dll/GridManagerTests/[Tests][GridManagerTests.ClearGrid_RemovesAllObjects]'
       name: ClearGrid_RemovesAllObjects
       fullName: GridManagerTests.ClearGrid_RemovesAllObjects
       resultStatus: 1
-      duration: 0.0116035
+      duration: 0.0123425
       messages: 
       output: 
       stacktrace: 
@@ -532,7 +532,7 @@ MonoBehaviour:
       name: GetObjectWithTagAt_ReturnsCorrectObject
       fullName: GridManagerTests.GetObjectWithTagAt_ReturnsCorrectObject
       resultStatus: 1
-      duration: 0.0040488
+      duration: 0.0044289
       messages: 
       output: 
       stacktrace: 
@@ -549,7 +549,7 @@ MonoBehaviour:
       name: GetPushableAt_NonPushableTag_ReturnsNull
       fullName: GridManagerTests.GetPushableAt_NonPushableTag_ReturnsNull
       resultStatus: 1
-      duration: 0.000539
+      duration: 0.0005761
       messages: 
       output: 
       stacktrace: 
@@ -566,7 +566,7 @@ MonoBehaviour:
       name: GetPushableAt_PushableTags_ReturnsObject
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject
       resultStatus: 1
-      duration: 0.0012415
+      duration: 0.0013729001
       messages: 
       output: 
       stacktrace: 
@@ -582,7 +582,7 @@ MonoBehaviour:
       name: GetPushableAt_PushableTags_ReturnsObject("Block")
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("Block")
       resultStatus: 1
-      duration: 0.0008
+      duration: 0.0009843
       messages: 
       output: 
       stacktrace: 
@@ -599,7 +599,7 @@ MonoBehaviour:
       name: GetPushableAt_PushableTags_ReturnsObject("Monster")
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("Monster")
       resultStatus: 1
-      duration: 0.0002696
+      duration: 0.0002182
       messages: 
       output: 
       stacktrace: 
@@ -616,7 +616,7 @@ MonoBehaviour:
       name: GetPushableAt_PushableTags_ReturnsObject("LockBox")
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("LockBox")
       resultStatus: 1
-      duration: 0.0001719
+      duration: 0.0001704
       messages: 
       output: 
       stacktrace: 
@@ -633,7 +633,7 @@ MonoBehaviour:
       name: GridToWorld_ZeroBase_ReturnsCorrectWorld
       fullName: GridManagerTests.GridToWorld_ZeroBase_ReturnsCorrectWorld
       resultStatus: 1
-      duration: 0.0014407
+      duration: 0.0014577
       messages: 
       output: 
       stacktrace: 
@@ -650,7 +650,7 @@ MonoBehaviour:
       name: IsPositionBlocked_EmptyPos_ReturnsFalse
       fullName: GridManagerTests.IsPositionBlocked_EmptyPos_ReturnsFalse
       resultStatus: 1
-      duration: 0.0003053
+      duration: 0.000277
       messages: 
       output: 
       stacktrace: 
@@ -667,7 +667,7 @@ MonoBehaviour:
       name: IsPositionBlocked_GoalTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionBlocked_GoalTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0004405
+      duration: 0.0004068
       messages: 
       output: 
       stacktrace: 
@@ -684,7 +684,7 @@ MonoBehaviour:
       name: IsPositionBlocked_WallTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionBlocked_WallTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0003417
+      duration: 0.0003212
       messages: 
       output: 
       stacktrace: 
@@ -701,7 +701,7 @@ MonoBehaviour:
       name: IsPositionPunished_ThornNormalTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionPunished_ThornNormalTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0005116
+      duration: 0.0005064
       messages: 
       output: 
       stacktrace: 
@@ -718,7 +718,7 @@ MonoBehaviour:
       name: IsPositionPunished_ThornUpTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionPunished_ThornUpTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0003943
+      duration: 0.000334
       messages: 
       output: 
       stacktrace: 
@@ -735,7 +735,7 @@ MonoBehaviour:
       name: MoveObject_UpdatesDictionary
       fullName: GridManagerTests.MoveObject_UpdatesDictionary
       resultStatus: 1
-      duration: 0.0010422
+      duration: 0.0010746
       messages: 
       output: 
       stacktrace: 
@@ -752,7 +752,7 @@ MonoBehaviour:
       name: UnregisterObject_RemovesFromGrid
       fullName: GridManagerTests.UnregisterObject_RemovesFromGrid
       resultStatus: 1
-      duration: 0.0005003
+      duration: 0.0005199
       messages: 
       output: 
       stacktrace: 
@@ -769,7 +769,7 @@ MonoBehaviour:
       name: WorldToGrid_ZeroBase_ReturnsCorrectGrid
       fullName: GridManagerTests.WorldToGrid_ZeroBase_ReturnsCorrectGrid
       resultStatus: 1
-      duration: 0.0004535
+      duration: 0.0004216
       messages: 
       output: 
       stacktrace: 
@@ -781,6 +781,277 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: 'Tests.dll/[Tests][GridManagerTests][suite]'
+    - id: 1018
+      uniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+      name: MapDataParserTests
+      fullName: MapDataParserTests
+      resultStatus: 1
+      duration: 0.0058252
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1034
+      parentUniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1031
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_BlankLinesInMiddle_IgnoresThem]'
+      name: Parse_BlankLinesInMiddle_IgnoresThem
+      fullName: MapDataParserTests.Parse_BlankLinesInMiddle_IgnoresThem
+      resultStatus: 1
+      duration: 0.0016908
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1033
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_CellsTrimmed_ReturnsTrimmedTileData]'
+      name: Parse_CellsTrimmed_ReturnsTrimmedTileData
+      fullName: MapDataParserTests.Parse_CellsTrimmed_ReturnsTrimmedTileData
+      resultStatus: 1
+      duration: 0.0002766
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1024
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_EmptyString_ThrowsException]'
+      name: Parse_EmptyString_ThrowsException
+      fullName: MapDataParserTests.Parse_EmptyString_ThrowsException
+      resultStatus: 1
+      duration: 0.0019743
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1022
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_GoalCharacterEmpty_AppliesDefault]'
+      name: Parse_GoalCharacterEmpty_AppliesDefault
+      fullName: MapDataParserTests.Parse_GoalCharacterEmpty_AppliesDefault
+      resultStatus: 1
+      duration: 0.0001592
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1021
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_GoalCharacterMissing_AppliesDefault]'
+      name: Parse_GoalCharacterMissing_AppliesDefault
+      fullName: MapDataParserTests.Parse_GoalCharacterMissing_AppliesDefault
+      resultStatus: 1
+      duration: 0.0001145
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1023
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_GoalCharacterWithWhitespace_TrimsCorrectly]'
+      name: Parse_GoalCharacterWithWhitespace_TrimsCorrectly
+      fullName: MapDataParserTests.Parse_GoalCharacterWithWhitespace_TrimsCorrectly
+      resultStatus: 1
+      duration: 0.0000924
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1028
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_InvalidMoveCount_ThrowsException]'
+      name: Parse_InvalidMoveCount_ThrowsException
+      fullName: MapDataParserTests.Parse_InvalidMoveCount_ThrowsException
+      resultStatus: 1
+      duration: 0.0001571
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1029
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_InvalidOffsetX_ThrowsException]'
+      name: Parse_InvalidOffsetX_ThrowsException
+      fullName: MapDataParserTests.Parse_InvalidOffsetX_ThrowsException
+      resultStatus: 1
+      duration: 0.0001783
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1030
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_InvalidOffsetY_ThrowsException]'
+      name: Parse_InvalidOffsetY_ThrowsException
+      fullName: MapDataParserTests.Parse_InvalidOffsetY_ThrowsException
+      resultStatus: 1
+      duration: 0.0001447
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1027
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_MetadataInsufficientFields_ThrowsException]'
+      name: Parse_MetadataInsufficientFields_ThrowsException
+      fullName: MapDataParserTests.Parse_MetadataInsufficientFields_ThrowsException
+      resultStatus: 1
+      duration: 0.0001518
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1026
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_MetadataOnly_NoTileData_ThrowsException]'
+      name: Parse_MetadataOnly_NoTileData_ThrowsException
+      fullName: MapDataParserTests.Parse_MetadataOnly_NoTileData_ThrowsException
+      resultStatus: 1
+      duration: 0.0001352
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1032
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_NegativeOffset_ParsesCorrectly]'
+      name: Parse_NegativeOffset_ParsesCorrectly
+      fullName: MapDataParserTests.Parse_NegativeOffset_ParsesCorrectly
+      resultStatus: 1
+      duration: 0.0002818
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1019
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_ValidCsv_ReturnsCorrectMetadata]'
+      name: Parse_ValidCsv_ReturnsCorrectMetadata
+      fullName: MapDataParserTests.Parse_ValidCsv_ReturnsCorrectMetadata
+      resultStatus: 1
+      duration: 0.0001682
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1020
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_ValidCsv_ReturnsCorrectTileData]'
+      name: Parse_ValidCsv_ReturnsCorrectTileData
+      fullName: MapDataParserTests.Parse_ValidCsv_ReturnsCorrectTileData
+      resultStatus: 1
+      duration: 0.000154
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
+    - id: 1025
+      uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_WhitespaceOnly_ThrowsException]'
+      name: Parse_WhitespaceOnly_ThrowsException
+      fullName: MapDataParserTests.Parse_WhitespaceOnly_ThrowsException
+      resultStatus: 1
+      duration: 0.0001463
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1018
+      parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
     m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
@@ -817,7 +1088,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 0}
     runProgress:
-      RunGuid: 4a3b171c-5c01-4d02-a3c0-11f6f41a3d0c
+      RunGuid: 0d070e3b-8bf2-4a33-a033-898963ff8902
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -844,7 +1115,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999997
+      Progress: 0.9999996
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList: []
@@ -883,7 +1154,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 0}
     runProgress:
-      RunGuid: 4a3b171c-5c01-4d02-a3c0-11f6f41a3d0c
+      RunGuid: 0d070e3b-8bf2-4a33-a033-898963ff8902
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -910,7 +1181,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999997
+      Progress: 0.9999996
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList: []
@@ -1851,7 +2122,7 @@ MonoBehaviour:
         m_PaneScroll: {x: 0, y: 0}
         m_ViewType: 0
         updateViewLive: 1
-        m_CurrentFrameIndex: 2378
+        m_CurrentFrameIndex: -1
         m_HierarchyOverruledThreadFromSelection: 0
         m_ProfilerViewFilteringOptions: 1
         m_FrameDataHierarchyView:
@@ -3748,7 +4019,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 12f1ffff0af2ffffa4faffff
+      m_ExpandedIDs: 3ef3fffff8faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -3837,7 +4108,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 129}
     m_SelectedIDs: 58d80000
     m_LastClickedID: 55384
-    m_ExpandedIDs: 0000000056c90000cccc0000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e8cc0000eacc0000eccc0000eecc0000f0cc0000f2cc0000f4cc0000f6cc0000
+    m_ExpandedIDs: 0000000040c90000becc0000c0cc0000c2cc0000c4cc0000c6cc0000c8cc0000cacc0000cccc0000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -3863,21 +4134,21 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 674.4}
+    scrollPos: {x: 0, y: 627.3334}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000056c90000cccc0000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e8cc0000eacc0000eccc0000eecc0000f0cc0000f2cc0000f4cc0000
+    m_ExpandedIDs: ffffffff0000000040c90000becc0000c0cc0000c2cc0000c4cc0000c6cc0000c8cc0000cacc0000cccc0000cecc0000d0cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e6cd0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: MapDataParser
-      m_OriginalName: MapDataParser
+      m_Name: MapDataParserTests
+      m_OriginalName: MapDataParserTests
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 52682
+      m_UserData: 52736
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
