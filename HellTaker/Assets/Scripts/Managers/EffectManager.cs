@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -29,7 +29,7 @@ public class EffectManager : MonoBehaviour
         {
             Instance = this;
         }
-        // ½Ì±ÛÅæ Áßº¹ ¹æÁö
+        // ì‹±ê¸€í†¤ ì¤‘ë³µ ë°©ì§€
         else if (Instance != this)
         {
             Destroy(gameObject);
@@ -41,7 +41,7 @@ public class EffectManager : MonoBehaviour
         
         if (!TryGetEffectPrefab(type, out GameObject prefab))
         {
-            Debug.LogWarning($"[EffectManager] {type} Å¸ÀÔÀÇ ÀÌÆåÆ® ÇÁ¸®ÆÕÀÌ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogWarning($"[EffectManager] {type} íƒ€ì…ì˜ ì´í™íŠ¸ í”„ë¦¬íŒ¹ì´ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -52,7 +52,7 @@ public class EffectManager : MonoBehaviour
     {
         if (obj == null)
         {
-            Debug.LogWarning($"[EffectManager] ÀÌÆåÆ®¸¦ Àç»ıÇÒ ¿ÀºêÁ§Æ®°¡ nullÀÔ´Ï´Ù.");
+            Debug.LogWarning($"[EffectManager] ì´í™íŠ¸ë¥¼ ì¬ìƒí•  ì˜¤ë¸Œì íŠ¸ê°€ nullì…ë‹ˆë‹¤.");
             return;
         }
 

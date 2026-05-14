@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public enum BGMType
 {
@@ -74,7 +74,7 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             InitializeAudioSources();
         }
-        // ½Ì±ÛÅæ Áßº¹ ¹æÁö
+        // ì‹±ê¸€í†¤ ì¤‘ë³µ ë°©ì§€
         else if (Instance != this)
         {
             Destroy(gameObject);
@@ -121,7 +121,7 @@ public class AudioManager : MonoBehaviour
             case BGMType.Ending: return endingBGM;
             case BGMType.None: return null;
             default:
-                Debug.LogError($"[AudioManager] ÀÌ BGM TypeÀ» Ã£Áö ¸øÇß½À´Ï´Ù: {type}");
+                Debug.LogError($"[AudioManager] ì´ BGM Typeì„ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤: {type}");
                 return null;
         }
     }
@@ -184,7 +184,7 @@ public class AudioManager : MonoBehaviour
             case SFXType.DialogueSuccess: return dialogueSuccess;
             case SFXType.None: return null;
             default:
-                Debug.LogError($"[AudioManager] ÀÌ SFX TypeÀ» Ã£Áö ¸øÇß½À´Ï´Ù: {type}");
+                Debug.LogError($"[AudioManager] ì´ SFX Typeì„ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤: {type}");
                 return null;
         }
     }
