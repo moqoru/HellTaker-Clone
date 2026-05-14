@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 154
+  controlID: 145
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 99
+  controlID: 93
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 155
+  controlID: 146
   draggingID: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 188
+    ID: 736
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_TestListGUIs:
   - m_Window: {fileID: 15}
     runProgress:
-      RunGuid: 0d070e3b-8bf2-4a33-a033-898963ff8902
+      RunGuid: 5fcb8c8e-dced-4aa8-a4e6-3cf3daf82340
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999996
+      Progress: 0.9999995
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList:
@@ -467,7 +467,7 @@ MonoBehaviour:
       name: Helltaker_Clone
       fullName: Helltaker_Clone
       resultStatus: 1
-      duration: 0.0298648
+      duration: 0.0358287
       messages: 
       output: 
       stacktrace: 
@@ -478,12 +478,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1034
+    - id: 1055
       uniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.0298648
+      duration: 0.0358287
       messages: 
       output: 
       stacktrace: 
@@ -492,14 +492,369 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1000
+      parentId: 1060
       parentUniqueId: '[Helltaker_Clone][suite]'
     - id: 1001
+      uniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+      name: CsvUtilityTests
+      fullName: CsvUtilityTests
+      resultStatus: 1
+      duration: 0.011044299
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1055
+      parentUniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1007
+      uniqueId: 'Tests.dll/CsvUtilityTests/[Tests][CsvUtilityTests.CleanString_BackslashN_ConvertsToNewline]'
+      name: CleanString_BackslashN_ConvertsToNewline
+      fullName: CsvUtilityTests.CleanString_BackslashN_ConvertsToNewline
+      resultStatus: 1
+      duration: 0.0095281
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+    - id: 1008
+      uniqueId: 'Tests.dll/CsvUtilityTests/[Tests][CsvUtilityTests.CleanString_EmptyInput_ReturnsEmpty]'
+      name: CleanString_EmptyInput_ReturnsEmpty
+      fullName: CsvUtilityTests.CleanString_EmptyInput_ReturnsEmpty
+      resultStatus: 1
+      duration: 0.000137
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+    - id: 1005
+      uniqueId: 'Tests.dll/CsvUtilityTests/[Tests][CsvUtilityTests.CleanString_TripleQuotes_StripsCorrectly]'
+      name: CleanString_TripleQuotes_StripsCorrectly
+      fullName: CsvUtilityTests.CleanString_TripleQuotes_StripsCorrectly
+      resultStatus: 1
+      duration: 0.0001117
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+    - id: 1003
+      uniqueId: 'Tests.dll/CsvUtilityTests/[Tests][CsvUtilityTests.ParseLine_CommaInsideQuotes_KeepsAsOneCell]'
+      name: ParseLine_CommaInsideQuotes_KeepsAsOneCell
+      fullName: CsvUtilityTests.ParseLine_CommaInsideQuotes_KeepsAsOneCell
+      resultStatus: 1
+      duration: 0.0009558
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+    - id: 1004
+      uniqueId: 'Tests.dll/CsvUtilityTests/[Tests][CsvUtilityTests.ParseLine_EmptyCells_PreservesEmpty]'
+      name: ParseLine_EmptyCells_PreservesEmpty
+      fullName: CsvUtilityTests.ParseLine_EmptyCells_PreservesEmpty
+      resultStatus: 1
+      duration: 0.0001264
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+    - id: 1002
+      uniqueId: 'Tests.dll/CsvUtilityTests/[Tests][CsvUtilityTests.ParseLine_SimpleLine_SplitsByComma]'
+      name: ParseLine_SimpleLine_SplitsByComma
+      fullName: CsvUtilityTests.ParseLine_SimpleLine_SplitsByComma
+      resultStatus: 1
+      duration: 0.0001853
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: 'Tests.dll/[Tests][CsvUtilityTests][suite]'
+    - id: 1008
+      uniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+      name: DialogueDataParserTests
+      fullName: DialogueDataParserTests
+      resultStatus: 1
+      duration: 0.0069478
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1055
+      parentUniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1011
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_ChoiceNode_ParsesThreeChoicesAndCorrectIndex]'
+      name: Parse_ChoiceNode_ParsesThreeChoicesAndCorrectIndex
+      fullName: DialogueDataParserTests.Parse_ChoiceNode_ParsesThreeChoicesAndCorrectIndex
+      resultStatus: 1
+      duration: 0.0023382
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1012
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_CutSceneNode_AutoIncrementsNextID]'
+      name: Parse_CutSceneNode_AutoIncrementsNextID
+      fullName: DialogueDataParserTests.Parse_CutSceneNode_AutoIncrementsNextID
+      resultStatus: 1
+      duration: 0.0001769
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1010
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_DialogueNode_AutoIncrementsNextID]'
+      name: Parse_DialogueNode_AutoIncrementsNextID
+      fullName: DialogueDataParserTests.Parse_DialogueNode_AutoIncrementsNextID
+      resultStatus: 1
+      duration: 0.0004574
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1018
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_EmptyString_ThrowsException]'
+      name: Parse_EmptyString_ThrowsException
+      fullName: DialogueDataParserTests.Parse_EmptyString_ThrowsException
+      resultStatus: 1
+      duration: 0.0021541
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1020
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_HeaderOnly_ReturnsEmptyNodes]'
+      name: Parse_HeaderOnly_ReturnsEmptyNodes
+      fullName: DialogueDataParserTests.Parse_HeaderOnly_ReturnsEmptyNodes
+      resultStatus: 1
+      duration: 0.0001948
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1016
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_InsufficientFields_SkipsLineAndWarns]'
+      name: Parse_InsufficientFields_SkipsLineAndWarns
+      fullName: DialogueDataParserTests.Parse_InsufficientFields_SkipsLineAndWarns
+      resultStatus: 1
+      duration: 0.0005662
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1014
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_InvalidID_SkipsLineAndWarns]'
+      name: Parse_InvalidID_SkipsLineAndWarns
+      fullName: DialogueDataParserTests.Parse_InvalidID_SkipsLineAndWarns
+      resultStatus: 1
+      duration: 0.0001619
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1015
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_InvalidType_SkipsLineAndWarns]'
+      name: Parse_InvalidType_SkipsLineAndWarns
+      fullName: DialogueDataParserTests.Parse_InvalidType_SkipsLineAndWarns
+      resultStatus: 1
+      duration: 0.0001659
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1017
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_MixedValidAndInvalid_LoadsValidOnly]'
+      name: Parse_MixedValidAndInvalid_LoadsValidOnly
+      fullName: DialogueDataParserTests.Parse_MixedValidAndInvalid_LoadsValidOnly
+      resultStatus: 1
+      duration: 0.0001663
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1013
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_NumberChoiceNode_ParsesMinMaxAndNextIDs]'
+      name: Parse_NumberChoiceNode_ParsesMinMaxAndNextIDs
+      fullName: DialogueDataParserTests.Parse_NumberChoiceNode_ParsesMinMaxAndNextIDs
+      resultStatus: 1
+      duration: 0.0001838
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1021
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_TextWithCommaInsideQuotes_PreservesText]'
+      name: Parse_TextWithCommaInsideQuotes_PreservesText
+      fullName: DialogueDataParserTests.Parse_TextWithCommaInsideQuotes_PreservesText
+      resultStatus: 1
+      duration: 0.0000999
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1022
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_TextWithEscapedNewline_ConvertsToActualNewline]'
+      name: Parse_TextWithEscapedNewline_ConvertsToActualNewline
+      fullName: DialogueDataParserTests.Parse_TextWithEscapedNewline_ConvertsToActualNewline
+      resultStatus: 1
+      duration: 0.0001056
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1019
+      uniqueId: 'Tests.dll/DialogueDataParserTests/[Tests][DialogueDataParserTests.Parse_WhitespaceOnly_ThrowsException]'
+      name: Parse_WhitespaceOnly_ThrowsException
+      fullName: DialogueDataParserTests.Parse_WhitespaceOnly_ThrowsException
+      resultStatus: 1
+      duration: 0.0001768
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: 'Tests.dll/[Tests][DialogueDataParserTests][suite]'
+    - id: 1022
       uniqueId: 'Tests.dll/[Tests][GridManagerTests][suite]'
       name: GridManagerTests
       fullName: GridManagerTests
       resultStatus: 1
-      duration: 0.0240396
+      duration: 0.0147353
       messages: 
       output: 
       stacktrace: 
@@ -508,14 +863,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1034
+      parentId: 1055
       parentUniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
     - id: 1008
       uniqueId: 'Tests.dll/GridManagerTests/[Tests][GridManagerTests.ClearGrid_RemovesAllObjects]'
       name: ClearGrid_RemovesAllObjects
       fullName: GridManagerTests.ClearGrid_RemovesAllObjects
       resultStatus: 1
-      duration: 0.0123425
+      duration: 0.0065333
       messages: 
       output: 
       stacktrace: 
@@ -532,7 +887,7 @@ MonoBehaviour:
       name: GetObjectWithTagAt_ReturnsCorrectObject
       fullName: GridManagerTests.GetObjectWithTagAt_ReturnsCorrectObject
       resultStatus: 1
-      duration: 0.0044289
+      duration: 0.0020248
       messages: 
       output: 
       stacktrace: 
@@ -549,7 +904,7 @@ MonoBehaviour:
       name: GetPushableAt_NonPushableTag_ReturnsNull
       fullName: GridManagerTests.GetPushableAt_NonPushableTag_ReturnsNull
       resultStatus: 1
-      duration: 0.0005761
+      duration: 0.0005755
       messages: 
       output: 
       stacktrace: 
@@ -561,12 +916,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: 'Tests.dll/[Tests][GridManagerTests][suite]'
-    - id: 1015
+    - id: 1036
       uniqueId: 'Tests.dll/GridManagerTests/[Tests][GridManagerTests.GetPushableAt_PushableTags_ReturnsObject][suite]'
       name: GetPushableAt_PushableTags_ReturnsObject
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject
       resultStatus: 1
-      duration: 0.0013729001
+      duration: 0.0011884
       messages: 
       output: 
       stacktrace: 
@@ -575,14 +930,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1001
+      parentId: 1022
       parentUniqueId: 'Tests.dll/[Tests][GridManagerTests][suite]'
     - id: 1012
       uniqueId: 'Tests.dll/GridManagerTests/GetPushableAt_PushableTags_ReturnsObject/[Tests][GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("Block")]'
       name: GetPushableAt_PushableTags_ReturnsObject("Block")
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("Block")
       resultStatus: 1
-      duration: 0.0009843
+      duration: 0.000876
       messages: 
       output: 
       stacktrace: 
@@ -599,7 +954,7 @@ MonoBehaviour:
       name: GetPushableAt_PushableTags_ReturnsObject("Monster")
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("Monster")
       resultStatus: 1
-      duration: 0.0002182
+      duration: 0.0001775
       messages: 
       output: 
       stacktrace: 
@@ -616,7 +971,7 @@ MonoBehaviour:
       name: GetPushableAt_PushableTags_ReturnsObject("LockBox")
       fullName: GridManagerTests.GetPushableAt_PushableTags_ReturnsObject("LockBox")
       resultStatus: 1
-      duration: 0.0001704
+      duration: 0.0001349
       messages: 
       output: 
       stacktrace: 
@@ -633,7 +988,7 @@ MonoBehaviour:
       name: GridToWorld_ZeroBase_ReturnsCorrectWorld
       fullName: GridManagerTests.GridToWorld_ZeroBase_ReturnsCorrectWorld
       resultStatus: 1
-      duration: 0.0014577
+      duration: 0.0007565
       messages: 
       output: 
       stacktrace: 
@@ -650,7 +1005,7 @@ MonoBehaviour:
       name: IsPositionBlocked_EmptyPos_ReturnsFalse
       fullName: GridManagerTests.IsPositionBlocked_EmptyPos_ReturnsFalse
       resultStatus: 1
-      duration: 0.000277
+      duration: 0.0002395
       messages: 
       output: 
       stacktrace: 
@@ -667,7 +1022,7 @@ MonoBehaviour:
       name: IsPositionBlocked_GoalTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionBlocked_GoalTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0004068
+      duration: 0.000351
       messages: 
       output: 
       stacktrace: 
@@ -684,7 +1039,7 @@ MonoBehaviour:
       name: IsPositionBlocked_WallTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionBlocked_WallTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0003212
+      duration: 0.0003042
       messages: 
       output: 
       stacktrace: 
@@ -701,7 +1056,7 @@ MonoBehaviour:
       name: IsPositionPunished_ThornNormalTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionPunished_ThornNormalTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.0005064
+      duration: 0.0004878
       messages: 
       output: 
       stacktrace: 
@@ -718,7 +1073,7 @@ MonoBehaviour:
       name: IsPositionPunished_ThornUpTag_ReturnsTrue
       fullName: GridManagerTests.IsPositionPunished_ThornUpTag_ReturnsTrue
       resultStatus: 1
-      duration: 0.000334
+      duration: 0.0003258
       messages: 
       output: 
       stacktrace: 
@@ -735,7 +1090,7 @@ MonoBehaviour:
       name: MoveObject_UpdatesDictionary
       fullName: GridManagerTests.MoveObject_UpdatesDictionary
       resultStatus: 1
-      duration: 0.0010746
+      duration: 0.001068
       messages: 
       output: 
       stacktrace: 
@@ -752,7 +1107,7 @@ MonoBehaviour:
       name: UnregisterObject_RemovesFromGrid
       fullName: GridManagerTests.UnregisterObject_RemovesFromGrid
       resultStatus: 1
-      duration: 0.0005199
+      duration: 0.0004892
       messages: 
       output: 
       stacktrace: 
@@ -769,7 +1124,7 @@ MonoBehaviour:
       name: WorldToGrid_ZeroBase_ReturnsCorrectGrid
       fullName: GridManagerTests.WorldToGrid_ZeroBase_ReturnsCorrectGrid
       resultStatus: 1
-      duration: 0.0004216
+      duration: 0.0003913
       messages: 
       output: 
       stacktrace: 
@@ -781,12 +1136,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: 'Tests.dll/[Tests][GridManagerTests][suite]'
-    - id: 1018
+    - id: 1039
       uniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
       name: MapDataParserTests
       fullName: MapDataParserTests
       resultStatus: 1
-      duration: 0.0058252
+      duration: 0.0031013
       messages: 
       output: 
       stacktrace: 
@@ -795,14 +1150,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1034
+      parentId: 1055
       parentUniqueId: '[Tests][C:/Users/june6/HellTaker_Clone/HellTaker/Library/ScriptAssemblies/Tests.dll][suite]'
     - id: 1031
       uniqueId: 'Tests.dll/MapDataParserTests/[Tests][MapDataParserTests.Parse_BlankLinesInMiddle_IgnoresThem]'
       name: Parse_BlankLinesInMiddle_IgnoresThem
       fullName: MapDataParserTests.Parse_BlankLinesInMiddle_IgnoresThem
       resultStatus: 1
-      duration: 0.0016908
+      duration: 0.0007644
       messages: 
       output: 
       stacktrace: 
@@ -819,7 +1174,7 @@ MonoBehaviour:
       name: Parse_CellsTrimmed_ReturnsTrimmedTileData
       fullName: MapDataParserTests.Parse_CellsTrimmed_ReturnsTrimmedTileData
       resultStatus: 1
-      duration: 0.0002766
+      duration: 0.0001991
       messages: 
       output: 
       stacktrace: 
@@ -836,7 +1191,7 @@ MonoBehaviour:
       name: Parse_EmptyString_ThrowsException
       fullName: MapDataParserTests.Parse_EmptyString_ThrowsException
       resultStatus: 1
-      duration: 0.0019743
+      duration: 0.0002762
       messages: 
       output: 
       stacktrace: 
@@ -853,7 +1208,7 @@ MonoBehaviour:
       name: Parse_GoalCharacterEmpty_AppliesDefault
       fullName: MapDataParserTests.Parse_GoalCharacterEmpty_AppliesDefault
       resultStatus: 1
-      duration: 0.0001592
+      duration: 0.0001107
       messages: 
       output: 
       stacktrace: 
@@ -870,7 +1225,7 @@ MonoBehaviour:
       name: Parse_GoalCharacterMissing_AppliesDefault
       fullName: MapDataParserTests.Parse_GoalCharacterMissing_AppliesDefault
       resultStatus: 1
-      duration: 0.0001145
+      duration: 0.0000904
       messages: 
       output: 
       stacktrace: 
@@ -887,7 +1242,7 @@ MonoBehaviour:
       name: Parse_GoalCharacterWithWhitespace_TrimsCorrectly
       fullName: MapDataParserTests.Parse_GoalCharacterWithWhitespace_TrimsCorrectly
       resultStatus: 1
-      duration: 0.0000924
+      duration: 0.0000887
       messages: 
       output: 
       stacktrace: 
@@ -904,7 +1259,7 @@ MonoBehaviour:
       name: Parse_InvalidMoveCount_ThrowsException
       fullName: MapDataParserTests.Parse_InvalidMoveCount_ThrowsException
       resultStatus: 1
-      duration: 0.0001571
+      duration: 0.0001598
       messages: 
       output: 
       stacktrace: 
@@ -921,7 +1276,7 @@ MonoBehaviour:
       name: Parse_InvalidOffsetX_ThrowsException
       fullName: MapDataParserTests.Parse_InvalidOffsetX_ThrowsException
       resultStatus: 1
-      duration: 0.0001783
+      duration: 0.0001667
       messages: 
       output: 
       stacktrace: 
@@ -938,7 +1293,7 @@ MonoBehaviour:
       name: Parse_InvalidOffsetY_ThrowsException
       fullName: MapDataParserTests.Parse_InvalidOffsetY_ThrowsException
       resultStatus: 1
-      duration: 0.0001447
+      duration: 0.0001388
       messages: 
       output: 
       stacktrace: 
@@ -955,7 +1310,7 @@ MonoBehaviour:
       name: Parse_MetadataInsufficientFields_ThrowsException
       fullName: MapDataParserTests.Parse_MetadataInsufficientFields_ThrowsException
       resultStatus: 1
-      duration: 0.0001518
+      duration: 0.0001381
       messages: 
       output: 
       stacktrace: 
@@ -972,7 +1327,7 @@ MonoBehaviour:
       name: Parse_MetadataOnly_NoTileData_ThrowsException
       fullName: MapDataParserTests.Parse_MetadataOnly_NoTileData_ThrowsException
       resultStatus: 1
-      duration: 0.0001352
+      duration: 0.0001337
       messages: 
       output: 
       stacktrace: 
@@ -989,7 +1344,7 @@ MonoBehaviour:
       name: Parse_NegativeOffset_ParsesCorrectly
       fullName: MapDataParserTests.Parse_NegativeOffset_ParsesCorrectly
       resultStatus: 1
-      duration: 0.0002818
+      duration: 0.0003279
       messages: 
       output: 
       stacktrace: 
@@ -1006,7 +1361,7 @@ MonoBehaviour:
       name: Parse_ValidCsv_ReturnsCorrectMetadata
       fullName: MapDataParserTests.Parse_ValidCsv_ReturnsCorrectMetadata
       resultStatus: 1
-      duration: 0.0001682
+      duration: 0.0001778
       messages: 
       output: 
       stacktrace: 
@@ -1023,7 +1378,7 @@ MonoBehaviour:
       name: Parse_ValidCsv_ReturnsCorrectTileData
       fullName: MapDataParserTests.Parse_ValidCsv_ReturnsCorrectTileData
       resultStatus: 1
-      duration: 0.000154
+      duration: 0.0001688
       messages: 
       output: 
       stacktrace: 
@@ -1040,7 +1395,7 @@ MonoBehaviour:
       name: Parse_WhitespaceOnly_ThrowsException
       fullName: MapDataParserTests.Parse_WhitespaceOnly_ThrowsException
       resultStatus: 1
-      duration: 0.0001463
+      duration: 0.0001602
       messages: 
       output: 
       stacktrace: 
@@ -1052,13 +1407,21 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1018
       parentUniqueId: 'Tests.dll/[Tests][MapDataParserTests][suite]'
-    m_ResultText: 
-    m_ResultStacktrace: 
+    m_ResultText: "CleanString_EscapedQuotes_Unescapes (0.004s)\n---\n  Expected
+      string length 13 but was 12. Strings differ at index 12.\r\n  Expected: \"she
+      said \"hi\"\"\r\n  But was:  \"she said \"hi\"\r\n  -----------------------^\r\n\n---\nat
+      CsvUtilityTests.CleanString_EscapedQuotes_Unescapes () [0x00000] in <color=#40a0ff><a
+      href=\"C:\\Users\\june6\\HellTaker_Clone\\HellTaker\\Assets\\Tests\\CsvUtilityTests.cs\"
+      line=\"55\r\">Assets\\Tests\\CsvUtilityTests.cs:55\r</a></color>"
+    m_ResultStacktrace: 'at CsvUtilityTests.CleanString_EscapedQuotes_Unescapes ()
+      [0x00000] in C:\Users\june6\HellTaker_Clone\HellTaker\Assets\Tests\CsvUtilityTests.cs:55
+
+'
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: f63ebad1ffffff7f
+      scrollPos: {x: 0, y: 49}
+      m_SelectedIDs: 9dd791f6
+      m_LastClickedID: -158214243
+      m_ExpandedIDs: 225504d0f63ebad1667c764effffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1088,7 +1451,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 0}
     runProgress:
-      RunGuid: 0d070e3b-8bf2-4a33-a033-898963ff8902
+      RunGuid: 5fcb8c8e-dced-4aa8-a4e6-3cf3daf82340
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -1115,7 +1478,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999996
+      Progress: 0.9999995
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList: []
@@ -1154,7 +1517,7 @@ MonoBehaviour:
     m_SelectedOption: 0
   - m_Window: {fileID: 0}
     runProgress:
-      RunGuid: 0d070e3b-8bf2-4a33-a033-898963ff8902
+      RunGuid: 5fcb8c8e-dced-4aa8-a4e6-3cf3daf82340
       ExecutionSettings:
         m_TargetPlatform: 0
         m_HasTargetPlatform: 0
@@ -1181,7 +1544,7 @@ MonoBehaviour:
           disableNestedEnumeratorBugfix: 0
         randomOrderSeed: 0
       HasFinished: 1
-      Progress: 0.9999996
+      Progress: 0.9999995
       CurrentStepName: Unlock Reload Assemblies
       CurrentStageName: 
     m_NewResultList: []
@@ -2122,7 +2485,7 @@ MonoBehaviour:
         m_PaneScroll: {x: 0, y: 0}
         m_ViewType: 0
         updateViewLive: 1
-        m_CurrentFrameIndex: 4270
+        m_CurrentFrameIndex: 2648
         m_HierarchyOverruledThreadFromSelection: 0
         m_ProfilerViewFilteringOptions: 1
         m_FrameDataHierarchyView:
@@ -4017,9 +4380,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 20ce0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: eefaffff
+      m_ExpandedIDs: acecffff8eefffffecfaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -4108,7 +4471,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 129}
     m_SelectedIDs: 58d80000
     m_LastClickedID: 55384
-    m_ExpandedIDs: 0000000046c90000c4cc0000c6cc0000c8cc0000cacc0000cccc0000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e8cc0000eacc0000
+    m_ExpandedIDs: 0000000002b4000050c90000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e8cc0000eacc0000eccc0000eecc0000f0cc0000f2cc0000f4cc0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4134,21 +4497,21 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 687.3334}
+    scrollPos: {x: 0, y: 803.3334}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000046c90000c6cc0000c8cc0000cacc0000cccc0000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e8cc0000eacc0000e6cd00000ece0000
+    m_ExpandedIDs: ffffffff0000000002b4000050c90000cecc0000d0cc0000d2cc0000d4cc0000d6cc0000d8cc0000dacc0000dccc0000decc0000e0cc0000e2cc0000e4cc0000e6cc0000e8cc0000eacc0000eccc0000eecc0000f0cc0000f2cc0000f4cc0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: DialogueDataParser
-      m_OriginalName: DialogueDataParser
+      m_Name: DialogueDataParserTests
+      m_OriginalName: DialogueDataParserTests
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 52768
+      m_UserData: 52774
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
