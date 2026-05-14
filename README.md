@@ -5,23 +5,57 @@
 - 개발 인원 : 1명
 - 제작 기간 : 3개월 (2025.10.21 - 2026.01.31)
 
-## 테스트 자동화
+## TC 문서와 자동화 테스트의 연결
 
  ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
 
-본 프로젝트는 Unity Test Framework 기반의 단위 테스트와 GitHub Actions CI를 운영합니다.
+본 프로젝트는 두 층위의 검증을 운영합니다.
 
-- **Edit Mode 단위 테스트 15개** — `GridManager`의 좌표 변환, 충돌 판정, 오브젝트 등록/이동 로직 검증
-- **테스트 가능한 구조** — `GameLogic.asmdef`로 게임 로직 어셈블리 분리, `LevelManager` 의존성을 우회할 수 있도록 좌표 기준점 주입 가능한 메서드 오버로드 설계
-- **CI 자동화** — master 푸시 및 PR 시 GitHub Actions에서 테스트 자동 실행, 초록불 미달 시 머지 차단
+- [**수동 TC 문서 (117개)**](https://naver.me/5LQHHwiI): 사용자 관점의 외부 행동 검증 (애니메이션, 사운드, UI 등 시각/청각 영역 포함)
+- **자동화 단위 테스트 (49개)**: 코드 단위 로직 검증 (좌표 계산, 데이터 파싱, 상태 판정)
 
-| 테스트 카테고리                       | 항목 수 |
-| ------------------------------------- | ------- |
-| 좌표 변환 (WorldToGrid/GridToWorld)   | 2       |
-| 위치 판정 (Blocked/Punished)          | 5       |
-| 오브젝트 등록/이동/제거               | 4       |
-| 푸시 가능 판정 (TestCase 데이터 주도) | 4       |
-| 그리드 초기화                         | 1       |
+자동화 테스트는 크게 세 영역으로 나뉩니다.
+
+### Type A. 수동 TC를 직접 대체하는 테스트
+
+수동 TC 중 퍼즐 파트의 일부 케이스를 코드 레벨에서 자동 검증합니다.
+(아래 항목은 모두 `GridManagerTests` 클래스의 메서드를 가리킵니다.)
+
+| TC ID | 수동 TC 항목 | 자동화 테스트 |
+|---|---|---|
+| PZ-003 | 몬스터 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`MoveObject_UpdatesDictionary`<br>`GetPushableAt_PushableTags_ReturnsObject`<br>`UnregisterObject_RemovesFromGrid` |
+| PZ-004 | 블록 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`MoveObject_UpdatesDictionary`<br>`GetPushableAt_PushableTags_ReturnsObject` |
+| PZ-005 | 이동 불가 위치 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`IsPositionBlocked_EmptyPos_ReturnsFalse`<br>`GetPushableAt_NonPushableTag_ReturnsNull` |
+| PZ-012 | 일반 가시 | `IsPositionPunished_ThornNormalTag_ReturnsTrue` |
+
+### Type B. 수동 TC의 핵심 판정 로직만 부분 검증하는 테스트
+
+수동 TC가 검증하는 행동의 **핵심 판정 로직**을 코드 레벨에서 자동 검증합니다. TC 전체 시나리오를 대체하지는 않으며, 해당 로직이 회귀로 깨지지 않았음을 보장합니다.
+(아래 항목은 모두 `GridManagerTests` 클래스의 메서드를 가리킵니다.)
+
+| TC ID | 수동 TC 항목 | 자동화 테스트 | 검증 층위 |
+|---|---|---|---|
+| PZ-006~010 | 스테이지 클리어 혹은 재시작 | `ClearGrid_RemovesAllObjects` | 맵 그리드 초기화 |
+| PZ-009 | 퍼즐 완료 | `WorldToGrid_ZeroBase_ReturnsCorrectGrid`<br>`GridToWorld_ZeroBase_ReturnsCorrectGrid`<br>`IsPositionBlocked_GoalTag_ReturnsTrue`<br>`GetObjectWithTagAt_ReturnsCorrectObject` | 골 지점 인접 판정 |
+| PZ-013 | 자물쇠(열쇠 획득 전) | `GetPushableAt_PushableTags_ReturnsObject` | 자물쇠 태그 구분 |
+| PZ-014 | 열쇠와 자물쇠 | `GetObjectWithTagAt_ReturnsCorrectObject`<br>`UnregisterObject_RemovesFromGrid` | 열쇠 태그 구분<br>자물쇠 제거 |
+| PZ-015 | 토글 가시 | `IsPositionBlocked_ThornUpTag_ReturnsTrue` | 가시가 올라왔을 때 동작 |
+| PZ-026~029, 032 | 위치 구분 이펙트 | `WorldToGrid_ZeroBase_ReturnsCorrectGrid`<br>`GridToWorld_ZeroBase_ReturnsCorrectGrid` | 이펙트 위치의 정확성 |
+
+### Type C. 데이터 무결성을 보장하는 테스트 (TC 직접 매칭 없음)
+
+대사/맵 CSV 파싱 로직을 검증합니다. 수동 TC에서 검증하는 결과물(화면에 표시되는 대사, 로드된 맵)은 **올바르게 파싱된 데이터**에서 출발한다는 전제에서 성립하고, 자동화 테스트는 그 **파싱 단계 자체의 정확성**을 보장합니다.
+
+- `MapDataParserTests` (15개): 맵 CSV의 메타데이터 및 타일 데이터 파싱
+- `DialogueDataParserTests` (12개): 대사 노드 타입별 파싱 및 분기 처리
+- `CsvUtilityTests` (7개): CSV 공통 로직 (따옴표/콤마/줄바꿈 처리)
+
+이 영역은 수동 TC와 **직접 1:1 매핑되지 않습니다.** TC는 화면 표시 결과를 검증하고, 자동화 테스트는 **표시 직전 단계**의 데이터 정확성을 검증합니다. 두 검증은 서로의 사각지대를 보완합니다.
+
+### 자동화 미커버 영역
+
+퍼즐 (40개), 트랜지션 (24개), 컷신/대화의 시각/청각 영역 (49개): 시각/청각 판정이 필요하므로 수동 TC 영역에 유지됩니다.
+
 
 # 핵심 기능
 
@@ -50,7 +84,7 @@
   - `T`: 일반 가시, `U`: 올라온 가시, `D`: 내려간 가시
   - `K`: 열쇠, `L`: 자물쇠, `.`: 빈 공간
 
-**LevelManager.cs**에서 CSV를 파싱해 그리드 좌표별로 해당하는 프리팹을 생성합니다.
+**MapDataParser.cs**가 CSV를 파싱해 `ParsedMap` 구조체로 반환하고, **LevelManager.cs**가 이를 받아 그리드 좌표별로 해당하는 프리팹을 생성합니다.
 
 ## 대화 시스템
 
@@ -67,7 +101,7 @@
 - **CharacterImage, CharacterName, Text**: 캐릭터 이미지 경로, 이름, 대사
 - **Choice1\~3, Choice1Next\~3Next**: 선택지 텍스트와 다음 대화 ID
 
-**DialogueManager.cs**에서 CSV를 파싱해 `DialogueNode`구조체로 관리하며, 선택지 선택시 ID 범위로 정답/오답을 분기 처리합니다.
+**DialogueDataParser.cs**가 CSV를 파싱해 `DialogueNode` 딕셔너리로 변환하고, **DialogueManager.cs**가 이를 받아 상태 관리 및 분기 처리를 담당합니다.
 
 ## 그리드 이동 시스템
 
@@ -132,7 +166,16 @@
   - Animator/    - 연출 및 애니메이션 제어
     - PlayerAnimator.cs
     - PlayerDeathAnimator.cs
-  - Utils/     - 오브젝트 동작 및 헬퍼 유틸리티
+  - Utils/     - 공통 유틸리티
+    - CsvUtility.cs
+  - Parsers/    - CSV 데이터 파싱 (단위 테스트 대상)
+    - MapDataParser.cs
+    - DialogueDataParser.cs
+- Tests/    - 단위 테스트
+  - GridManagerTests.cs
+  - MapDataParserTests.cs
+  - DialogueDataParserTests.cs
+  - CsvUtilityTests.cs
 - Resources/
   - Dialogues/    - 대화 데이터 (CSV)
     - Opening.csv
