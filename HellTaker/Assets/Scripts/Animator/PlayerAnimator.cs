@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using DG.Tweening;
 
 public class PlayerAnimator : MonoBehaviour
@@ -59,7 +59,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (animator == null || animator.runtimeAnimatorController == null)
         {
-            Debug.LogError("[PlayerAnimator] TriggerMove È£Ãâ ½ÇÆĞ - Animator°¡ ÁØºñµÇÁö ¾ÊÀ½");
+            Debug.LogError("[PlayerAnimator] TriggerMove í˜¸ì¶œ ì‹¤íŒ¨ - Animatorê°€ ì¤€ë¹„ë˜ì§€ ì•ŠìŒ");
             return;
         }
 
@@ -71,7 +71,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (animator == null || animator.runtimeAnimatorController == null)
         {
-            Debug.LogError("[PlayerAnimator] TriggerKick È£Ãâ ½ÇÆĞ - Animator°¡ ÁØºñµÇÁö ¾ÊÀ½");
+            Debug.LogError("[PlayerAnimator] TriggerKick í˜¸ì¶œ ì‹¤íŒ¨ - Animatorê°€ ì¤€ë¹„ë˜ì§€ ì•ŠìŒ");
             return;
         }
 
