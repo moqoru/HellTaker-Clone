@@ -183,139 +183,24 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        string[] lines = csvFile.text.Split('\n');
-
-        // 0번째 줄은 헤더
-        for (int i = 1; i < lines.Length; i++)
+        DialogueDataParser.ParsedDialogue parsed;
+        try
         {
-            if (string.IsNullOrWhiteSpace(lines[i])) continue;
-
-            string[] values = ParseCSVLine(lines[i]);
-
-            if (values.Length < 5) continue; // 필드의 최솟값 이상 채워져 있는지 체크
-
-            if (!int.TryParse(values[0], out int id))
-            {
-                Debug.LogWarning($"[DialogueManager] csv {i}번째 줄: ID 파싱 실패");
-                continue;
-            }
-
-            if (!System.Enum.TryParse(values[1], out DialogueType type))
-            {
-                Debug.LogWarning($"[DialogueManager] csv {i}번째 줄: 타입 파싱 실패");
-                continue;
-            }
-
-            DialogueNode node = new DialogueNode
-            {
-                dialogueID = id,
-                type = type,
-                characterImagePath = CleanString(values[2]),
-                characterName = CleanString(values[3]),
-                text = CleanString(values[4]),
-            };
-
-            // Choice 타입일 때 선택지 데이터 파싱
-            if (node.type == DialogueType.Choice)
-            {
-                // 정답 선택지 인덱스 (첫번째를 정답으로 초기 설정)
-                node.correctChoiceIndex = 0;
-
-                int validChoices = 0;
-                for (int j = 0; j < 3; j++)
-                {
-                    int choiceTextIndex = 5 + j * 2;
-                    int choiceNextIndex = 6 + j * 2;
-
-                    if (choiceTextIndex < values.Length
-                        && choiceNextIndex < values.Length
-                        && !string.IsNullOrEmpty(values[choiceTextIndex]))
-                    {
-                        node.choiceTexts[j] = CleanString(values[choiceTextIndex]);
-                        node.choiceNextIDs[j] = int.Parse(values[choiceNextIndex]);
-                        validChoices++;
-
-                        // 다음 ID 번호가 한 자릿수이면 일반 대화 => 정답 선택지 인덱스로 설정
-                        if (node.choiceNextIDs[j] < DIALOGUE_THRESHOLD_ID)
-                        {
-                            node.correctChoiceIndex = j;
-                        }
-                    }
-                }
-            }
-            else if (node.type == DialogueType.NumberChoice)
-            {
-                // NumberChoice: Choice1에 최솟값, 2에 최댓값
-                node.minValue = int.Parse(CleanString(values[5]));
-                node.maxValue = int.Parse(CleanString(values[7]));
-                node.choiceNextIDs[0] = int.Parse(values[6]); // 1 ~ 9 선택
-                node.choiceNextIDs[1] = int.Parse(values[8]); // 10 선택
-            }
-            else if (node.type == DialogueType.Dialogue
-                || node.type == DialogueType.Advice
-                || node.type == DialogueType.CutScene)
-            {
-                // 일반적인 경우 다음 대사 ID는 순차적으로 증가
-                node.nextDialogueID = node.dialogueID + 1;
-            }
-
-            currentDialogueData.Add(node.dialogueID, node);
+            parsed = DialogueDataParser.Parse(csvFile.text);
+        }
+        catch (DialogueDataParseException e)
+        {
+            Debug.LogError($"[DialogueManager] {csvFileName} 파싱 실패: {e.Message}");
+            return;
         }
 
-    }
+        currentDialogueData = parsed.Nodes;
 
-    private string[] ParseCSVLine(string line)
-    {
-        List<string> result = new List<string>();
-        bool inQuotes = false;
-        string current = "";
-
-        for (int i = 0; i < line.Length; i++)
+        // 경고 로그 출력 (원본 동작 호환: 건너뛴 줄마다 경고)
+        foreach (string warning in parsed.Warnings)
         {
-            char c = line[i];
-
-            // ',' 기호가 칼럼 구분자인지, 아니면 따옴표 안에 있는 문장 부호인지 구분하여 저장
-            if (c == '"')
-            {
-                inQuotes = !inQuotes;
-            }
-            else if (c == ',' && !inQuotes)
-            {
-                result.Add(current);
-                current = "";
-            }
-            else
-            {
-                current += c;
-            }
+            Debug.LogWarning($"[DialogueManager] {csvFileName}: {warning}");
         }
-
-        result.Add(current);
-        return result.ToArray();
-    }
-
-    /// <summary>
-    /// 문자열에서 따옴표가 3쌍씩 생기는 문제와 \n 기호가 실제와 다른 것을 정상화
-    /// </summary>
-    private string CleanString(string str)
-    {
-        if (string.IsNullOrEmpty(str)) return "";
-
-        // 앞뒤 따옴표 제거 (따옴표 3쌍씩 있는 경우도 포함)
-        str = str.Trim();
-        if (str.StartsWith("\"\"\"")) str = str.Substring(3);
-        if (str.EndsWith("\"\"\"")) str = str.Substring(0, str.Length - 3);
-        if (str.StartsWith("\"")) str = str.Substring(1);
-        if (str.EndsWith("\"")) str = str.Substring(0, str.Length - 1);
-
-        // 이스케이프된 따옴표 처리
-        str = str.Replace("\"\"", "\"");
-
-        // \n을 실제 줄바꿈으로 변경
-        str = str.Replace("\\n", "\n");
-
-        // 앞 뒤 공백 제거하여 깔끔하게 만들기
-        return str.Trim();
     }
 
     private void ShowCutScene(int dialogueID)
