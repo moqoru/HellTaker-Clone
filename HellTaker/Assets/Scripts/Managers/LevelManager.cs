@@ -111,63 +111,31 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
-        string[] lines = csvFile.text.Split('\n');
-        List<string> validLines = new List<string>();
-
-        foreach (string line in lines)
+        MapDataParser.ParsedMap parsed;
+        try
         {
-            if (!string.IsNullOrWhiteSpace(line))
-            {
-                validLines.Add(line.Trim());
-            }
+            parsed = MapDataParser.Parse(csvFile.text);
+        }
+        catch (MapDataParseException e)
+        {
+            Debug.LogError($"[LevelManager] 맵 CSV 파싱 실패: {e.Message}");
+            return;
         }
 
-        mapHeight = validLines.Count - 1;
-        mapWidth = validLines[1].Count(c => c == ',') + 1;
+        // 게임 상태에 반영
+        GameManager.Instance.maxMoveCount = parsed.MoveCount;
+        basePosition = parsed.BasePosition;
+        currentGoalCharacter = parsed.GoalCharacter;
 
-        string[] mapInfo = validLines[0].Split(',');
-
-        if (int.TryParse(mapInfo[0].Trim(), out int moveCount))
+        if (parsed.IsGoalCharacterDefaulted)
         {
-            GameManager.Instance.maxMoveCount = moveCount;
-        }
-        else
-        {
-            Debug.LogError($"[LevelManager] 이동 횟수를 불러오지 못했습니다: {mapInfo[0]}");
+            Debug.LogWarning("[LevelManager] 골 캐릭터를 불러오지 못했습니다. 기본 캐릭터인 판데모니카로 설정합니다.");
         }
 
-        if (float.TryParse(mapInfo[1].Trim(), out float offsetX)
-            && float.TryParse(mapInfo[2].Trim(), out float offsetY))
-        {
-            basePosition.x = offsetX;
-            basePosition.y = offsetY;
-        }
-        else
-        {
-            Debug.LogError($"[LevelManager] 오프셋 좌표를 불러오지 못했습니다: x => {mapInfo[1]} y => {mapInfo[2]}");
-        }
-
-        if (mapInfo.Length > 3 && !string.IsNullOrWhiteSpace(mapInfo[3]))
-        {
-            currentGoalCharacter = mapInfo[3].Trim();
-        }
-        else
-        {
-            Debug.LogWarning($"[LevelManager] 골 캐릭터를 불러오지 못했습니다. 기본 캐릭터인 판데모니카로 설정합니다.");
-            currentGoalCharacter = "PandeMonica";
-        }
-
-        mapData = new string[mapHeight, mapWidth];
-
-        for (int y = 0; y < mapHeight; y++)
-        {
-            string[] cells = validLines[y + 1].Split(',');
-            for (int x = 0; x < cells.Length && x < mapWidth; x++)
-            {
-                mapData[y, x] = cells[x].Trim();
-            }
-        }
-
+        // 타일 데이터 반영
+        mapHeight = parsed.Height;
+        mapWidth = parsed.Width;
+        mapData = parsed.TileData;
     }
 
     private void GenerateMap()
