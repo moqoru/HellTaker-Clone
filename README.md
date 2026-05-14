@@ -5,57 +5,6 @@
 - 개발 인원 : 1명
 - 제작 기간 : 3개월 (2025.10.21 - 2026.01.31)
 
-## TC 문서와 자동화 테스트의 연결
-
- ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
-
-본 프로젝트는 두 층위의 검증을 운영합니다.
-
-- [**수동 TC 문서 (117개)**](https://naver.me/5LQHHwiI): 사용자 관점의 외부 행동 검증 (애니메이션, 사운드, UI 등 시각/청각 영역 포함)
-- **자동화 단위 테스트 (49개)**: 코드 단위 로직 검증 (좌표 계산, 데이터 파싱, 상태 판정)
-
-자동화 테스트는 크게 세 영역으로 나뉩니다.
-
-### Type A. 수동 TC를 직접 대체하는 테스트
-
-수동 TC 중 퍼즐 파트의 일부 케이스를 코드 레벨에서 자동 검증합니다.
-(아래 항목은 모두 `GridManagerTests` 클래스의 메서드를 가리킵니다.)
-
-| TC ID | 수동 TC 항목 | 자동화 테스트 |
-|---|---|---|
-| PZ-003 | 몬스터 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`MoveObject_UpdatesDictionary`<br>`GetPushableAt_PushableTags_ReturnsObject`<br>`UnregisterObject_RemovesFromGrid` |
-| PZ-004 | 블록 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`MoveObject_UpdatesDictionary`<br>`GetPushableAt_PushableTags_ReturnsObject` |
-| PZ-005 | 이동 불가 위치 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`IsPositionBlocked_EmptyPos_ReturnsFalse`<br>`GetPushableAt_NonPushableTag_ReturnsNull` |
-| PZ-012 | 일반 가시 | `IsPositionPunished_ThornNormalTag_ReturnsTrue` |
-
-### Type B. 수동 TC의 핵심 판정 로직만 부분 검증하는 테스트
-
-수동 TC가 검증하는 행동의 **핵심 판정 로직**을 코드 레벨에서 자동 검증합니다. TC 전체 시나리오를 대체하지는 않으며, 해당 로직이 회귀로 깨지지 않았음을 보장합니다.
-(아래 항목은 모두 `GridManagerTests` 클래스의 메서드를 가리킵니다.)
-
-| TC ID | 수동 TC 항목 | 자동화 테스트 | 검증 층위 |
-|---|---|---|---|
-| PZ-006~010 | 스테이지 클리어 혹은 재시작 | `ClearGrid_RemovesAllObjects` | 맵 그리드 초기화 |
-| PZ-009 | 퍼즐 완료 | `WorldToGrid_ZeroBase_ReturnsCorrectGrid`<br>`GridToWorld_ZeroBase_ReturnsCorrectGrid`<br>`IsPositionBlocked_GoalTag_ReturnsTrue`<br>`GetObjectWithTagAt_ReturnsCorrectObject` | 골 지점 인접 판정 |
-| PZ-013 | 자물쇠(열쇠 획득 전) | `GetPushableAt_PushableTags_ReturnsObject` | 자물쇠 태그 구분 |
-| PZ-014 | 열쇠와 자물쇠 | `GetObjectWithTagAt_ReturnsCorrectObject`<br>`UnregisterObject_RemovesFromGrid` | 열쇠 태그 구분<br>자물쇠 제거 |
-| PZ-015 | 토글 가시 | `IsPositionBlocked_ThornUpTag_ReturnsTrue` | 가시가 올라왔을 때 동작 |
-| PZ-026~029, 032 | 위치 구분 이펙트 | `WorldToGrid_ZeroBase_ReturnsCorrectGrid`<br>`GridToWorld_ZeroBase_ReturnsCorrectGrid` | 이펙트 위치의 정확성 |
-
-### Type C. 데이터 무결성을 보장하는 테스트 (TC 직접 매칭 없음)
-
-대사/맵 CSV 파싱 로직을 검증합니다. 수동 TC에서 검증하는 결과물(화면에 표시되는 대사, 로드된 맵)은 **올바르게 파싱된 데이터**에서 출발한다는 전제에서 성립하고, 자동화 테스트는 그 **파싱 단계 자체의 정확성**을 보장합니다.
-
-- `MapDataParserTests` (15개): 맵 CSV의 메타데이터 및 타일 데이터 파싱
-- `DialogueDataParserTests` (12개): 대사 노드 타입별 파싱 및 분기 처리
-- `CsvUtilityTests` (7개): CSV 공통 로직 (따옴표/콤마/줄바꿈 처리)
-
-이 영역은 수동 TC와 **직접 1:1 매핑되지 않습니다.** TC는 화면 표시 결과를 검증하고, 자동화 테스트는 **표시 직전 단계**의 데이터 정확성을 검증합니다. 두 검증은 서로의 사각지대를 보완합니다.
-
-### 자동화 미커버 영역
-
-퍼즐 (40개), 트랜지션 (24개), 컷신/대화의 시각/청각 영역 (49개): 시각/청각 판정이 필요하므로 수동 TC 영역에 유지됩니다.
-
 
 # 핵심 기능
 
@@ -145,6 +94,57 @@
 - **볼륨 조절**: `SetBGMVolume()`, `SetSFXVolume()`으로 런타임에도 조정 가능
 - **BGM과 게임 상태 연동**: Opening -> Game -> Ending 상태 전환시 자동으로 BGM 변경
 - **액션별 SFX 재생**: 이동, 킥, 피격, 대화 등 각 액션마다 적절한 효과음 재생
+
+# TC 문서와 자동화 테스트의 연결
+
+ ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
+
+본 프로젝트는 두 층위의 검증을 운영합니다.
+
+- [**수동 TC 문서 (117개)**](https://naver.me/5LQHHwiI): 사용자 관점의 외부 행동 검증 (애니메이션, 사운드, UI 등 시각/청각 영역 포함)
+- **자동화 단위 테스트 (49개)**: 코드 단위 로직 검증 (좌표 계산, 데이터 파싱, 상태 판정)
+
+자동화 테스트는 크게 세 영역으로 나뉩니다.
+
+### Type A. 수동 TC를 직접 대체하는 테스트
+
+수동 TC 중 퍼즐 파트의 일부 케이스를 코드 레벨에서 자동 검증합니다.
+(아래 항목은 모두 `GridManagerTests` 클래스의 메서드를 가리킵니다.)
+
+| TC ID | 수동 TC 항목 | 자동화 테스트 |
+|---|---|---|
+| PZ-003 | 몬스터 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`MoveObject_UpdatesDictionary`<br>`GetPushableAt_PushableTags_ReturnsObject`<br>`UnregisterObject_RemovesFromGrid` |
+| PZ-004 | 블록 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`MoveObject_UpdatesDictionary`<br>`GetPushableAt_PushableTags_ReturnsObject` |
+| PZ-005 | 이동 불가 위치 | `IsPositionBlocked_WallTag_ReturnsTrue`<br>`IsPositionBlocked_EmptyPos_ReturnsFalse`<br>`GetPushableAt_NonPushableTag_ReturnsNull` |
+| PZ-012 | 일반 가시 | `IsPositionPunished_ThornNormalTag_ReturnsTrue` |
+
+### Type B. 수동 TC의 핵심 판정 로직만 부분 검증하는 테스트
+
+수동 TC가 검증하는 행동의 **핵심 판정 로직**을 코드 레벨에서 자동 검증합니다. TC 전체 시나리오를 대체하지는 않으며, 해당 로직이 회귀로 깨지지 않았음을 보장합니다.
+(아래 항목은 모두 `GridManagerTests` 클래스의 메서드를 가리킵니다.)
+
+| TC ID | 수동 TC 항목 | 자동화 테스트 | 검증 층위 |
+|---|---|---|---|
+| PZ-006~010 | 스테이지 클리어 혹은 재시작 | `ClearGrid_RemovesAllObjects` | 맵 그리드 초기화 |
+| PZ-009 | 퍼즐 완료 | `WorldToGrid_ZeroBase_ReturnsCorrectGrid`<br>`GridToWorld_ZeroBase_ReturnsCorrectGrid`<br>`IsPositionBlocked_GoalTag_ReturnsTrue`<br>`GetObjectWithTagAt_ReturnsCorrectObject` | 골 지점 인접 판정 |
+| PZ-013 | 자물쇠(열쇠 획득 전) | `GetPushableAt_PushableTags_ReturnsObject` | 자물쇠 태그 구분 |
+| PZ-014 | 열쇠와 자물쇠 | `GetObjectWithTagAt_ReturnsCorrectObject`<br>`UnregisterObject_RemovesFromGrid` | 열쇠 태그 구분<br>자물쇠 제거 |
+| PZ-015 | 토글 가시 | `IsPositionBlocked_ThornUpTag_ReturnsTrue` | 가시가 올라왔을 때 동작 |
+| PZ-026~029, 032 | 위치 구분 이펙트 | `WorldToGrid_ZeroBase_ReturnsCorrectGrid`<br>`GridToWorld_ZeroBase_ReturnsCorrectGrid` | 이펙트 위치의 정확성 |
+
+### Type C. 데이터 무결성을 보장하는 테스트 (TC 직접 매칭 없음)
+
+대사/맵 CSV 파싱 로직을 검증합니다. 수동 TC에서 검증하는 결과물(화면에 표시되는 대사, 로드된 맵)은 **올바르게 파싱된 데이터**에서 출발한다는 전제에서 성립하고, 자동화 테스트는 그 **파싱 단계 자체의 정확성**을 보장합니다.
+
+- `MapDataParserTests` (15개): 맵 CSV의 메타데이터 및 타일 데이터 파싱
+- `DialogueDataParserTests` (12개): 대사 노드 타입별 파싱 및 분기 처리
+- `CsvUtilityTests` (7개): CSV 공통 로직 (따옴표/콤마/줄바꿈 처리)
+
+이 영역은 수동 TC와 **직접 1:1 매핑되지 않습니다.** TC는 화면 표시 결과를 검증하고, 자동화 테스트는 **표시 직전 단계**의 데이터 정확성을 검증합니다. 두 검증은 서로의 사각지대를 보완합니다.
+
+### 자동화 미커버 영역
+
+퍼즐 (40개), 트랜지션 (24개), 컷신/대화의 시각/청각 영역 (49개): 시각/청각 판정이 필요하므로 수동 TC 영역에 유지됩니다.
 
 # 기술 스택
 
