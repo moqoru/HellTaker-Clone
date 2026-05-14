@@ -1,3 +1,5 @@
+ ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
+
 # Helltaker (헬테이커) 모작
 
 - 그리드 기반 퍼즐 게임인 [Helltaker](https://store.steampowered.com/app/1289310/Helltaker/)의 Unity, C# 기반 모작입니다.
@@ -96,8 +98,6 @@
 - **액션별 SFX 재생**: 이동, 킥, 피격, 대화 등 각 액션마다 적절한 효과음 재생
 
 # TC 문서와 자동화 테스트의 연결
-
- ![Unity Tests](https://github.com/moqoru/HellTaker-Clone/actions/workflows/unity-test.yml/badge.svg)
 
 본 프로젝트는 두 층위의 검증을 운영합니다.
 
